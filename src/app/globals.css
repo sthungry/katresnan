@@ -1,0 +1,189 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-satoshi: 'Satoshi', sans-serif;
+  --font-clash: 'Clash Display', sans-serif;
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #fffde8;
+  color: #1a2e1d;
+  font-family: var(--font-satoshi);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ======================== DARK MODE ======================== */
+.dark body {
+  background-color: #0f1a13;
+  color: #e8f0e8;
+}
+
+.dark ::-webkit-scrollbar-track { background: #0f1a13; }
+.dark ::-webkit-scrollbar-thumb { background: #2a4a38; }
+
+/* ======================== SCROLLBAR ======================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #fffde8; }
+::-webkit-scrollbar-thumb { background: #f9b8c4; border-radius: 3px; }
+
+/* ======================== GRADIENT TEXT ======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #03554e 0%, #057a71 40%, #e8879a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .gradient-text {
+  background: linear-gradient(135deg, #4ecdc4 0%, #7fdeaa 40%, #ffb3c1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ======================== CARD HOVER ======================== */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(3, 85, 78, 0.12);
+  border-color: #f9b8c4;
+}
+.dark .card-hover:hover {
+  box-shadow: 0 20px 50px rgba(78, 205, 196, 0.1);
+  border-color: #4ecdc4;
+}
+
+/* ======================== SCROLL ANIMATION ======================== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======================== PATTERN BG ======================== */
+.pattern-bg {
+  background-image: radial-gradient(circle, #ffdce2 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+.dark .pattern-bg {
+  background-image: radial-gradient(circle, rgba(78, 205, 196, 0.15) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+
+/* ======================== HERO PARTICLES ======================== */
+@keyframes petalDrift {
+  0%   { transform: translateY(-80px) translateX(0px) rotate(0deg); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 0.7; }
+  100% { transform: translateY(110vh) translateX(80px) rotate(720deg); opacity: 0; }
+}
+.petal {
+  position: absolute;
+  pointer-events: none;
+  animation: petalDrift linear infinite;
+  font-size: 1.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+
+/* ======================== TYPEWRITER ======================== */
+@keyframes typewrite {
+  from { width: 0 }
+  to   { width: 100% }
+}
+@keyframes blinkCaret {
+  0%, 100% { border-color: transparent }
+  50%      { border-color: #e8879a }
+}
+
+/* ======================== RING PULSE ======================== */
+@keyframes ringPulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+.ring-pulse {
+  animation: ringPulse 2.5s ease-out infinite;
+}
+.ring-pulse-2 {
+  animation: ringPulse 2.5s ease-out 0.8s infinite;
+}
+.ring-pulse-3 {
+  animation: ringPulse 2.5s ease-out 1.6s infinite;
+}
+
+/* ======================== SVG PATH DRAW ======================== */
+@keyframes svgDraw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+.svg-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: svgDraw 3s ease forwards;
+}
+
+/* ======================== GLASS CARD ======================== */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 220, 226, 0.6);
+}
+.dark .glass {
+  background: rgba(15, 30, 20, 0.7);
+  border: 1px solid rgba(78, 205, 196, 0.15);
+}
+
+/* ======================== DARK SECTION HELPERS ======================== */
+.dark .section-white { background-color: #111d17 !important; }
+.dark .section-cream  { background-color: #0f1a13 !important; }
+.dark .section-pink   { background-color: #131f18 !important; }
+
+/* ======================== MARQUEE ======================== */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ======================== PARALLAX HELPER ======================== */
+.parallax-slow { will-change: transform; }
+
+/* ======================== CHECKOUT ======================== */
+.animate-bounce-soft {
+  animation: bounceSoft 2s ease-in-out infinite;
+}
+
+/* ── Mobile utilities ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
