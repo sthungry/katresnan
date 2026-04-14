@@ -1134,6 +1134,7 @@ function IsiDataInner() {
     if (!orderId) return
     setSaving(true); setError(null)
     try {
+<<<<<<< HEAD
       console.log('[saveProgress] Sending data to upsert_wedding_data:', { orderId, form })
       const { data, error: err } = await supabase.rpc('upsert_wedding_data', {
         p_order_id: orderId,
@@ -1151,6 +1152,16 @@ function IsiDataInner() {
       const errorMsg = e?.message || e?.details || JSON.stringify(e)
       setError('Gagal menyimpan: ' + errorMsg)
     }
+=======
+      const { error: err } = await supabase.rpc('upsert_wedding_data', {
+        p_order_id: orderId,
+        p_data: form,
+      })
+      if (err) throw err
+      if (nextStep) setStep(nextStep)
+      setSaved(true); setTimeout(() => setSaved(false), 2000)
+    } catch (e: any) { setError('Gagal menyimpan: ' + e.message) }
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     setSaving(false)
   }
 

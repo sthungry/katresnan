@@ -36,8 +36,11 @@ export interface WeddingData {
   resepsi_maps_url: string
 
   // Media
+<<<<<<< HEAD
   pria_foto_url?: string
   wanita_foto_url?: string
+=======
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   foto_urls: string[]
   video_youtube_url: string
   musik_pilihan: string

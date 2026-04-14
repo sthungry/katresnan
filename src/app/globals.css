@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+=======
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 /* ======================== BASE ======================== */
 * { box-sizing: border-box; padding: 0; margin: 0; }
 html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
@@ -15,10 +21,27 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.5s ease, color 0.5s ease;
+=======
+:root {
+  --font-satoshi: 'Satoshi', sans-serif;
+  --font-clash: 'Clash Display', sans-serif;
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #fffde8;
+  color: #1a2e1d;
+  font-family: var(--font-satoshi);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 }
 
 /* ======================== DARK MODE ======================== */
 .dark body {
+<<<<<<< HEAD
   background-color: #0f1512;
   color: #e8ece9;
 }
@@ -37,11 +60,29 @@ body {
 /* ======================== GRADIENT TEXT ======================== */
 .gradient-text {
   background: linear-gradient(135deg, #2D4A3E 0%, #5c846a 50%, #C8A96E 100%);
+=======
+  background-color: #0f1a13;
+  color: #e8f0e8;
+}
+
+.dark ::-webkit-scrollbar-track { background: #0f1a13; }
+.dark ::-webkit-scrollbar-thumb { background: #2a4a38; }
+
+/* ======================== SCROLLBAR ======================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #fffde8; }
+::-webkit-scrollbar-thumb { background: #f9b8c4; border-radius: 3px; }
+
+/* ======================== GRADIENT TEXT ======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #03554e 0%, #057a71 40%, #e8879a 100%);
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .dark .gradient-text {
+<<<<<<< HEAD
   background: linear-gradient(135deg, #7da088 0%, #a8bfae 50%, #e9c485 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -50,6 +91,9 @@ body {
 
 .gradient-text-gold {
   background: linear-gradient(135deg, #C8A96E 0%, #dfA855 50%, #e9c485 100%);
+=======
+  background: linear-gradient(135deg, #4ecdc4 0%, #7fdeaa 40%, #ffb3c1 100%);
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -57,6 +101,7 @@ body {
 
 /* ======================== CARD HOVER ======================== */
 .card-hover {
+<<<<<<< HEAD
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.4s ease, 
               border-color 0.3s ease;
@@ -67,20 +112,38 @@ body {
 }
 .dark .card-hover:hover {
   box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+=======
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(3, 85, 78, 0.12);
+  border-color: #f9b8c4;
+}
+.dark .card-hover:hover {
+  box-shadow: 0 20px 50px rgba(78, 205, 196, 0.1);
+  border-color: #4ecdc4;
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 }
 
 /* ======================== SCROLL ANIMATION ======================== */
 .animate-on-scroll {
   opacity: 0;
+<<<<<<< HEAD
   transform: translateY(28px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
               transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+=======
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 }
 .animate-on-scroll.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+<<<<<<< HEAD
 /* ======================== GLASS ======================== */
 .glass {
   background: rgba(250, 248, 245, 0.7);
@@ -129,10 +192,46 @@ body {
 @keyframes blinkCaret {
   0%, 100% { border-color: transparent }
   50%      { border-color: #C8A96E }
+=======
+/* ======================== PATTERN BG ======================== */
+.pattern-bg {
+  background-image: radial-gradient(circle, #ffdce2 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+.dark .pattern-bg {
+  background-image: radial-gradient(circle, rgba(78, 205, 196, 0.15) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+
+/* ======================== HERO PARTICLES ======================== */
+@keyframes petalDrift {
+  0%   { transform: translateY(-80px) translateX(0px) rotate(0deg); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 0.7; }
+  100% { transform: translateY(110vh) translateX(80px) rotate(720deg); opacity: 0; }
+}
+.petal {
+  position: absolute;
+  pointer-events: none;
+  animation: petalDrift linear infinite;
+  font-size: 1.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+
+/* ======================== TYPEWRITER ======================== */
+@keyframes typewrite {
+  from { width: 0 }
+  to   { width: 100% }
+}
+@keyframes blinkCaret {
+  0%, 100% { border-color: transparent }
+  50%      { border-color: #e8879a }
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 }
 
 /* ======================== RING PULSE ======================== */
 @keyframes ringPulse {
+<<<<<<< HEAD
   0%   { transform: scale(1);   opacity: 0.5; }
   100% { transform: scale(2.2); opacity: 0;   }
 }
@@ -176,13 +275,89 @@ body {
 }
 
 /* ======================== SCROLLBAR HIDE ======================== */
+=======
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+.ring-pulse {
+  animation: ringPulse 2.5s ease-out infinite;
+}
+.ring-pulse-2 {
+  animation: ringPulse 2.5s ease-out 0.8s infinite;
+}
+.ring-pulse-3 {
+  animation: ringPulse 2.5s ease-out 1.6s infinite;
+}
+
+/* ======================== SVG PATH DRAW ======================== */
+@keyframes svgDraw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+.svg-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: svgDraw 3s ease forwards;
+}
+
+/* ======================== GLASS CARD ======================== */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 220, 226, 0.6);
+}
+.dark .glass {
+  background: rgba(15, 30, 20, 0.7);
+  border: 1px solid rgba(78, 205, 196, 0.15);
+}
+
+/* ======================== DARK SECTION HELPERS ======================== */
+.dark .section-white { background-color: #111d17 !important; }
+.dark .section-cream  { background-color: #0f1a13 !important; }
+.dark .section-pink   { background-color: #131f18 !important; }
+
+/* ======================== MARQUEE ======================== */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ======================== PARALLAX HELPER ======================== */
+.parallax-slow { will-change: transform; }
+
+/* ======================== CHECKOUT ======================== */
+.animate-bounce-soft {
+  animation: bounceSoft 2s ease-in-out infinite;
+}
+
+/* ── Mobile utilities ── */
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+<<<<<<< HEAD
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
 /* ======================== MOBILE ======================== */
 @media (max-width: 768px) {
   button, a { -webkit-tap-highlight-color: transparent; }
+=======
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+>>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 }
