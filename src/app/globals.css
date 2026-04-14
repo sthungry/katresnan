@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================== BASE ======================== */
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background-color: #FAF8F5;
+  color: #2D4A3E;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ======================== DARK MODE ======================== */
+.dark body {
+  background-color: #0f1512;
+  color: #e8ece9;
+}
+
+/* ======================== SCROLLBAR ======================== */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #FAF8F5; }
+::-webkit-scrollbar-thumb { background: #C8A96E; border-radius: 10px; }
+.dark ::-webkit-scrollbar-track { background: #0f1512; }
+.dark ::-webkit-scrollbar-thumb { background: #3a5644; }
+
+/* ======================== SELECTION ======================== */
+::selection { background: rgba(200, 169, 110, 0.2); color: #2D4A3E; }
+.dark ::selection { background: rgba(200, 169, 110, 0.3); color: #e8ece9; }
+
+/* ======================== GRADIENT TEXT ======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #2D4A3E 0%, #5c846a 50%, #C8A96E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .gradient-text {
+  background: linear-gradient(135deg, #7da088 0%, #a8bfae 50%, #e9c485 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, #C8A96E 0%, #dfA855 50%, #e9c485 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ======================== CARD HOVER ======================== */
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s ease, 
+              border-color 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -12px rgba(45, 74, 62, 0.12);
+}
+.dark .card-hover:hover {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* ======================== SCROLL ANIMATION ======================== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======================== GLASS ======================== */
+.glass {
+  background: rgba(250, 248, 245, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 169, 110, 0.15);
+}
+.dark .glass {
+  background: rgba(15, 21, 18, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(125, 160, 136, 0.1);
+}
+
+/* ======================== GRAIN OVERLAY ======================== */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ======================== SECTION DIVIDER ======================== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 110, 0.3), transparent);
+}
+.dark .section-divider {
+  background: linear-gradient(90deg, transparent, rgba(125, 160, 136, 0.15), transparent);
+}
+
+/* ======================== PATTERN DOT ======================== */
+.pattern-dot {
+  background-image: radial-gradient(circle, rgba(200, 169, 110, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.dark .pattern-dot {
+  background-image: radial-gradient(circle, rgba(125, 160, 136, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ======================== TYPEWRITER ======================== */
+@keyframes blinkCaret {
+  0%, 100% { border-color: transparent }
+  50%      { border-color: #C8A96E }
+}
+
+/* ======================== RING PULSE ======================== */
+@keyframes ringPulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+.ring-pulse { animation: ringPulse 2.5s ease-out infinite; }
+
+/* ======================== GLOW ======================== */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(200, 169, 110, 0.15);
+}
+.dark .glow-gold {
+  box-shadow: 0 0 40px rgba(200, 169, 110, 0.08);
+}
+
+.glow-sage {
+  box-shadow: 0 0 40px rgba(45, 74, 62, 0.1);
+}
+
+/* ======================== CTA BUTTON ======================== */
+.btn-primary {
+  @apply bg-sage-800 text-white font-semibold px-7 py-3.5 rounded-full 
+         transition-all duration-300 hover:bg-sage-700 hover:shadow-lg 
+         hover:shadow-sage-800/20 active:scale-[0.97];
+}
+.dark .btn-primary {
+  @apply bg-sage-600 hover:bg-sage-500;
+}
+
+.btn-secondary {
+  @apply border border-sage-200 text-sage-800 font-medium px-7 py-3.5 
+         rounded-full transition-all duration-300 hover:bg-sage-50 
+         hover:border-sage-300;
+}
+.dark .btn-secondary {
+  @apply border-sage-700 text-sage-200 hover:bg-sage-900 hover:border-sage-600;
+}
+
+.btn-gold {
+  @apply bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold 
+         px-7 py-3.5 rounded-full transition-all duration-300 
+         hover:shadow-lg hover:shadow-gold-500/25 active:scale-[0.97];
+}
+
+/* ======================== SCROLLBAR HIDE ======================== */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ======================== MOBILE ======================== */
+@media (max-width: 768px) {
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
