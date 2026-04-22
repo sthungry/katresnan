@@ -1,0 +1,943 @@
+/**
+ * Feature Gate Styles
+ * Styling untuk sistem pembatasan fitur berdasarkan paket
+ */
+
+/* ========================================
+   SIDEBAR LOCKED MENU STYLES
+   ======================================== */
+
+/* Locked menu item - subtle opacity only */
+.sidebar-link.feature-locked {
+    opacity: 0.45 !important;
+    position: relative !important;
+}
+
+.sidebar-link.feature-locked:hover {
+    opacity: 0.65 !important;
+}
+
+/* Small PRO text indicator - minimal and clean */
+.feature-pro-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-left: auto;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.feature-pro-tag-premium {
+    background: rgba(251, 191, 36, 0.15);
+    color: #b45309;
+}
+
+.feature-pro-tag-ultimate {
+    background: rgba(168, 85, 247, 0.15);
+    color: #7c3aed;
+}
+
+.dark .feature-pro-tag-premium {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.dark .feature-pro-tag-ultimate {
+    background: rgba(168, 85, 247, 0.2);
+    color: #a855f7;
+}
+
+/* Hide old elements */
+.package-badge,
+.feature-lock-icon,
+.feature-lock-tooltip {
+    display: none !important;
+}
+
+/* ========================================
+   MODAL STYLES
+   ======================================== */
+
+.feature-gate-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.feature-gate-modal.hidden {
+    display: none;
+}
+
+.feature-gate-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.feature-gate-content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    max-width: 400px;
+    width: 100%;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+    padding: 1.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: featureGateSlideUp 0.3s ease-out;
+}
+
+.dark .feature-gate-content {
+    background: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom scrollbar for modal */
+.feature-gate-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.feature-gate-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.feature-gate-content::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.dark .feature-gate-content::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+@keyframes featureGateSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.feature-gate-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    color: #9ca3af;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.feature-gate-close:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.dark .feature-gate-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.feature-gate-close ion-icon {
+    font-size: 1.125rem;
+}
+
+/* ========================================
+   MODAL HEADER
+   ======================================== */
+
+.feature-gate-header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.feature-gate-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.875rem;
+}
+
+.feature-gate-icon ion-icon {
+    font-size: 1.75rem;
+    color: #ffffff;
+}
+
+.feature-gate-icon-premium {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 8px 16px -4px rgba(251, 191, 36, 0.4);
+}
+
+.feature-gate-icon-ultimate {
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    box-shadow: 0 8px 16px -4px rgba(168, 85, 247, 0.4);
+}
+
+.feature-gate-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.375rem;
+    line-height: 1.3;
+}
+
+.dark .feature-gate-title {
+    color: #ffffff;
+}
+
+.feature-gate-description {
+    font-size: 0.8125rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.dark .feature-gate-description {
+    color: #9ca3af;
+}
+
+/* ========================================
+   MODAL BENEFITS
+   ======================================== */
+
+.feature-gate-benefits {
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    padding: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+.dark .feature-gate-benefits {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.feature-gate-benefits-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.dark .feature-gate-benefits-title {
+    color: #9ca3af;
+}
+
+.feature-gate-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.375rem 0;
+    font-size: 0.8125rem;
+    color: #374151;
+    line-height: 1.4;
+}
+
+.dark .feature-gate-benefit {
+    color: #d1d5db;
+}
+
+.feature-gate-benefit ion-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.feature-gate-benefit:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .feature-gate-benefit:not(:last-child) {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   MODAL UPGRADE INFO
+   ======================================== */
+
+.feature-gate-upgrade-info {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.feature-gate-package-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 0.375rem;
+}
+
+.dark .feature-gate-package-badge {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%);
+    color: #fbbf24;
+}
+
+.feature-gate-package-badge ion-icon {
+    font-size: 0.875rem;
+}
+
+.feature-gate-price {
+    font-size: 0.8125rem;
+    color: #059669;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.dark .feature-gate-price {
+    color: #34d399;
+}
+
+.feature-gate-price strong {
+    font-size: 1rem;
+}
+
+.feature-gate-price-strike {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-left: 0.375rem;
+}
+
+.dark .feature-gate-price-strike {
+    color: #6b7280;
+}
+
+.feature-gate-price-note {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+.dark .feature-gate-price-note {
+    color: #9ca3af;
+}
+
+/* ========================================
+   MODAL ACTIONS
+   ======================================== */
+
+.feature-gate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feature-gate-btn-upgrade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-gate-btn-upgrade::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.feature-gate-btn-upgrade:hover::before {
+    left: 100%;
+}
+
+.feature-gate-btn-upgrade:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -4px rgba(17, 24, 39, 0.3);
+}
+
+.dark .feature-gate-btn-upgrade {
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    color: #111827;
+}
+
+.dark .feature-gate-btn-upgrade:hover {
+    box-shadow: 0 8px 16px -4px rgba(255, 255, 255, 0.2);
+}
+
+.feature-gate-btn-upgrade ion-icon {
+    font-size: 1rem;
+}
+
+.feature-gate-btn-later {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background: transparent;
+    color: #6b7280;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.feature-gate-btn-later:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.dark .feature-gate-btn-later {
+    color: #9ca3af;
+}
+
+.dark .feature-gate-btn-later:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+/* ========================================
+   INLINE BANNER STYLES
+   ======================================== */
+
+.feature-gate-inline-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #f59e0b;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+
+.dark .feature-gate-inline-banner {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.feature-gate-inline-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(245, 158, 11, 0.2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-gate-inline-icon ion-icon {
+    font-size: 1.25rem;
+    color: #b45309;
+}
+
+.dark .feature-gate-inline-icon ion-icon {
+    color: #fbbf24;
+}
+
+.feature-gate-inline-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.feature-gate-inline-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 0.25rem;
+}
+
+.dark .feature-gate-inline-title {
+    color: #fbbf24;
+}
+
+.feature-gate-inline-desc {
+    font-size: 0.75rem;
+    color: #b45309;
+    line-height: 1.4;
+}
+
+.dark .feature-gate-inline-desc {
+    color: #fcd34d;
+}
+
+.feature-gate-inline-btn {
+    padding: 0.5rem 1rem;
+    background: #111827;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.feature-gate-inline-btn:hover {
+    background: #1f2937;
+    transform: translateY(-1px);
+}
+
+.dark .feature-gate-inline-btn {
+    background: #ffffff;
+    color: #111827;
+}
+
+.dark .feature-gate-inline-btn:hover {
+    background: #f3f4f6;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 640px) {
+    .feature-gate-modal {
+        padding: 1rem;
+    }
+    
+    .feature-gate-content {
+        padding: 1.25rem;
+        margin: 0;
+        max-width: calc(100% - 0.5rem);
+        max-height: calc(100vh - 2rem);
+        border-radius: 1.25rem;
+    }
+    
+    .feature-gate-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+    }
+    
+    .feature-gate-icon ion-icon {
+        font-size: 1.5rem;
+    }
+    
+    .feature-gate-title {
+        font-size: 1rem;
+    }
+    
+    .feature-gate-description {
+        font-size: 0.75rem;
+    }
+    
+    .feature-gate-benefits {
+        padding: 0.75rem;
+    }
+    
+    .feature-gate-benefit {
+        font-size: 0.75rem;
+        padding: 0.3125rem 0;
+    }
+    
+    .feature-gate-benefit ion-icon {
+        font-size: 0.875rem;
+    }
+    
+    .feature-gate-btn-upgrade {
+        padding: 0.6875rem 1rem;
+        font-size: 0.8125rem;
+    }
+    
+    .feature-gate-inline-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .feature-gate-inline-btn {
+        width: 100%;
+    }
+    
+    .package-badge {
+        font-size: 0.5rem;
+        padding: 2px 6px;
+    }
+}
+
+/* Extra small screens */
+@media (max-height: 600px) {
+    .feature-gate-content {
+        padding: 1rem;
+    }
+    
+    .feature-gate-header {
+        margin-bottom: 1rem;
+    }
+    
+    .feature-gate-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-bottom: 0.625rem;
+    }
+    
+    .feature-gate-icon ion-icon {
+        font-size: 1.25rem;
+    }
+    
+    .feature-gate-benefits {
+        margin-bottom: 1rem;
+        padding: 0.625rem;
+    }
+    
+    .feature-gate-benefit {
+        padding: 0.25rem 0;
+    }
+    
+    .feature-gate-upgrade-info {
+        margin-bottom: 1rem;
+    }
+}
+
+
+/* ========================================
+   MOBILE NAVIGATION LOCK INDICATOR
+   ======================================== */
+
+.nav-btn-locked {
+    position: relative;
+    opacity: 0.4;
+}
+
+/* Remove the lock indicator circle - just use opacity */
+.mobile-lock-indicator {
+    display: none !important;
+}
+
+/* Gift menu locked items */
+.popup-menu-item.feature-locked {
+    opacity: 0.4;
+    position: relative;
+}
+
+/* Submenu locked items */
+.sidebar-submenu-link.feature-locked {
+    opacity: 0.4 !important;
+}
+
+.sidebar-submenu-link .feature-pro-tag {
+    font-size: 8px;
+    padding: 1px 4px;
+}
+
+
+/* ========================================
+   GUEST LIMIT PROGRESS BAR
+   ======================================== */
+
+.guest-limit-container {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.dark .guest-limit-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.guest-limit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.guest-limit-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dark .guest-limit-label {
+    color: #9ca3af;
+}
+
+.guest-limit-label ion-icon {
+    font-size: 14px;
+}
+
+.guest-limit-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .guest-limit-text {
+    color: #ffffff;
+}
+
+.guest-limit-track {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.dark .guest-limit-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.guest-limit-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.guest-limit-normal {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.guest-limit-warning {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.guest-limit-danger {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+/* Upgrade hint when near limit */
+.guest-limit-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(251, 191, 36, 0.1);
+    border-radius: 8px;
+    font-size: 11px;
+    color: #b45309;
+}
+
+.dark .guest-limit-hint {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.guest-limit-hint ion-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.guest-limit-hint a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.guest-limit-hint a:hover {
+    opacity: 0.8;
+}
+
+/* Compact version for header/toolbar */
+.guest-limit-compact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #f3f4f6;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.dark .guest-limit-compact {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+}
+
+.guest-limit-compact-bar {
+    width: 60px;
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.dark .guest-limit-compact-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.guest-limit-compact-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+
+/* ========================================
+   GENERIC FEATURE LIMIT PROGRESS BAR
+   Reusable for all limited features
+   ======================================== */
+
+.feature-limit-container {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.dark .feature-limit-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.feature-limit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.feature-limit-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dark .feature-limit-label {
+    color: #9ca3af;
+}
+
+.feature-limit-label ion-icon {
+    font-size: 14px;
+}
+
+.feature-limit-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .feature-limit-text {
+    color: #ffffff;
+}
+
+.feature-limit-track {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.dark .feature-limit-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.feature-limit-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.feature-limit-normal {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.feature-limit-warning {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.feature-limit-danger {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.feature-limit-hint {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(251, 191, 36, 0.1);
+    border-radius: 8px;
+    font-size: 11px;
+    color: #b45309;
+}
+
+.feature-limit-hint.show {
+    display: flex;
+}
+
+.dark .feature-limit-hint {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.feature-limit-hint ion-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.feature-limit-hint a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.feature-limit-hint a:hover {
+    opacity: 0.8;
+}
+
+/* Hide progress bar for unlimited */
+.feature-limit-container.unlimited {
+    display: none;
+}

@@ -1,5 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { QRCodeSVG } from 'qrcode.react'
 import { supabase } from '@/lib/supabase'
 import type { WeddingData, Ucapan } from '../types'
 
@@ -895,6 +897,26 @@ function SectionAmplop({ w }: { w: WeddingData }) {
   )
 }
 
+// ── Section: Tiket / QR Code ──────────────────────────────────────────
+function SectionTiket({ w, guestId }: { w: WeddingData, guestId: string }) {
+  if (!guestId) return null
+  return (
+    <section id="tiket" style={{ background: C.cream, position: 'relative', padding: '60px 20px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 400, margin: '0 auto', background: C.creamAlt, border: `2px solid ${C.goldDim}`, padding: '40px 24px', borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,0.05)' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1rem', letterSpacing: '0.12em', color: C.inkDark, marginBottom: 16 }}>
+          Tiket Kehadiran
+        </p>
+        <div style={{ background: '#fff', padding: 20, display: 'inline-block', borderRadius: 12, marginBottom: 16, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+          <QRCodeSVG value={guestId} size={180} fgColor={C.inkDark} bgColor="#fff" />
+        </div>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.85rem', color: C.inkLight, lineHeight: 1.6 }}>
+          Mohon tunjukkan QR Code ini kepada penerima tamu / scanner di lokasi acara untuk mempermudah proses check-in.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 // ── Section: Footer Closing ───────────────────────────────────────────
 function SectionFooter({ w }: { w: WeddingData }) {
   return (
@@ -952,6 +974,8 @@ export default function TemplateBotanicalSage({ wedding: wd }: { wedding: Weddin
   const [opened, setOpened] = useState(false)
   const [playing, setPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const searchParams = useSearchParams()
+  const guestId = searchParams.get('to') || ''
 
   function open() {
     setOpened(true)
@@ -1010,6 +1034,7 @@ export default function TemplateBotanicalSage({ wedding: wd }: { wedding: Weddin
             <div className="bs-section"><SectionGaleri w={wd} /></div>
             {wd.fitur_rsvp && <div className="bs-section"><SectionRSVP w={wd} /></div>}
             <div className="bs-section"><SectionAmplop w={wd} /></div>
+            {guestId && <div className="bs-section"><SectionTiket w={wd} guestId={guestId} /></div>}
             <div className="bs-section"><SectionFooter w={wd} /></div>
           </main>
         }

@@ -1,0 +1,718 @@
+/* ============================================
+   DARK MODE OVERRIDE - HIGH SPECIFICITY
+   Must override all Tailwind classes
+   ============================================ */
+
+/* Force dark mode gradient background */
+.dark,
+.dark body,
+.dark #app,
+.dark .main-content,
+.dark main,
+body.dark,
+html.dark {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0a0a0a 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Sidebar Dark Mode with Gradient */
+.dark aside .sidebar {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0a0a0a 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   GLASS EFFECT - ALL CONTAINERS
+   ============================================ */
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark [class*="bg-white"],
+.dark [class*="bg-gray-"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* Override Tailwind Dark Backgrounds */
+.dark .dark\:bg-bodydark,
+.dark .dark\:bg-bodydark1,
+.dark .dark\:bg-bodydark2,
+.dark .dark\:bg-gray-800,
+.dark .dark\:bg-gray-900,
+.dark .bg-gray-800,
+.dark .bg-gray-900 {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* Header Glass Effect */
+.dark header,
+.dark .dark\:bg-bodydark {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* ============================================
+   BORDER COLORS
+   ============================================ */
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-gray-700,
+.dark .border-gray-800,
+.dark .border-stroke,
+.dark [class*="border-gray"],
+.dark .dark\:border-gray-700,
+.dark .dark\:border-gray-800 {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   TEXT COLORS - HIGH CONTRAST
+   ============================================ */
+
+/* Headings - Always White */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+    color: #FFFFFF !important;
+}
+
+/* Dark text classes to white */
+.dark .text-dark,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark [class*="text-dark"],
+.dark .dark\:text-white {
+    color: #FFFFFF !important;
+}
+
+/* Body text - Light Gray for readability */
+.dark p,
+.dark span:not(.text-white):not([class*="text-primary"]):not([class*="text-green"]):not([class*="text-red"]):not(ion-icon):not(ion-icon *),
+.dark label,
+.dark td,
+.dark th,
+.dark div:not([class*="bg-"]):not(ion-icon) {
+    color: #E5E7EB !important;
+}
+
+/* Muted text */
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-700,
+.dark .dark\:text-gray-400 {
+    color: #9CA3AF !important;
+}
+
+.dark .text-gray-400:not(ion-icon):not(header ion-icon) {
+    color: #6B7280 !important;
+}
+
+/* Keep ion-icon text-gray-400 visible */
+.dark ion-icon.text-gray-400 {
+    color: #9CA3AF !important;
+}
+
+/* Exception for header search icon - must be very visible */
+.dark header ion-icon.text-gray-400[name="search-outline"] {
+    color: #E5E7EB !important;
+}
+
+/* ============================================
+   INPUT FIELDS
+   ============================================ */
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]):focus,
+.dark select:focus,
+.dark textarea:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    outline: none !important;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]):hover,
+.dark select:hover,
+.dark textarea:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ============================================
+   SEARCH INPUTS - WHITE BACKGROUND
+   (Except main header)
+   ============================================ */
+.dark #searchInput,
+.dark #wishesSearchInput,
+.dark #wishesSearchInputDesktop,
+.dark #giftSearchInput,
+.dark #manualSearchInput,
+.dark input[id*="search"]:not(#globalSearch),
+.dark input[id*="Search"]:not(#globalSearch) {
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    color: #1F2937 !important;
+    border-radius: 0.75rem !important;
+}
+
+.dark #searchInput:focus,
+.dark #wishesSearchInput:focus,
+.dark #wishesSearchInputDesktop:focus,
+.dark #giftSearchInput:focus,
+.dark #manualSearchInput:focus,
+.dark input[id*="search"]:not(#globalSearch):focus,
+.dark input[id*="Search"]:not(#globalSearch):focus {
+    background: #FFFFFF !important;
+    border-color: #3B82F6 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.dark #searchInput::placeholder,
+.dark #wishesSearchInput::placeholder,
+.dark #wishesSearchInputDesktop::placeholder,
+.dark #giftSearchInput::placeholder,
+.dark #manualSearchInput::placeholder,
+.dark input[id*="search"]:not(#globalSearch)::placeholder,
+.dark input[id*="Search"]:not(#globalSearch)::placeholder {
+    color: #9CA3AF !important;
+}
+
+/* Main Header Search - Keep Dark */
+.dark #globalSearch {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+
+.dark #globalSearch::placeholder {
+    color: #9CA3AF !important;
+}
+
+/* Search icon colors - make visible in dark mode */
+.dark ion-icon[name="search-outline"] {
+    color: #9CA3AF !important;
+}
+
+.dark .relative:hover ion-icon[name="search-outline"] {
+    color: #9CA3AF !important;
+}
+
+/* Main header search icon - ULTRA HIGH SPECIFICITY - Force visible */
+html.dark header .flex-1.max-w-md ion-icon[name="search-outline"],
+body.dark header .flex-1.max-w-md ion-icon[name="search-outline"],
+.dark header .flex-1.max-w-md ion-icon[name="search-outline"],
+html.dark header .relative ion-icon[name="search-outline"].text-gray-400,
+body.dark header .relative ion-icon[name="search-outline"].text-gray-400,
+.dark header .relative ion-icon[name="search-outline"].text-gray-400 {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+html.dark header .flex-1.max-w-md:hover ion-icon[name="search-outline"],
+body.dark header .flex-1.max-w-md:hover ion-icon[name="search-outline"],
+.dark header .flex-1.max-w-md:hover ion-icon[name="search-outline"],
+html.dark header .relative:hover ion-icon[name="search-outline"].text-gray-400,
+body.dark header .relative:hover ion-icon[name="search-outline"].text-gray-400,
+.dark header .relative:hover ion-icon[name="search-outline"].text-gray-400 {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* ============================================
+   BUTTONS - ULTRA HIGH SPECIFICITY
+   ============================================ */
+
+/* All buttons base style */
+html.dark button,
+html.dark .btn,
+html.dark [class*="btn-"],
+body.dark button,
+body.dark .btn,
+body.dark [class*="btn-"] {
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+/* PRIMARY BUTTONS - Tambah, Buat, Simpan */
+html.dark button.bg-primary,
+html.dark button[class*="bg-primary"],
+html.dark button[class*="bg-blue"],
+html.dark #addGuestBtn,
+html.dark #addTemplateBtn,
+html.dark #addGiftBtn,
+html.dark #addBankBtn,
+html.dark #addAddressBtn,
+html.dark button[onclick*="renderGuestModal"],
+html.dark button[onclick*="renderTemplateModal"],
+html.dark button[onclick*="renderGiftModal"],
+html.dark button[onclick*="renderBankModal"],
+html.dark button[onclick*="renderAddressModal"],
+body.dark button.bg-primary,
+body.dark button[class*="bg-primary"],
+body.dark button[class*="bg-blue"],
+body.dark #addGuestBtn,
+body.dark #addTemplateBtn,
+body.dark #addGiftBtn,
+body.dark #addBankBtn,
+body.dark #addAddressBtn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+}
+
+html.dark button.bg-primary:hover,
+html.dark button[class*="bg-primary"]:hover,
+html.dark button[class*="bg-blue"]:hover,
+html.dark #addGuestBtn:hover,
+html.dark #addTemplateBtn:hover,
+html.dark #addGiftBtn:hover,
+html.dark #addBankBtn:hover,
+html.dark #addAddressBtn:hover,
+body.dark button.bg-primary:hover,
+body.dark button[class*="bg-primary"]:hover,
+body.dark button[class*="bg-blue"]:hover,
+body.dark #addGuestBtn:hover,
+body.dark #addTemplateBtn:hover,
+body.dark #addGiftBtn:hover,
+body.dark #addBankBtn:hover,
+body.dark #addAddressBtn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Button text and icons */
+html.dark button.bg-primary span,
+html.dark button[class*="bg-primary"] span,
+html.dark button[class*="bg-blue"] span,
+html.dark #addGuestBtn span,
+html.dark #addTemplateBtn span,
+html.dark #addGiftBtn span,
+html.dark #addBankBtn span,
+html.dark #addAddressBtn span,
+html.dark button.bg-primary ion-icon,
+html.dark button[class*="bg-primary"] ion-icon,
+html.dark button[class*="bg-blue"] ion-icon,
+html.dark #addGuestBtn ion-icon,
+html.dark #addTemplateBtn ion-icon,
+html.dark #addGiftBtn ion-icon,
+html.dark #addBankBtn ion-icon,
+html.dark #addAddressBtn ion-icon,
+body.dark button.bg-primary span,
+body.dark button[class*="bg-primary"] span,
+body.dark button[class*="bg-blue"] span,
+body.dark #addGuestBtn span,
+body.dark #addTemplateBtn span,
+body.dark #addGiftBtn span,
+body.dark #addBankBtn span,
+body.dark #addAddressBtn span {
+    color: #FFFFFF !important;
+}
+
+/* SECONDARY BUTTONS */
+html.dark button[class*="bg-gray"],
+html.dark button[class*="bg-secondary"],
+body.dark button[class*="bg-gray"],
+body.dark button[class*="bg-secondary"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #E5E7EB !important;
+}
+
+html.dark button[class*="bg-gray"]:hover,
+html.dark button[class*="bg-secondary"]:hover,
+body.dark button[class*="bg-gray"]:hover,
+body.dark button[class*="bg-secondary"]:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #FFFFFF !important;
+}
+
+/* SUCCESS BUTTONS */
+html.dark button[class*="bg-green"],
+body.dark button[class*="bg-green"] {
+    background: rgba(34, 197, 94, 0.2) !important;
+    border: 1px solid rgba(34, 197, 94, 0.4) !important;
+    color: #22C55E !important;
+}
+
+html.dark button[class*="bg-green"]:hover,
+body.dark button[class*="bg-green"]:hover {
+    background: rgba(34, 197, 94, 0.3) !important;
+    border-color: rgba(34, 197, 94, 0.6) !important;
+}
+
+/* DANGER BUTTONS */
+html.dark button[class*="bg-red"],
+body.dark button[class*="bg-red"] {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #EF4444 !important;
+}
+
+html.dark button[class*="bg-red"]:hover,
+body.dark button[class*="bg-red"]:hover {
+    background: rgba(239, 68, 68, 0.3) !important;
+    border-color: rgba(239, 68, 68, 0.6) !important;
+}
+
+/* WARNING BUTTONS */
+html.dark button[class*="bg-yellow"],
+html.dark button[class*="bg-orange"],
+body.dark button[class*="bg-yellow"],
+body.dark button[class*="bg-orange"] {
+    background: rgba(251, 146, 60, 0.2) !important;
+    border: 1px solid rgba(251, 146, 60, 0.4) !important;
+    color: #FB923C !important;
+}
+
+html.dark button[class*="bg-yellow"]:hover,
+html.dark button[class*="bg-orange"]:hover,
+body.dark button[class*="bg-yellow"]:hover,
+body.dark button[class*="bg-orange"]:hover {
+    background: rgba(251, 146, 60, 0.3) !important;
+    border-color: rgba(251, 146, 60, 0.6) !important;
+}
+
+/* ICON BUTTONS */
+html.dark button[class*="w-10"],
+html.dark button[class*="w-12"],
+body.dark button[class*="w-10"],
+body.dark button[class*="w-12"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark button[class*="w-10"]:hover,
+html.dark button[class*="w-12"]:hover,
+body.dark button[class*="w-10"]:hover,
+body.dark button[class*="w-12"]:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Keep icon colors on hover - prevent white color */
+html.dark button[class*="w-10"]:hover ion-icon,
+html.dark button[class*="w-12"]:hover ion-icon,
+body.dark button[class*="w-10"]:hover ion-icon,
+body.dark button[class*="w-12"]:hover ion-icon,
+html.dark button:hover ion-icon.text-gray-400,
+html.dark button:hover ion-icon.text-gray-600,
+body.dark button:hover ion-icon.text-gray-400,
+body.dark button:hover ion-icon.text-gray-600 {
+    color: #9CA3AF !important;
+}
+
+/* Tutorial button hover - keep icon color */
+html.dark a[href*="panduan"]:hover ion-icon,
+body.dark a[href*="panduan"]:hover ion-icon {
+    color: #3B82F6 !important;
+}
+
+/* ============================================
+   TABLE STYLING
+   ============================================ */
+.dark table thead,
+.dark .dark\:bg-bodydark2 {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark table tbody tr {
+    border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Table text */
+.dark table th {
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+}
+
+.dark table td {
+    color: #E5E7EB !important;
+}
+
+/* ============================================
+   MODAL & COMPONENTS
+   ============================================ */
+.dark .modal-content,
+.dark .modal-sidebar,
+.dark .modal-sidebar-header,
+.dark .modal-sidebar-footer {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .toast {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+
+.dark .search-modal-content {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.dark .search-modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   FILTERS & TAGS
+   ============================================ */
+.dark .search-tag,
+.dark .filter-btn,
+.dark .filter-sheet-btn {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #E5E7EB !important;
+}
+
+.dark .search-tag:hover,
+.dark .filter-btn:hover,
+.dark .filter-sheet-btn:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+.dark .tab-inactive {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #9CA3AF !important;
+}
+
+.dark .tab-inactive:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   MISC COMPONENTS
+   ============================================ */
+.dark .custom-checkbox {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark .sidebar-nav-scrollable::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .sidebar-nav-scrollable::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark .sidebar-nav-scrollable {
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent !important;
+}
+
+.dark hr,
+.dark .divide-y > * {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .shadow,
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .stat-card,
+.dark .card,
+.dark .bg-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark select option {
+    background: rgba(10, 10, 10, 0.95) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+
+.dark select option:checked {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark select option:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .sidebar-bottom-fixed {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .sidebar-submenu-link::before {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .search-category-item:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .modal-list-item {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .modal-sidebar-close:hover,
+.dark .toast-close:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .main-content header.scrolled {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .table-row-border {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark select:disabled,
+.dark input:disabled,
+.dark button:disabled {
+    background: rgba(255, 255, 255, 0.03) !important;
+    opacity: 0.5 !important;
+}
+
+.dark .floating-bulk-send-button {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.dark .floating-bulk-send-button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .search-modal-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+
+/* ============================================
+   CRITICAL FIX - MAIN HEADER SEARCH ICON
+   Must be at the end to override everything
+   ============================================ */
+
+/* Use ID selector for maximum specificity */
+#headerSearchIcon,
+html.dark #headerSearchIcon,
+body.dark #headerSearchIcon,
+.dark #headerSearchIcon {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    fill: currentColor !important;
+    pointer-events: none !important;
+}
+
+/* Prevent ANY hover state from affecting this icon */
+#headerSearchIcon:hover,
+html.dark #headerSearchIcon:hover,
+body.dark #headerSearchIcon:hover,
+.dark #headerSearchIcon:hover,
+html.dark *:hover #headerSearchIcon,
+body.dark *:hover #headerSearchIcon,
+.dark *:hover #headerSearchIcon,
+html.dark *:hover > #headerSearchIcon,
+body.dark *:hover > #headerSearchIcon,
+.dark *:hover > #headerSearchIcon {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    fill: currentColor !important;
+    pointer-events: none !important;
+}
+
+/* Force search icon color in header - prevent ANY override */
+html.dark header .flex-1.max-w-md .relative ion-icon[name="search-outline"],
+body.dark header .flex-1.max-w-md .relative ion-icon[name="search-outline"],
+.dark header .flex-1.max-w-md .relative ion-icon[name="search-outline"],
+html.dark header ion-icon[name="search-outline"][style],
+body.dark header ion-icon[name="search-outline"][style],
+.dark header ion-icon[name="search-outline"][style] {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    fill: currentColor !important;
+}
+
+/* CRITICAL: Prevent hover from changing color - multiple selectors */
+html.dark header .flex-1.max-w-md .relative:hover ion-icon[name="search-outline"],
+body.dark header .flex-1.max-w-md .relative:hover ion-icon[name="search-outline"],
+.dark header .flex-1.max-w-md .relative:hover ion-icon[name="search-outline"],
+html.dark header .relative:hover ion-icon[name="search-outline"][style],
+body.dark header .relative:hover ion-icon[name="search-outline"][style],
+.dark header .relative:hover ion-icon[name="search-outline"][style],
+html.dark header .cursor-pointer:hover ion-icon[name="search-outline"],
+body.dark header .cursor-pointer:hover ion-icon[name="search-outline"],
+.dark header .cursor-pointer:hover ion-icon[name="search-outline"],
+html.dark header div:hover > ion-icon[name="search-outline"],
+body.dark header div:hover > ion-icon[name="search-outline"],
+.dark header div:hover > ion-icon[name="search-outline"] {
+    color: #9CA3AF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    fill: currentColor !important;
+}
+
+/* Prevent any hover state from changing icon color */
+html.dark header ion-icon[name="search-outline"]:hover,
+body.dark header ion-icon[name="search-outline"]:hover,
+.dark header ion-icon[name="search-outline"]:hover {
+    color: #9CA3AF !important;
+    fill: currentColor !important;
+}
+
+/* Override any parent hover that might affect this icon */
+html.dark header *:hover ion-icon[name="search-outline"],
+body.dark header *:hover ion-icon[name="search-outline"],
+.dark header *:hover ion-icon[name="search-outline"] {
+    color: #9CA3AF !important;
+    fill: currentColor !important;
+}

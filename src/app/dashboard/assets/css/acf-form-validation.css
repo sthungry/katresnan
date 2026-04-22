@@ -1,0 +1,85 @@
+/* ACF Form Error State Styles */
+
+/* Input Error State - More specific selectors to override Tailwind */
+input.acf-input-error,
+textarea.acf-input-error,
+select.acf-input-error,
+.acf-input-error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+    border-width: 2px !important;
+}
+
+.dark input.acf-input-error,
+.dark textarea.acf-input-error,
+.dark select.acf-input-error,
+.dark .acf-input-error {
+    border-color: #dc2626 !important;
+    background-color: #7f1d1d !important;
+    border-width: 2px !important;
+}
+
+/* Button Error State (for date picker button) */
+.acf-button-error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+}
+
+.dark .acf-button-error {
+    border-color: #dc2626 !important;
+    background-color: #7f1d1d !important;
+}
+
+/* Upload Container Error State */
+[data-upload-container].acf-upload-error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+}
+
+.dark [data-upload-container].acf-upload-error {
+    border-color: #dc2626 !important;
+    background-color: #7f1d1d !important;
+}
+
+/* Error Message Text */
+[data-error-for] {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #dc2626;
+}
+
+.dark [data-error-for] {
+    color: #fca5a5;
+}
+
+[data-error-for] ion-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* Shake animation for error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.acf-input-error,
+.acf-button-error,
+.acf-upload-error {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Focus state for error fields */
+.acf-input-error:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.dark .acf-input-error:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important;
+}
