@@ -1,9 +1,5 @@
 'use client'
-<<<<<<< HEAD
 import { useState, useEffect, useCallback, useMemo } from 'react'
-=======
-import { useState, useEffect, useCallback } from 'react'
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 import { supabase } from '@/lib/supabase'
 import type { OrderStatus } from '@/lib/supabase'
 
@@ -27,7 +23,6 @@ interface WeddingInfo {
   status_pengisian: string | null
   edit_token: string | null
 }
-<<<<<<< HEAD
 interface TemplateRow {
   id: string; name: string; category_id: string; style_label: string
   description: string; thumbnail_url: string; demo_url: string
@@ -71,14 +66,11 @@ const icons = {
   sort: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3"><path d="M7 15l5 5 5-5" /><path d="M7 9l5-5 5 5" /></svg>,
   menu: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
 }
-=======
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 const ADMIN_PASSWORD = 'katresnan2024'
 
 const STATUS_CFG: Record<string, { label: string; color: string; bg: string; dot: string }> = {
-<<<<<<< HEAD
   pending: { label: 'Menunggu Bayar', color: 'text-amber-700 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20', dot: 'bg-amber-400' },
   menunggu_konfirmasi: { label: 'Verifikasi', color: 'text-blue-700 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20', dot: 'bg-blue-400' },
   diproses: { label: 'Diproses', color: 'text-purple-700 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-900/20', dot: 'bg-purple-400' },
@@ -87,9 +79,9 @@ const STATUS_CFG: Record<string, { label: string; color: string; bg: string; dot
 }
 
 const PKG_CFG: Record<string, { label: string; color: string }> = {
-  silver: { label: 'Silver', color: 'text-sage-400' },
-  gold: { label: 'Gold', color: 'text-gold-500' },
-  platinum: { label: 'Platinum', color: 'text-rose-400' },
+  silver: { label: 'Silver', color: 'text-slate-400' },
+  gold: { label: 'Gold', color: 'text-primary-500' },
+  platinum: { label: 'Platinum', color: 'text-tertiary-400' },
 }
 
 const STATUS_FLOW: Record<string, string[]> = {
@@ -100,45 +92,6 @@ const STATUS_FLOW: Record<string, string[]> = {
   dibatalkan: [],
 }
 
-=======
-  pending:             { label: 'Menunggu Bayar',   color: 'text-amber-700',  bg: 'bg-amber-50 dark:bg-amber-900/20',   dot: 'bg-amber-400' },
-  menunggu_konfirmasi: { label: 'Verifikasi',        color: 'text-blue-700',   bg: 'bg-blue-50 dark:bg-blue-900/20',     dot: 'bg-blue-400' },
-  diproses:            { label: 'Diproses',           color: 'text-purple-700', bg: 'bg-purple-50 dark:bg-purple-900/20', dot: 'bg-purple-400' },
-  selesai:             { label: 'Selesai',            color: 'text-green-700',  bg: 'bg-green-50 dark:bg-green-900/20',   dot: 'bg-green-400' },
-  dibatalkan:          { label: 'Dibatalkan',         color: 'text-red-700',    bg: 'bg-red-50 dark:bg-red-900/20',       dot: 'bg-red-400' },
-}
-
-const PKG_CFG: Record<string, { label: string; color: string }> = {
-  silver:   { label: 'Silver',   color: 'text-slate-400' },
-  gold:     { label: 'Gold',     color: 'text-amber-400' },
-  platinum: { label: 'Platinum', color: 'text-purple-400' },
-}
-
-const STATUS_FLOW: Record<string, string[]> = {
-  pending:             ['menunggu_konfirmasi', 'dibatalkan'],
-  menunggu_konfirmasi: ['diproses', 'dibatalkan'],
-  diproses:            ['selesai', 'dibatalkan'],
-  selesai:             [],
-  dibatalkan:          [],
-}
-
-const TEMPLATE_LIST = [
-  { id: 'floral-premium',   name: 'Floral Premium',       category: 'Premium'  },
-  { id: 'jogja-floral',     name: 'Jogja Floral',         category: 'Premium'  },
-  { id: 'java14-elegant',   name: 'Java 14 Ivory Gold',   category: 'Premium'  },
-  { id: 'floral-classic',   name: 'Floral Classic',       category: 'Floral'   },
-  { id: 'floral-story',     name: 'Floral Story',         category: 'Floral'   },
-  { id: 'gold-classic',     name: 'Elegant Gold Classic', category: 'Elegant'  },
-  { id: 'gold-story',       name: 'Elegant Gold Story',   category: 'Elegant'  },
-  { id: 'minimal-classic',  name: 'Modern Minimal',       category: 'Modern'   },
-  { id: 'midnight-classic', name: 'Midnight Blue',        category: 'Modern'   },
-  { id: 'sage-classic',     name: 'Rustic Sage',          category: 'Rustic'   },
-  { id: 'tropical-classic', name: 'Tropical Green',       category: 'Rustic'   },
-  { id: 'islamic-navy',     name: 'Islamic Navy',         category: 'Islami'   },
-  { id: 'islamic-gold',     name: 'Islamic Gold',         category: 'Islami'   },
-]
-
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 function formatRp(n: number) {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n)
 }
@@ -153,7 +106,6 @@ function formatDate(s: string) {
   return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 }
 
-<<<<<<< HEAD
 function formatDateFull(s: string) {
   if (!s) return '--'
   return new Date(s).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
@@ -164,13 +116,6 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   const [pass, setPass] = useState('')
   const [err, setErr] = useState('')
   const [load, setLoad] = useState(false)
-=======
-// ─── Login ────────────────────────────────────────────────────────────────────
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
-  const [pass, setPass]    = useState('')
-  const [err,  setErr]     = useState('')
-  const [load, setLoad]    = useState(false)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
   function handleLogin() {
     setLoad(true)
@@ -186,30 +131,18 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-sage-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sage-800 flex items-center justify-center text-gold-500">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-800 flex items-center justify-center text-primary-500">
             {icons.lock}
           </div>
-          <h1 className="font-serif font-bold text-2xl text-ivory-200 mb-1">Katresnan Admin</h1>
-          <p className="text-sage-400 text-sm">Dashboard manajemen pesanan</p>
+          <h1 className="font-serif font-bold text-2xl text-surface-200 mb-1">Katresnan Admin</h1>
+          <p className="text-slate-400 text-sm">Dashboard manajemen pesanan</p>
         </div>
-        <div className="bg-sage-900 border border-sage-800 rounded-2xl p-6 space-y-4">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
           <div>
-            <label className="text-xs font-bold text-sage-400 uppercase tracking-wider block mb-2">
-=======
-    <div className="min-h-screen bg-[#0f1a13] flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="font-bold text-2xl text-[#e8f0e8] mb-1">Katresnan Admin</h1>
-          <p className="text-[#5a9e80] text-sm">Dashboard manajemen pesanan</p>
-        </div>
-        <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-3xl p-6 space-y-4">
-          <div>
-            <label className="text-xs font-bold text-[#7aaa90] uppercase tracking-wider block mb-2">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
               Password
             </label>
             <input
@@ -218,19 +151,14 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
               onChange={e => { setPass(e.target.value); setErr('') }}
               onKeyDown={e => e.key === 'Enter' && handleLogin()}
               placeholder="Masukkan password admin"
-<<<<<<< HEAD
-              className="w-full bg-sage-950 border border-sage-700 focus:border-gold-500 rounded-xl px-4 py-3 text-ivory-200 outline-none text-sm transition-colors placeholder:text-sage-600"
-=======
-              className="w-full bg-[#0f1a13] border border-[#2a4a38] focus:border-[#4ecdc4] rounded-xl px-4 py-3 text-[#e8f0e8] outline-none text-sm transition-colors placeholder:text-[#3a5a48]"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+              className="w-full bg-slate-950 border border-slate-700 focus:border-primary-500 rounded-xl px-4 py-3 text-surface-200 outline-none text-sm transition-colors placeholder:text-slate-600"
             />
             {err && <p className="text-red-400 text-xs mt-2">{err}</p>}
           </div>
           <button
             onClick={handleLogin}
             disabled={!pass || load}
-<<<<<<< HEAD
-            className="w-full bg-sage-800 hover:bg-sage-700 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
+            className="w-full bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
           >
             {load ? (
               <span className="flex items-center justify-center gap-2">
@@ -238,11 +166,6 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
                 Masuk...
               </span>
             ) : 'Masuk'}
-=======
-            className="w-full bg-[#03554e] hover:bg-[#04665e] disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
-          >
-            {load ? 'Masuk...' : 'Masuk'}
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
           </button>
         </div>
       </div>
@@ -252,112 +175,23 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, sub, color }: {
-<<<<<<< HEAD
   icon: JSX.Element; label: string; value: string | number; sub?: string; color?: string
 }) {
   return (
-    <div className="bg-sage-900 border border-sage-800 rounded-2xl p-4 flex items-center gap-4 hover:border-sage-700 transition-colors">
-      <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${color || 'bg-sage-800'}`}>
-        <span className="text-sage-300">{icon}</span>
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4 hover:border-slate-700 transition-colors">
+      <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${color || 'bg-slate-800'}`}>
+        <span className="text-slate-300">{icon}</span>
       </div>
       <div className="min-w-0">
-        <p className="text-sage-400 text-xs font-medium">{label}</p>
-        <p className="font-bold text-xl text-ivory-200 truncate">{value}</p>
-        {sub && <p className="text-sage-500 text-xs">{sub}</p>}
-=======
-  icon: string; label: string; value: string | number; sub?: string; color?: string
-}) {
-  return (
-    <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-2xl p-4 flex items-center gap-4">
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold text-[#4ecdc4] flex-shrink-0 ${color || 'bg-[#0f1a13]'}`}>
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <p className="text-[#5a9e80] text-xs font-medium">{label}</p>
-        <p className="font-bold text-xl text-[#e8f0e8] truncate">{value}</p>
-        {sub && <p className="text-[#3a5a48] text-xs">{sub}</p>}
-      </div>
-    </div>
-  )
-}
-
-// ─── Order Row ────────────────────────────────────────────────────────────────
-function OrderRow({ order, onStatusChange, onDetail }: {
-  order: Order
-  onStatusChange: (id: string, status: string) => void
-  onDetail: (order: Order) => void
-}) {
-  const cfg          = STATUS_CFG[order.status] || STATUS_CFG.pending
-  const pkg          = PKG_CFG[order.package_id] || { label: order.package_id, color: 'text-gray-400' }
-  const nextStatuses = STATUS_FLOW[order.status] || []
-  const short        = order.id.slice(0, 8).toUpperCase()
-
-  return (
-    <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-2xl p-4 hover:border-[#3a5a48] transition-colors">
-      <div className="flex items-start gap-3">
-        <div className={`w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 ${cfg.dot}`} />
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2 flex-wrap">
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-mono font-bold text-sm text-[#4ecdc4]">#{short}</span>
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${cfg.bg} ${cfg.color}`}>
-                  {cfg.label}
-                </span>
-                <span className={`text-xs font-semibold ${pkg.color}`}>{pkg.label}</span>
-              </div>
-              <p className="font-bold text-[#e8f0e8] mt-1">{order.nama}</p>
-              <p className="text-[#5a9e80] text-xs">
-                {order.email} · {order.wa ? '+62 ' + order.wa : '--'}
-              </p>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <p className="font-bold text-[#4ecdc4]">{formatRp(order.total)}</p>
-              <p className="text-[#3a5a48] text-xs">{formatDate(order.created_at)}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <button
-              onClick={() => onDetail(order)}
-              className="text-xs px-3 py-1.5 bg-[#0f1a13] border border-[#2a4a38] text-[#7aaa90] rounded-lg hover:border-[#4ecdc4] hover:text-[#4ecdc4] transition-colors"
-            >
-              Detail
-            </button>
-            <a
-              href={`https://wa.me/62${order.wa}?text=${encodeURIComponent('Halo ' + order.nama + '! Pesanan undangan digital kamu (Order #' + short + ') sedang kami proses ya')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs px-3 py-1.5 bg-[#0f1a13] border border-[#2a4a38] text-[#25D366] rounded-lg hover:border-[#25D366] transition-colors"
-            >
-              WA
-            </a>
-            {nextStatuses.map(ns => (
-              <button
-                key={ns}
-                onClick={() => onStatusChange(order.id, ns)}
-                className={`text-xs px-3 py-1.5 rounded-lg font-bold transition-colors border ${
-                  ns === 'dibatalkan'
-                    ? 'border-red-800 text-red-400 hover:bg-red-900/20'
-                    : 'border-[#03554e] text-[#4ecdc4] bg-[#03554e]/20 hover:bg-[#03554e]/40'
-                }`}
-              >
-                {ns === 'menunggu_konfirmasi' ? 'Konfirmasi' :
-                 ns === 'diproses'            ? 'Proses' :
-                 ns === 'selesai'             ? 'Selesai' :
-                 ns === 'dibatalkan'          ? 'Batalkan' : ns}
-              </button>
-            ))}
-          </div>
-        </div>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+        <p className="text-slate-400 text-xs font-medium">{label}</p>
+        <p className="font-bold text-xl text-surface-200 truncate">{value}</p>
+        {sub && <p className="text-slate-500 text-xs">{sub}</p>}
       </div>
     </div>
   )
 }
 
 // ─── Detail Modal ─────────────────────────────────────────────────────────────
-<<<<<<< HEAD
 function DetailModal({ order, onClose, onStatusChange, templateList }: {
   order: Order
   onClose: () => void
@@ -376,25 +210,6 @@ function DetailModal({ order, onClose, onStatusChange, templateList }: {
   const [genLink, setGenLink] = useState(false)
   const [genToken, setGenToken] = useState(false)
   const [copied, setCopied] = useState(false)
-=======
-function DetailModal({ order, onClose, onStatusChange }: {
-  order: Order
-  onClose: () => void
-  onStatusChange: (id: string, status: string) => void
-}) {
-  const cfg          = STATUS_CFG[order.status] || STATUS_CFG.pending
-  const short        = order.id.slice(0, 8).toUpperCase()
-  const nextStatuses = STATUS_FLOW[order.status] || []
-
-  const [tab,        setTab]        = useState<'info' | 'undangan' | 'edit'>('info')
-  const [wedding,    setWedding]    = useState<WeddingInfo | null>(null)
-  const [loadingW,   setLoadingW]   = useState(true)
-  const [selTpl,     setSelTpl]     = useState('floral-premium')
-  const [savingTpl,  setSavingTpl]  = useState(false)
-  const [genLink,    setGenLink]    = useState(false)
-  const [genToken,   setGenToken]   = useState(false)
-  const [copied,     setCopied]     = useState(false)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   const [copiedEdit, setCopiedEdit] = useState(false)
 
   useEffect(() => {
@@ -434,7 +249,6 @@ function DetailModal({ order, onClose, onStatusChange }: {
   async function generateEditToken() {
     setGenToken(true)
     const { data, error } = await supabase.rpc('generate_edit_token', { p_order_id: order.id })
-<<<<<<< HEAD
     if (!error && data) setWedding(w => w
       ? { ...w, edit_token: data }
       : { link_unik: null, template_id: null, pria_nama_panggilan: null, wanita_nama_panggilan: null, status_pengisian: null, edit_token: data }
@@ -445,15 +259,6 @@ function DetailModal({ order, onClose, onStatusChange }: {
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://katresnan.id'
   const undanganUrl = wedding?.link_unik ? `${origin}/undangan/${wedding.link_unik}` : null
   const editUrl = wedding?.edit_token ? `${origin}/isi-data?order=${order.id}&token=${wedding.edit_token}` : null
-=======
-    if (!error && data) setWedding(w => w ? { ...w, edit_token: data } : w)
-    setGenToken(false)
-  }
-
-  const origin      = typeof window !== 'undefined' ? window.location.origin : 'https://katresnan.id'
-  const undanganUrl = wedding?.link_unik ? `${origin}/undangan/${wedding.link_unik}` : null
-  const editUrl     = wedding?.edit_token ? `${origin}/isi-data?order=${order.id}&token=${wedding.edit_token}` : null
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   const adminEditUrl = `${origin}/isi-data?order=${order.id}&admin=1`
 
   function copyLink() {
@@ -479,7 +284,6 @@ function DetailModal({ order, onClose, onStatusChange }: {
 
   function sendEditLinkWA() {
     if (!editUrl) return
-<<<<<<< HEAD
     const msg = `Halo Kak ${order.nama}!\n\nBerikut link untuk mengisi data pernikahan:\n\nLink Edit Data:\n${editUrl}\n\nLink ini khusus untuk Kak ${order.nama}, harap jangan disebarkan ya.\n\n_Katresnan - Undangan Digital_`
     window.open(`https://wa.me/62${order.wa}?text=${encodeURIComponent(msg)}`, '_blank')
   }
@@ -492,22 +296,8 @@ function DetailModal({ order, onClose, onStatusChange }: {
     return acc
   }, {} as Record<string, TemplateRow[]>)
 
-  const sectionClass = "bg-sage-950 rounded-xl p-4"
-  const sectionLabel = "text-sage-400 text-xs uppercase tracking-widest mb-3 font-bold"
-=======
-    const nama = wedding?.pria_nama_panggilan && wedding?.wanita_nama_panggilan
-      ? `${wedding.pria_nama_panggilan} & ${wedding.wanita_nama_panggilan}`
-      : order.nama
-    const msg = `Halo Kak ${order.nama}!\n\nBerikut link untuk mengisi data pernikahan *${nama}*:\n\nLink Edit Data:\n${editUrl}\n\nLink ini khusus untuk Kak ${order.nama}, harap jangan disebarkan ya.\n\n_Katresnan - Undangan Digital_`
-    window.open(`https://wa.me/62${order.wa}?text=${encodeURIComponent(msg)}`, '_blank')
-  }
-
-  const groupedTpl = TEMPLATE_LIST.reduce((acc, t) => {
-    if (!acc[t.category]) acc[t.category] = []
-    acc[t.category].push(t)
-    return acc
-  }, {} as Record<string, typeof TEMPLATE_LIST>)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+  const sectionClass = "bg-slate-950 rounded-xl p-4"
+  const sectionLabel = "text-slate-400 text-xs uppercase tracking-widest mb-3 font-bold"
 
   return (
     <div
@@ -515,61 +305,33 @@ function DetailModal({ order, onClose, onStatusChange }: {
       onClick={onClose}
     >
       <div
-<<<<<<< HEAD
-        className="w-full max-w-md bg-sage-900 border border-sage-800 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col"
+        className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-sage-800 px-6 py-4 flex items-center justify-between flex-shrink-0">
+        <div className="bg-slate-800 px-6 py-4 flex items-center justify-between flex-shrink-0">
           <div>
-            <p className="text-sage-300 text-xs font-bold uppercase tracking-wider">Detail Order</p>
-=======
-        className="w-full max-w-md bg-[#1a2e1d] border border-[#2a4a38] rounded-3xl overflow-hidden max-h-[90vh] flex flex-col"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="bg-[#03554e] px-6 py-4 flex items-center justify-between flex-shrink-0">
-          <div>
-            <p className="text-white/60 text-xs font-bold uppercase tracking-wider">Detail Order</p>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+            <p className="text-slate-300 text-xs font-bold uppercase tracking-wider">Detail Order</p>
             <p className="text-white font-mono font-bold text-lg">#{short}</p>
           </div>
           <button
             onClick={onClose}
-<<<<<<< HEAD
             className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
           >
             {icons.close}
-=======
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors text-lg font-bold"
-          >
-            x
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
           </button>
         </div>
 
         {/* Tabs */}
-<<<<<<< HEAD
-        <div className="flex border-b border-sage-800 flex-shrink-0">
-=======
-        <div className="flex border-b border-[#2a4a38] flex-shrink-0">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+        <div className="flex border-b border-slate-800 flex-shrink-0">
           {(['info', 'undangan', 'edit'] as const).map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
-<<<<<<< HEAD
               className={`flex-1 py-3 text-xs font-semibold transition-colors ${tab === t
-                ? 'text-gold-400 border-b-2 border-gold-400'
-                : 'text-sage-400 hover:text-ivory-200'
+                ? 'text-primary-400 border-b-2 border-primary-400'
+                : 'text-slate-400 hover:text-surface-200'
                 }`}
-=======
-              className={`flex-1 py-3 text-xs font-semibold transition-colors ${
-                tab === t
-                  ? 'text-[#4ecdc4] border-b-2 border-[#4ecdc4]'
-                  : 'text-[#5a9e80] hover:text-[#e8f0e8]'
-              }`}
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
             >
               {t === 'info' ? 'Info Order' : t === 'undangan' ? 'Undangan' : 'Edit Data'}
             </button>
@@ -583,7 +345,6 @@ function DetailModal({ order, onClose, onStatusChange }: {
           {tab === 'info' && (
             <div className="p-5 space-y-3 text-sm">
               {([
-<<<<<<< HEAD
                 ['Nama', order.nama],
                 ['Email', order.email],
                 ['WhatsApp', '+62 ' + order.wa],
@@ -598,34 +359,12 @@ function DetailModal({ order, onClose, onStatusChange }: {
                 ['Waktu Pesan', order.created_at ? new Date(order.created_at).toLocaleString('id-ID') : '--'],
               ] as [string, string][]).map(([label, value]) => (
                 <div key={label} className="flex justify-between gap-4">
-                  <span className="text-sage-400 flex-shrink-0">{label}</span>
-                  <span className="text-ivory-200 text-right">{value}</span>
+                  <span className="text-slate-400 flex-shrink-0">{label}</span>
+                  <span className="text-surface-200 text-right">{value}</span>
                 </div>
               ))}
-              <div className="flex justify-between pt-2 border-t border-sage-800">
-                <span className="text-sage-400">Status</span>
-=======
-                ['Nama',        order.nama],
-                ['Email',       order.email],
-                ['WhatsApp',    '+62 ' + order.wa],
-                ['Paket',       order.package_id],
-                ['Template 1',  order.template_text_1 || '--'],
-                ['Template 2',  order.template_text_2 || '--'],
-                ['Metode',      (order.metode_bayar || '').toUpperCase()],
-                ['Harga Paket', formatRp(order.harga)],
-                ['Kode Unik',   '+' + formatRp(order.kode_unik)],
-                ['Total',       formatRp(order.total)],
-                ['Catatan',     order.catatan || '--'],
-                ['Waktu Pesan', order.created_at ? new Date(order.created_at).toLocaleString('id-ID') : '--'],
-              ] as [string, string][]).map(([label, value]) => (
-                <div key={label} className="flex justify-between gap-4">
-                  <span className="text-[#5a9e80] flex-shrink-0">{label}</span>
-                  <span className="text-[#e8f0e8] text-right">{value}</span>
-                </div>
-              ))}
-              <div className="flex justify-between pt-2 border-t border-[#2a4a38]">
-                <span className="text-[#5a9e80]">Status</span>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+              <div className="flex justify-between pt-2 border-t border-slate-800">
+                <span className="text-slate-400">Status</span>
                 <span className={`font-bold ${cfg.color}`}>{cfg.label}</span>
               </div>
             </div>
@@ -635,8 +374,7 @@ function DetailModal({ order, onClose, onStatusChange }: {
           {tab === 'undangan' && (
             <div className="p-5 space-y-4 text-sm">
               {loadingW ? (
-<<<<<<< HEAD
-                <div className="text-center py-6 text-sage-400">
+                <div className="text-center py-6 text-slate-400">
                   <svg className="w-5 h-5 animate-spin mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" className="opacity-25" /><path d="M4 12a8 8 0 018-8" className="opacity-75" /></svg>
                   Memuat data...
                 </div>
@@ -648,53 +386,23 @@ function DetailModal({ order, onClose, onStatusChange }: {
                     {wedding?.pria_nama_panggilan ? (
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-sage-400">Nama</span>
-                          <span className="text-ivory-200 font-semibold text-right">
-=======
-                <div className="text-center py-6 text-[#5a9e80]">Memuat data...</div>
-              ) : (
-                <>
-                  {/* Status data */}
-                  <div className="bg-[#111d17] rounded-2xl p-4">
-                    <p className="text-[#5a9e80] text-xs uppercase tracking-widest mb-3 font-bold">
-                      Status Data
-                    </p>
-                    {wedding?.pria_nama_panggilan ? (
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-[#5a9e80]">Nama</span>
-                          <span className="text-[#e8f0e8] font-semibold text-right">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                          <span className="text-slate-400">Nama</span>
+                          <span className="text-surface-200 font-semibold text-right">
                             {wedding.pria_nama_panggilan} &amp; {wedding.wanita_nama_panggilan}
                           </span>
                         </div>
                         <div className="flex justify-between">
-<<<<<<< HEAD
-                          <span className="text-sage-400">Kelengkapan</span>
+                          <span className="text-slate-400">Kelengkapan</span>
                           <span className={`font-bold ${wedding.status_pengisian === 'lengkap' ? 'text-green-400' : 'text-amber-400'}`}>
-=======
-                          <span className="text-[#5a9e80]">Kelengkapan</span>
-                          <span className={`font-bold ${wedding.status_pengisian === 'lengkap' ? 'text-green-400' : 'text-yellow-400'}`}>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
                             {wedding.status_pengisian === 'lengkap' ? 'Lengkap' : 'Sebagian'}
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="text-center py-2">
-<<<<<<< HEAD
                         <p className="text-amber-400 text-xs mb-2">Customer belum mengisi data</p>
                         <a href={`/isi-data?order=${order.id}&admin=1`} target="_blank" rel="noopener noreferrer"
-                          className="text-gold-400 text-xs underline underline-offset-2 hover:text-gold-300 transition-colors">
-=======
-                        <p className="text-yellow-400 text-xs mb-2">Customer belum mengisi data</p>
-                        <a
-                          href={`/isi-data?order=${order.id}&admin=1`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#4ecdc4] text-xs underline"
-                        >
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                          className="text-primary-400 text-xs underline underline-offset-2 hover:text-primary-300 transition-colors">
                           Isi data sekarang
                         </a>
                       </div>
@@ -702,21 +410,12 @@ function DetailModal({ order, onClose, onStatusChange }: {
                   </div>
 
                   {/* Pilih template */}
-<<<<<<< HEAD
                   <div className={sectionClass}>
                     <p className={sectionLabel}>Template</p>
                     <select
                       value={selTpl}
                       onChange={e => setSelTpl(e.target.value)}
-                      className="w-full bg-sage-900 border border-sage-700 text-ivory-200 rounded-xl px-3 py-2.5 text-sm outline-none mb-3 focus:border-gold-500 transition-colors"
-=======
-                  <div className="bg-[#111d17] rounded-2xl p-4">
-                    <p className="text-[#5a9e80] text-xs uppercase tracking-widest mb-3 font-bold">Template</p>
-                    <select
-                      value={selTpl}
-                      onChange={e => setSelTpl(e.target.value)}
-                      className="w-full bg-[#1a2e1d] border border-[#2a4a38] text-[#e8f0e8] rounded-xl px-3 py-2.5 text-sm outline-none mb-3"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                      className="w-full bg-slate-900 border border-slate-700 text-surface-200 rounded-xl px-3 py-2.5 text-sm outline-none mb-3 focus:border-primary-500 transition-colors"
                     >
                       {Object.entries(groupedTpl).map(([cat, tmpls]) => (
                         <optgroup key={cat} label={cat}>
@@ -730,11 +429,7 @@ function DetailModal({ order, onClose, onStatusChange }: {
                       <button
                         onClick={saveTemplate}
                         disabled={savingTpl}
-<<<<<<< HEAD
-                        className="flex-1 bg-sage-800 hover:bg-sage-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
-=======
-                        className="flex-1 bg-[#03554e] hover:bg-[#04665e] disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                        className="flex-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
                       >
                         {savingTpl ? 'Menyimpan...' : 'Simpan Template'}
                       </button>
@@ -743,79 +438,43 @@ function DetailModal({ order, onClose, onStatusChange }: {
                           href={`/undangan/${wedding.link_unik}`}
                           target="_blank"
                           rel="noopener noreferrer"
-<<<<<<< HEAD
-                          className="flex items-center gap-1.5 px-3 py-2.5 bg-sage-900 border border-sage-700 hover:border-gold-500 text-gold-400 rounded-xl text-sm transition-colors"
+                          className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-900 border border-slate-700 hover:border-primary-500 text-primary-400 rounded-xl text-sm transition-colors"
                         >
                           {icons.eye} Preview
-=======
-                          className="px-3 py-2.5 bg-[#1a2e1d] border border-[#2a4a38] hover:border-[#4ecdc4] text-[#4ecdc4] rounded-xl text-sm transition-colors flex items-center"
-                        >
-                          Preview
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
                         </a>
                       )}
                     </div>
                   </div>
 
                   {/* Link undangan */}
-<<<<<<< HEAD
                   <div className={sectionClass}>
                     <p className={sectionLabel}>Link Undangan</p>
                     {undanganUrl ? (
                       <div className="space-y-3">
-                        <div className="bg-sage-900 border border-sage-700 rounded-xl px-3 py-2.5 flex items-center justify-between gap-2">
-                          <p className="text-gold-400 text-xs font-mono truncate">{undanganUrl}</p>
+                        <div className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 flex items-center justify-between gap-2">
+                          <p className="text-primary-400 text-xs font-mono truncate">{undanganUrl}</p>
                           <button
                             onClick={copyLink}
-                            className={`flex-shrink-0 flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${copied ? 'bg-green-600 text-white' : 'bg-sage-800 text-sage-300 hover:bg-sage-700'
+                            className={`flex-shrink-0 flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${copied ? 'bg-green-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                               }`}
                           >
                             {icons.copy} {copied ? 'Tersalin' : 'Salin'}
-=======
-                  <div className="bg-[#111d17] rounded-2xl p-4">
-                    <p className="text-[#5a9e80] text-xs uppercase tracking-widest mb-3 font-bold">Link Undangan</p>
-                    {undanganUrl ? (
-                      <div className="space-y-3">
-                        <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-xl px-3 py-2.5 flex items-center justify-between gap-2">
-                          <p className="text-[#4ecdc4] text-xs font-mono truncate">{undanganUrl}</p>
-                          <button
-                            onClick={copyLink}
-                            className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${
-                              copied ? 'bg-green-600 text-white' : 'bg-[#2a4a38] text-[#4ecdc4] hover:bg-[#03554e]'
-                            }`}
-                          >
-                            {copied ? 'Tersalin' : 'Salin'}
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
                           </button>
                         </div>
                         <button
                           onClick={sendWA}
-<<<<<<< HEAD
                           className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 rounded-xl text-sm transition-colors"
                         >
                           {icons.wa} Kirim ke Customer via WhatsApp
-=======
-                          className="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 rounded-xl text-sm transition-colors"
-                        >
-                          Kirim ke Customer via WhatsApp
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
                         </button>
                       </div>
                     ) : (
                       <div className="space-y-2">
-<<<<<<< HEAD
-                        <p className="text-sage-400 text-xs">Link belum dibuat.</p>
+                        <p className="text-slate-400 text-xs">Link belum dibuat.</p>
                         <button
                           onClick={generateLink}
                           disabled={genLink}
-                          className="w-full bg-gold-500 hover:bg-gold-600 disabled:opacity-50 text-sage-950 font-bold py-3 rounded-xl text-sm transition-colors"
-=======
-                        <p className="text-[#5a9e80] text-xs">Link belum dibuat.</p>
-                        <button
-                          onClick={generateLink}
-                          disabled={genLink}
-                          className="w-full bg-[#4ecdc4] hover:bg-[#3dbdb4] disabled:opacity-50 text-[#1a2e1d] font-bold py-3 rounded-xl text-sm transition-colors"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                          className="w-full bg-primary-500 hover:bg-primary-600 disabled:opacity-50 text-slate-950 font-bold py-3 rounded-xl text-sm transition-colors"
                         >
                           {genLink ? 'Membuat link...' : 'Generate Link Undangan'}
                         </button>
@@ -832,21 +491,12 @@ function DetailModal({ order, onClose, onStatusChange }: {
             <div className="p-5 space-y-4 text-sm">
 
               {/* Token keamanan */}
-<<<<<<< HEAD
               <div className={`${sectionClass} space-y-3`}>
                 <p className={sectionLabel}>Token Keamanan Customer</p>
                 {wedding?.edit_token ? (
                   <div className="space-y-2">
-                    <div className="bg-sage-900 border border-sage-700 rounded-xl px-3 py-2 flex items-center gap-2">
-                      <p className="text-gold-400 text-xs font-mono truncate flex-1">
-=======
-              <div className="bg-[#111d17] rounded-2xl p-4 space-y-3">
-                <p className="text-[#5a9e80] text-xs uppercase tracking-widest font-bold">Token Keamanan Customer</p>
-                {wedding?.edit_token ? (
-                  <div className="space-y-2">
-                    <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-xl px-3 py-2 flex items-center gap-2">
-                      <p className="text-[#4ecdc4] text-xs font-mono truncate flex-1">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                    <div className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 flex items-center gap-2">
+                      <p className="text-primary-400 text-xs font-mono truncate flex-1">
                         {wedding.edit_token.slice(0, 8)}...{wedding.edit_token.slice(-4)}
                       </p>
                       <span className="text-green-400 text-xs font-bold flex-shrink-0">Aktif</span>
@@ -854,11 +504,7 @@ function DetailModal({ order, onClose, onStatusChange }: {
                     <button
                       onClick={generateEditToken}
                       disabled={genToken}
-<<<<<<< HEAD
-                      className="w-full py-2 rounded-xl border border-sage-700 text-sage-400 text-xs font-medium hover:border-amber-600 hover:text-amber-400 transition-colors disabled:opacity-50"
-=======
-                      className="w-full py-2 rounded-xl border border-[#2a4a38] text-[#5a9e80] text-xs font-medium hover:border-yellow-600 hover:text-yellow-400 transition-colors disabled:opacity-50"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                      className="w-full py-2 rounded-xl border border-slate-700 text-slate-400 text-xs font-medium hover:border-amber-600 hover:text-amber-400 transition-colors disabled:opacity-50"
                     >
                       {genToken ? 'Regenerating...' : 'Regenerate Token (link lama tidak berlaku)'}
                     </button>
@@ -867,11 +513,7 @@ function DetailModal({ order, onClose, onStatusChange }: {
                   <button
                     onClick={generateEditToken}
                     disabled={genToken}
-<<<<<<< HEAD
-                    className="w-full bg-sage-800 hover:bg-sage-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
-=======
-                    className="w-full bg-[#03554e] hover:bg-[#04665e] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                    className="w-full bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
                   >
                     {genToken ? 'Membuat token...' : 'Generate Token'}
                   </button>
@@ -880,25 +522,17 @@ function DetailModal({ order, onClose, onStatusChange }: {
 
               {/* Link edit customer */}
               {editUrl && (
-<<<<<<< HEAD
                 <div className={`${sectionClass} space-y-3`}>
                   <p className={sectionLabel}>Link Edit untuk Customer</p>
-                  <div className="bg-sage-900 border border-sage-700 rounded-xl px-3 py-2.5">
-                    <p className="text-gold-400 text-[10px] font-mono break-all leading-relaxed">{editUrl}</p>
-=======
-                <div className="bg-[#111d17] rounded-2xl p-4 space-y-3">
-                  <p className="text-[#5a9e80] text-xs uppercase tracking-widest font-bold">Link Edit untuk Customer</p>
-                  <div className="bg-[#1a2e1d] border border-[#2a4a38] rounded-xl px-3 py-2.5">
-                    <p className="text-[#4ecdc4] text-[10px] font-mono break-all leading-relaxed">{editUrl}</p>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                  <div className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5">
+                    <p className="text-primary-400 text-[10px] font-mono break-all leading-relaxed">{editUrl}</p>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={copyEditLink}
-<<<<<<< HEAD
                       className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${copiedEdit
                         ? 'bg-green-600 text-white'
-                        : 'bg-sage-800 text-sage-300 hover:bg-sage-700'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                         }`}
                     >
                       {icons.copy} {copiedEdit ? 'Tersalin!' : 'Salin Link'}
@@ -910,59 +544,28 @@ function DetailModal({ order, onClose, onStatusChange }: {
                       {icons.wa} Kirim WA
                     </button>
                   </div>
-                  <p className="text-sage-500 text-[10px] leading-relaxed">
-=======
-                      className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
-                        copiedEdit
-                          ? 'bg-green-600 text-white'
-                          : 'bg-[#2a4a38] text-[#4ecdc4] hover:bg-[#03554e] hover:text-white'
-                      }`}
-                    >
-                      {copiedEdit ? 'Tersalin!' : 'Salin Link'}
-                    </button>
-                    <button
-                      onClick={sendEditLinkWA}
-                      className="flex-1 py-2.5 rounded-xl text-sm font-bold bg-[#25D366] hover:bg-[#1ebe5d] text-white transition-colors"
-                    >
-                      Kirim WA
-                    </button>
-                  </div>
-                  <p className="text-[#5a9e80] text-[10px] leading-relaxed">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                  <p className="text-slate-500 text-[10px] leading-relaxed">
                     Link ini hanya untuk customer. Token bisa di-regenerate jika disalahgunakan.
                   </p>
                 </div>
               )}
 
               {/* Edit langsung admin */}
-<<<<<<< HEAD
               <div className={`${sectionClass} space-y-3`}>
                 <p className={sectionLabel}>Edit Langsung (Admin)</p>
-                <p className="text-sage-400 text-xs">Admin tidak perlu token.</p>
-=======
-              <div className="bg-[#111d17] rounded-2xl p-4 space-y-3">
-                <p className="text-[#5a9e80] text-xs uppercase tracking-widest font-bold">Edit Langsung (Admin)</p>
-                <p className="text-[#5a9e80] text-xs">Admin tidak perlu token.</p>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                <p className="text-slate-400 text-xs">Admin tidak perlu token.</p>
                 <a
                   href={adminEditUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-<<<<<<< HEAD
-                  className="flex items-center justify-center gap-2 w-full bg-sage-800 hover:bg-sage-700 text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
+                  className="flex items-center justify-center gap-2 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
                 >
                   {icons.eye} Buka Form Edit (Admin)
-=======
-                  className="flex items-center justify-center w-full bg-[#03554e] hover:bg-[#04665e] text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
-                >
-                  Buka Form Edit (Admin)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
                 </a>
               </div>
 
               {/* Ringkasan data */}
               {wedding?.pria_nama_panggilan && (
-<<<<<<< HEAD
                 <div className={`${sectionClass} space-y-2`}>
                   <p className={`${sectionLabel} mb-3`}>Data Tersimpan</p>
                   {([
@@ -972,21 +575,8 @@ function DetailModal({ order, onClose, onStatusChange }: {
                     ['Link', wedding.link_unik || '--'],
                   ] as [string, string][]).map(([k, v]) => (
                     <div key={k} className="flex justify-between gap-3">
-                      <span className="text-sage-400 flex-shrink-0">{k}</span>
-                      <span className="text-ivory-200 text-right text-xs truncate max-w-[180px]">{v}</span>
-=======
-                <div className="bg-[#111d17] rounded-2xl p-4 space-y-2">
-                  <p className="text-[#5a9e80] text-xs uppercase tracking-widest font-bold mb-3">Data Tersimpan</p>
-                  {([
-                    ['Pengantin', `${wedding.pria_nama_panggilan} & ${wedding.wanita_nama_panggilan}`],
-                    ['Status',    wedding.status_pengisian === 'lengkap' ? 'Lengkap' : 'Sebagian'],
-                    ['Template',  wedding.template_id || '--'],
-                    ['Link',      wedding.link_unik || '--'],
-                  ] as [string, string][]).map(([k, v]) => (
-                    <div key={k} className="flex justify-between gap-3">
-                      <span className="text-[#5a9e80] flex-shrink-0">{k}</span>
-                      <span className="text-[#e8f0e8] text-right text-xs truncate max-w-[180px]">{v}</span>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+                      <span className="text-slate-400 flex-shrink-0">{k}</span>
+                      <span className="text-surface-200 text-right text-xs truncate max-w-[180px]">{v}</span>
                     </div>
                   ))}
                 </div>
@@ -999,37 +589,20 @@ function DetailModal({ order, onClose, onStatusChange }: {
 
         {/* Footer actions */}
         {nextStatuses.length > 0 && (
-<<<<<<< HEAD
-          <div className="px-5 py-4 border-t border-sage-800 flex gap-2 flex-wrap flex-shrink-0">
-=======
-          <div className="px-5 py-4 border-t border-[#2a4a38] flex gap-2 flex-wrap flex-shrink-0">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+          <div className="px-5 py-4 border-t border-slate-800 flex gap-2 flex-wrap flex-shrink-0">
             {nextStatuses.map(ns => (
               <button
                 key={ns}
                 onClick={() => { onStatusChange(order.id, ns); onClose() }}
-<<<<<<< HEAD
                 className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${ns === 'dibatalkan'
                   ? 'bg-red-900/30 border border-red-800 text-red-400 hover:bg-red-900/50'
-                  : 'bg-sage-800 hover:bg-sage-700 text-white'
+                  : 'bg-slate-800 hover:bg-slate-700 text-white'
                   }`}
               >
                 {ns === 'menunggu_konfirmasi' ? 'Konfirmasi Bayar' :
                   ns === 'diproses' ? 'Tandai Diproses' :
                     ns === 'selesai' ? 'Tandai Selesai' :
                       ns === 'dibatalkan' ? 'Batalkan' : ns}
-=======
-                className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
-                  ns === 'dibatalkan'
-                    ? 'bg-red-900/30 border border-red-800 text-red-400 hover:bg-red-900/50'
-                    : 'bg-[#03554e] hover:bg-[#04665e] text-white'
-                }`}
-              >
-                {ns === 'menunggu_konfirmasi' ? 'Konfirmasi Bayar' :
-                 ns === 'diproses'            ? 'Tandai Diproses' :
-                 ns === 'selesai'             ? 'Tandai Selesai' :
-                 ns === 'dibatalkan'          ? 'Batalkan' : ns}
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
               </button>
             ))}
           </div>
@@ -1040,7 +613,6 @@ function DetailModal({ order, onClose, onStatusChange }: {
   )
 }
 
-<<<<<<< HEAD
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── TEMPLATE MANAGEMENT TAB ─────────────────────────────────────────────────
@@ -1129,20 +701,20 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
 
   const getCatName = (catId: string) => categories.find(c => c.id === catId)?.name || catId
 
-  const inputClass = "w-full bg-sage-950 border border-sage-700 focus:border-gold-500 rounded-xl px-4 py-2.5 text-ivory-200 outline-none text-sm transition-colors placeholder:text-sage-600"
-  const labelClass = "text-xs font-bold text-sage-400 uppercase tracking-wider block mb-1.5"
+  const inputClass = "w-full bg-slate-950 border border-slate-700 focus:border-primary-500 rounded-xl px-4 py-2.5 text-surface-200 outline-none text-sm transition-colors placeholder:text-slate-600"
+  const labelClass = "text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5"
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-serif font-bold text-xl text-ivory-200">Manajemen Template</h2>
-          <p className="text-sage-400 text-sm">{templates.length} template terdaftar</p>
+          <h2 className="font-serif font-bold text-xl text-surface-200">Manajemen Template</h2>
+          <p className="text-slate-400 text-sm">{templates.length} template terdaftar</p>
         </div>
         <button
           onClick={openAdd}
-          className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-sage-950 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors"
+          className="flex items-center gap-2 bg-primary-500 hover:bg-primary-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors"
         >
           {icons.plus} Tambah Template
         </button>
@@ -1151,18 +723,18 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
       {/* Filter & Search */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sage-500">{icons.search}</span>
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">{icons.search}</span>
           <input
             value={searchQ}
             onChange={e => setSearchQ(e.target.value)}
             placeholder="Cari template..."
-            className="w-full bg-sage-900 border border-sage-700 focus:border-gold-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-ivory-200 outline-none transition-colors placeholder:text-sage-600"
+            className="w-full bg-slate-900 border border-slate-700 focus:border-primary-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-surface-200 outline-none transition-colors placeholder:text-slate-600"
           />
         </div>
         <select
           value={filterCat}
           onChange={e => setFilterCat(e.target.value)}
-          className="bg-sage-900 border border-sage-700 text-ivory-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-gold-500"
+          className="bg-slate-900 border border-slate-700 text-surface-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary-500"
         >
           <option value="semua">Semua Kategori</option>
           {categories.map(c => (
@@ -1175,39 +747,39 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-sage-900 border border-sage-800 rounded-2xl p-4 animate-pulse">
-              <div className="h-4 bg-sage-800 rounded w-1/3 mb-2" />
-              <div className="h-3 bg-sage-800 rounded w-1/2" />
+            <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-4 animate-pulse">
+              <div className="h-4 bg-slate-800 rounded w-1/3 mb-2" />
+              <div className="h-3 bg-slate-800 rounded w-1/2" />
             </div>
           ))}
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-sage-400 font-medium">Tidak ada template ditemukan</p>
+          <p className="text-slate-400 font-medium">Tidak ada template ditemukan</p>
         </div>
       ) : (
         <div className="grid gap-3">
           {filtered.map(t => (
             <div
               key={t.id}
-              className="bg-sage-900 border border-sage-800 rounded-2xl p-4 hover:border-sage-700 transition-colors"
+              className="bg-slate-900 border border-slate-800 rounded-2xl p-4 hover:border-slate-700 transition-colors"
             >
               <div className="flex items-start gap-4">
                 {/* Thumbnail */}
-                <div className="w-16 h-16 rounded-xl bg-sage-800 flex-shrink-0 overflow-hidden flex items-center justify-center">
+                <div className="w-16 h-16 rounded-xl bg-slate-800 flex-shrink-0 overflow-hidden flex items-center justify-center">
                   {t.thumbnail_url ? (
                     <img src={t.thumbnail_url} alt={t.name} className="w-full h-full object-cover" />
                   ) : (
-                    <span className="text-sage-600">{icons.template}</span>
+                    <span className="text-slate-600">{icons.template}</span>
                   )}
                 </div>
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-ivory-200">{t.name}</span>
+                    <span className="font-semibold text-surface-200">{t.name}</span>
                     {t.is_popular && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-400">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-400">
                         Popular
                       </span>
                     )}
@@ -1217,17 +789,17 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-sage-400">
+                  <div className="flex items-center gap-3 text-xs text-slate-400">
                     <span>{getCatName(t.category_id)}</span>
                     <span>·</span>
                     <span>{t.style_label || '--'}</span>
                     <span>·</span>
                     <span>{t.has_photo ? 'Foto' : 'No Foto'}</span>
                     <span>·</span>
-                    <span className="font-mono text-sage-500">#{t.sort_order}</span>
+                    <span className="font-mono text-slate-500">#{t.sort_order}</span>
                   </div>
                   {t.description && (
-                    <p className="text-sage-500 text-xs mt-1 line-clamp-1">{t.description}</p>
+                    <p className="text-slate-500 text-xs mt-1 line-clamp-1">{t.description}</p>
                   )}
                 </div>
 
@@ -1238,7 +810,7 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
                       href={t.demo_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors"
+                      className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors"
                       title="Preview"
                     >
                       {icons.eye}
@@ -1246,14 +818,14 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
                   )}
                   <button
                     onClick={() => openEdit(t)}
-                    className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-blue-500 hover:text-blue-400 transition-colors"
+                    className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-400 transition-colors"
                     title="Edit"
                   >
                     {icons.edit}
                   </button>
                   <button
                     onClick={() => setDelConfirm(t.id)}
-                    className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-red-500 hover:text-red-400 transition-colors"
+                    className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-red-500 hover:text-red-400 transition-colors"
                     title="Hapus"
                   >
                     {icons.trash}
@@ -1268,8 +840,8 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
       {/* Form Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowForm(false)}>
-          <div className="w-full max-w-lg bg-sage-900 border border-sage-800 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
-            <div className="bg-sage-800 px-6 py-4 flex items-center justify-between flex-shrink-0">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="bg-slate-800 px-6 py-4 flex items-center justify-between flex-shrink-0">
               <h3 className="font-serif font-bold text-lg text-white">
                 {editId ? 'Edit Template' : 'Tambah Template Baru'}
               </h3>
@@ -1314,28 +886,28 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
                 <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} className={inputClass} />
               </div>
               <div className="flex flex-wrap gap-4">
-                <label className="flex items-center gap-2 text-sm text-ivory-200 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-surface-200 cursor-pointer">
                   <input type="checkbox" checked={form.has_photo} onChange={e => setForm({ ...form, has_photo: e.target.checked })}
-                    className="w-4 h-4 rounded border-sage-600 bg-sage-950 text-gold-500 focus:ring-gold-500" />
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-950 text-primary-500 focus:ring-primary-500" />
                   Dengan Foto
                 </label>
-                <label className="flex items-center gap-2 text-sm text-ivory-200 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-surface-200 cursor-pointer">
                   <input type="checkbox" checked={form.is_popular} onChange={e => setForm({ ...form, is_popular: e.target.checked })}
-                    className="w-4 h-4 rounded border-sage-600 bg-sage-950 text-gold-500 focus:ring-gold-500" />
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-950 text-primary-500 focus:ring-primary-500" />
                   Popular
                 </label>
-                <label className="flex items-center gap-2 text-sm text-ivory-200 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-surface-200 cursor-pointer">
                   <input type="checkbox" checked={form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked })}
-                    className="w-4 h-4 rounded border-sage-600 bg-sage-950 text-gold-500 focus:ring-gold-500" />
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-950 text-primary-500 focus:ring-primary-500" />
                   Aktif
                 </label>
               </div>
             </div>
-            <div className="px-5 py-4 border-t border-sage-800 flex gap-3 flex-shrink-0">
-              <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl border border-sage-700 text-sage-400 font-semibold text-sm hover:bg-sage-950 transition-colors">
+            <div className="px-5 py-4 border-t border-slate-800 flex gap-3 flex-shrink-0">
+              <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl border border-slate-700 text-slate-400 font-semibold text-sm hover:bg-slate-950 transition-colors">
                 Batal
               </button>
-              <button onClick={handleSave} disabled={saving} className="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 disabled:opacity-50 text-sage-950 font-bold text-sm transition-colors">
+              <button onClick={handleSave} disabled={saving} className="flex-1 py-2.5 rounded-xl bg-primary-500 hover:bg-primary-600 disabled:opacity-50 text-slate-950 font-bold text-sm transition-colors">
                 {saving ? 'Menyimpan...' : editId ? 'Update Template' : 'Tambah Template'}
               </button>
             </div>
@@ -1346,16 +918,16 @@ function TemplateManagement({ showToast }: { showToast: (msg: string) => void })
       {/* Delete Confirmation */}
       {delConfirm && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setDelConfirm(null)}>
-          <div className="w-full max-w-sm bg-sage-900 border border-sage-800 rounded-2xl p-6 space-y-4" onClick={e => e.stopPropagation()}>
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4" onClick={e => e.stopPropagation()}>
             <div className="text-center">
               <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-red-900/30 flex items-center justify-center text-red-400">
                 {icons.trash}
               </div>
-              <h3 className="font-bold text-ivory-200 text-lg">Hapus Template?</h3>
-              <p className="text-sage-400 text-sm mt-1">Tindakan ini tidak dapat dibatalkan.</p>
+              <h3 className="font-bold text-surface-200 text-lg">Hapus Template?</h3>
+              <p className="text-slate-400 text-sm mt-1">Tindakan ini tidak dapat dibatalkan.</p>
             </div>
             <div className="flex gap-3">
-              <button onClick={() => setDelConfirm(null)} className="flex-1 py-2.5 rounded-xl border border-sage-700 text-sage-400 font-semibold text-sm hover:bg-sage-950 transition-colors">
+              <button onClick={() => setDelConfirm(null)} className="flex-1 py-2.5 rounded-xl border border-slate-700 text-slate-400 font-semibold text-sm hover:bg-slate-950 transition-colors">
                 Batal
               </button>
               <button onClick={() => handleDelete(delConfirm)} className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-colors">
@@ -1477,36 +1049,36 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
     loadPackages()
   }
 
-  const inputClass = "w-full bg-sage-950 border border-sage-700 focus:border-gold-500 rounded-xl px-4 py-2.5 text-ivory-200 outline-none text-sm transition-colors placeholder:text-sage-600"
-  const labelClass = "text-xs font-bold text-sage-400 uppercase tracking-wider block mb-1.5"
+  const inputClass = "w-full bg-slate-950 border border-slate-700 focus:border-primary-500 rounded-xl px-4 py-2.5 text-surface-200 outline-none text-sm transition-colors placeholder:text-slate-600"
+  const labelClass = "text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5"
 
   const pkgColors: Record<string, string> = {
-    silver: 'border-sage-600',
-    gold: 'border-gold-500/40',
-    platinum: 'border-rose-500/40',
+    silver: 'border-slate-600',
+    gold: 'border-primary-500/40',
+    platinum: 'border-tertiary-500/40',
   }
   const pkgBadgeColors: Record<string, string> = {
-    silver: 'bg-sage-800 text-sage-300',
-    gold: 'bg-gold-500/20 text-gold-400',
-    platinum: 'bg-rose-500/20 text-rose-400',
+    silver: 'bg-slate-800 text-slate-300',
+    gold: 'bg-primary-500/20 text-primary-400',
+    platinum: 'bg-tertiary-500/20 text-tertiary-400',
   }
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-serif font-bold text-xl text-ivory-200">Harga Paket Undangan</h2>
-        <p className="text-sage-400 text-sm">Edit harga, diskon otomatis dihitung dari harga asli vs harga jual</p>
+        <h2 className="font-serif font-bold text-xl text-surface-200">Harga Paket Undangan</h2>
+        <p className="text-slate-400 text-sm">Edit harga, diskon otomatis dihitung dari harga asli vs harga jual</p>
       </div>
 
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-sage-900 border border-sage-800 rounded-2xl p-6 animate-pulse">
-              <div className="h-5 bg-sage-800 rounded w-1/4 mb-4" />
+            <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 animate-pulse">
+              <div className="h-5 bg-slate-800 rounded w-1/4 mb-4" />
               <div className="grid grid-cols-3 gap-4">
-                <div className="h-10 bg-sage-800 rounded" />
-                <div className="h-10 bg-sage-800 rounded" />
-                <div className="h-10 bg-sage-800 rounded" />
+                <div className="h-10 bg-slate-800 rounded" />
+                <div className="h-10 bg-slate-800 rounded" />
+                <div className="h-10 bg-slate-800 rounded" />
               </div>
             </div>
           ))}
@@ -1521,12 +1093,12 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
             return (
               <div
                 key={pkg.id}
-                className={`bg-sage-900 border ${pkgColors[pkg.id] || 'border-sage-800'} rounded-2xl overflow-hidden transition-all ${isEditing ? 'ring-1 ring-gold-500/20' : ''}`}
+                className={`bg-slate-900 border ${pkgColors[pkg.id] || 'border-slate-800'} rounded-2xl overflow-hidden transition-all ${isEditing ? 'ring-1 ring-primary-500/20' : ''}`}
               >
                 {/* Package Header */}
-                <div className="px-6 py-4 flex items-center justify-between border-b border-sage-800">
+                <div className="px-6 py-4 flex items-center justify-between border-b border-slate-800">
                   <div className="flex items-center gap-3">
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${pkgBadgeColors[pkg.id] || 'bg-sage-800 text-sage-300'}`}>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${pkgBadgeColors[pkg.id] || 'bg-slate-800 text-slate-300'}`}>
                       {pkg.emoji} {pkg.name}
                     </span>
                     {!form.is_active && (
@@ -1540,14 +1112,14 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                       <>
                         <button
                           onClick={() => { setEditPkg(null); loadPackages() }}
-                          className="text-xs px-3 py-1.5 rounded-lg border border-sage-700 text-sage-400 hover:bg-sage-950 transition-colors"
+                          className="text-xs px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-950 transition-colors"
                         >
                           Batal
                         </button>
                         <button
                           onClick={() => savePkg(pkg.id)}
                           disabled={saving}
-                          className="text-xs px-4 py-1.5 rounded-lg bg-gold-500 hover:bg-gold-600 disabled:opacity-50 text-sage-950 font-bold transition-colors"
+                          className="text-xs px-4 py-1.5 rounded-lg bg-primary-500 hover:bg-primary-600 disabled:opacity-50 text-slate-950 font-bold transition-colors"
                         >
                           {saving ? 'Saving...' : 'Simpan'}
                         </button>
@@ -1555,7 +1127,7 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                     ) : (
                       <button
                         onClick={() => setEditPkg(pkg.id)}
-                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border border-sage-700 text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors"
+                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors"
                       >
                         {icons.edit} Edit Harga
                       </button>
@@ -1598,18 +1170,18 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                               min={0}
                               max={100}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sage-500 text-sm">%</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">%</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Discount preview */}
-                      <div className="bg-sage-950 rounded-xl p-3 flex items-center justify-between">
-                        <span className="text-sage-400 text-xs">Preview harga:</span>
+                      <div className="bg-slate-950 rounded-xl p-3 flex items-center justify-between">
+                        <span className="text-slate-400 text-xs">Preview harga:</span>
                         <div className="flex items-center gap-3">
-                          <span className="text-sage-500 text-sm line-through">{formatRp(form.original_price)}</span>
-                          <span className="text-gold-400 font-bold text-lg">{formatRp(form.price)}</span>
-                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-400">
+                          <span className="text-slate-500 text-sm line-through">{formatRp(form.original_price)}</span>
+                          <span className="text-primary-400 font-bold text-lg">{formatRp(form.price)}</span>
+                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-400">
                             HEMAT {form.discount}%
                           </span>
                         </div>
@@ -1645,7 +1217,7 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                               />
                               <button
                                 onClick={() => removeFeature(pkg.id, idx)}
-                                className="w-10 h-10 flex-shrink-0 rounded-xl border border-sage-700 text-red-400 hover:border-red-500 flex items-center justify-center transition-colors"
+                                className="w-10 h-10 flex-shrink-0 rounded-xl border border-slate-700 text-red-400 hover:border-red-500 flex items-center justify-center transition-colors"
                               >
                                 {icons.close}
                               </button>
@@ -1653,7 +1225,7 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                           ))}
                           <button
                             onClick={() => addFeature(pkg.id)}
-                            className="flex items-center gap-1.5 text-xs text-gold-400 hover:text-gold-300 transition-colors"
+                            className="flex items-center gap-1.5 text-xs text-primary-400 hover:text-primary-300 transition-colors"
                           >
                             {icons.plus} Tambah Fitur
                           </button>
@@ -1661,10 +1233,10 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                       </div>
 
                       {/* Active toggle */}
-                      <label className="flex items-center gap-2 text-sm text-ivory-200 cursor-pointer">
+                      <label className="flex items-center gap-2 text-sm text-surface-200 cursor-pointer">
                         <input type="checkbox" checked={form.is_active} onChange={e => setEditForm(prev => ({
                           ...prev, [pkg.id]: { ...prev[pkg.id], is_active: e.target.checked }
-                        }))} className="w-4 h-4 rounded border-sage-600 bg-sage-950 text-gold-500 focus:ring-gold-500" />
+                        }))} className="w-4 h-4 rounded border-slate-600 bg-slate-950 text-primary-500 focus:ring-primary-500" />
                         Paket Aktif
                       </label>
                     </div>
@@ -1673,24 +1245,24 @@ function PricingManagement({ showToast }: { showToast: (msg: string) => void }) 
                     <div className="space-y-4">
                       <div className="flex items-end gap-4">
                         <div>
-                          <p className="text-sage-500 text-xs mb-1">Harga Jual</p>
-                          <p className="font-serif font-bold text-3xl text-ivory-200">{formatRp(pkg.price)}</p>
+                          <p className="text-slate-500 text-xs mb-1">Harga Jual</p>
+                          <p className="font-serif font-bold text-3xl text-surface-200">{formatRp(pkg.price)}</p>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sage-500 text-sm line-through">{formatRp(pkg.original_price)}</span>
-                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-gold-500/20 text-gold-400">
+                          <span className="text-slate-500 text-sm line-through">{formatRp(pkg.original_price)}</span>
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-primary-500/20 text-primary-400">
                             HEMAT {pkg.discount}%
                           </span>
                         </div>
                       </div>
-                      <div className="flex gap-4 text-xs text-sage-400">
+                      <div className="flex gap-4 text-xs text-slate-400">
                         <span>Max {pkg.max_themes} tema</span>
                         <span>·</span>
                         <span>Aktif {pkg.masa_aktif}</span>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {pkg.features.map((f: string, i: number) => (
-                          <span key={i} className="text-xs px-2.5 py-1 rounded-lg bg-sage-950 text-sage-300 border border-sage-800">
+                          <span key={i} className="text-xs px-2.5 py-1 rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
                             {f}
                           </span>
                         ))}
@@ -1771,8 +1343,8 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
   }
 
   function SortIcon({ field }: { field: SortField }) {
-    if (sortField !== field) return <span className="text-sage-700 ml-1">{icons.sort}</span>
-    return <span className="text-gold-400 ml-1">{sortDir === 'asc' ? icons.chevUp : icons.chevDown}</span>
+    if (sortField !== field) return <span className="text-slate-700 ml-1">{icons.sort}</span>
+    return <span className="text-primary-400 ml-1">{sortDir === 'asc' ? icons.chevUp : icons.chevDown}</span>
   }
 
   return (
@@ -1780,24 +1352,24 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          <StatCard icon={icons.orders} label="Total Order" value={stats.total} color="bg-sage-800" />
+          <StatCard icon={icons.orders} label="Total Order" value={stats.total} color="bg-slate-800" />
           <StatCard icon={icons.alert} label="Perlu Aksi" value={stats.pending + stats.menunggu_konfirmasi} color="bg-amber-900/30" />
           <StatCard icon={icons.process} label="Diproses" value={stats.diproses} color="bg-purple-900/30" />
           <StatCard icon={icons.check} label="Selesai" value={stats.selesai} color="bg-green-900/30" />
           <StatCard icon={icons.revenue} label="Revenue Bulan" value={formatRp(stats.revenue_bulan_ini)}
-            sub={'Total: ' + formatRp(stats.revenue_total)} color="bg-sage-800" />
+            sub={'Total: ' + formatRp(stats.revenue_total)} color="bg-slate-800" />
         </div>
       )}
 
       {/* Search & Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sage-500">{icons.search}</span>
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">{icons.search}</span>
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Cari nama, email, WA, atau Order ID..."
-            className="w-full bg-sage-900 border border-sage-700 focus:border-gold-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-ivory-200 outline-none transition-colors placeholder:text-sage-600"
+            className="w-full bg-slate-900 border border-slate-700 focus:border-primary-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-surface-200 outline-none transition-colors placeholder:text-slate-600"
           />
         </div>
         <div className="flex gap-2 flex-wrap">
@@ -1806,8 +1378,8 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
               key={s}
               onClick={() => setFilter(s)}
               className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${filterStatus === s
-                ? 'bg-sage-800 text-gold-400 border border-sage-700'
-                : 'bg-sage-900 border border-sage-800 text-sage-400 hover:border-sage-700'
+                ? 'bg-slate-800 text-primary-400 border border-slate-700'
+                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
             >
               {s === 'semua' ? 'Semua' : (STATUS_CFG[s]?.label || s)}
@@ -1826,21 +1398,21 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
       </div>
 
       {/* Data Table */}
-      <div className="bg-sage-900 border border-sage-800 rounded-2xl overflow-hidden">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
         {/* Table header - per page selector + info */}
-        <div className="px-4 py-3 border-b border-sage-800 flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2 text-xs text-sage-400">
+        <div className="px-4 py-3 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2 text-xs text-slate-400">
             <span>Tampilkan</span>
             <select
               value={perPage}
               onChange={e => { setPerPage(Number(e.target.value)); setPage(1) }}
-              className="bg-sage-950 border border-sage-700 text-ivory-200 rounded-lg px-2 py-1 text-xs outline-none focus:border-gold-500"
+              className="bg-slate-950 border border-slate-700 text-surface-200 rounded-lg px-2 py-1 text-xs outline-none focus:border-primary-500"
             >
               {[5, 10, 25, 50].map(n => <option key={n} value={n}>{n}</option>)}
             </select>
             <span>data</span>
           </div>
-          <p className="text-xs text-sage-500">
+          <p className="text-xs text-slate-500">
             {sorted.length > 0
               ? `${(page - 1) * perPage + 1}–${Math.min(page * perPage, sorted.length)} dari ${sorted.length} order`
               : '0 order'}
@@ -1850,14 +1422,14 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
         {loading ? (
           <div className="p-6 space-y-3">
             {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="h-12 bg-sage-800 rounded animate-pulse" />
+              <div key={i} className="h-12 bg-slate-800 rounded animate-pulse" />
             ))}
           </div>
         ) : sorted.length === 0 ? (
           <div className="text-center py-16">
-            <svg className="w-10 h-10 mx-auto mb-3 text-sage-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-            <p className="text-sage-400 font-medium">Tidak ada order ditemukan</p>
-            <p className="text-sage-500 text-sm mt-1">Coba ubah filter atau kata kunci pencarian</p>
+            <svg className="w-10 h-10 mx-auto mb-3 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <p className="text-slate-400 font-medium">Tidak ada order ditemukan</p>
+            <p className="text-slate-500 text-sm mt-1">Coba ubah filter atau kata kunci pencarian</p>
           </div>
         ) : (
           <>
@@ -1865,7 +1437,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
             <div className="hidden lg:block overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-sage-800">
+                  <tr className="border-b border-slate-800">
                     {([
                       ['Order ID', null],
                       ['Nama', 'nama'],
@@ -1878,7 +1450,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                       <th
                         key={label}
                         onClick={() => field && toggleSort(field)}
-                        className={`px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-sage-400 ${field ? 'cursor-pointer hover:text-gold-400 select-none transition-colors' : ''}`}
+                        className={`px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-slate-400 ${field ? 'cursor-pointer hover:text-primary-400 select-none transition-colors' : ''}`}
                       >
                         <span className="flex items-center">
                           {label}
@@ -1888,32 +1460,32 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-sage-800/50">
+                <tbody className="divide-y divide-slate-800/50">
                   {paginated.map(order => {
                     const cfg = STATUS_CFG[order.status] || STATUS_CFG.pending
-                    const pkg = PKG_CFG[order.package_id] || { label: order.package_id, color: 'text-sage-400' }
+                    const pkg = PKG_CFG[order.package_id] || { label: order.package_id, color: 'text-slate-400' }
                     const short = order.id.slice(0, 8).toUpperCase()
                     const nextStatuses = STATUS_FLOW[order.status] || []
 
                     return (
                       <tr
                         key={order.id}
-                        className={`hover:bg-sage-800/30 transition-colors ${updating === order.id ? 'opacity-50 pointer-events-none' : ''}`}
+                        className={`hover:bg-slate-800/30 transition-colors ${updating === order.id ? 'opacity-50 pointer-events-none' : ''}`}
                       >
                         <td className="px-4 py-3">
-                          <span className="font-mono font-bold text-xs text-gold-400">#{short}</span>
+                          <span className="font-mono font-bold text-xs text-primary-400">#{short}</span>
                         </td>
                         <td className="px-4 py-3">
                           <div>
-                            <p className="font-semibold text-ivory-200">{order.nama}</p>
-                            <p className="text-sage-500 text-xs">{order.email}</p>
+                            <p className="font-semibold text-surface-200">{order.nama}</p>
+                            <p className="text-slate-500 text-xs">{order.email}</p>
                           </div>
                         </td>
                         <td className="px-4 py-3">
                           <span className={`text-xs font-semibold ${pkg.color}`}>{pkg.label}</span>
                         </td>
                         <td className="px-4 py-3">
-                          <span className="font-bold text-gold-400">{formatRp(order.total)}</span>
+                          <span className="font-bold text-primary-400">{formatRp(order.total)}</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${cfg.bg} ${cfg.color}`}>
@@ -1922,13 +1494,13 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <span className="text-sage-400 text-xs">{formatDateFull(order.created_at)}</span>
+                          <span className="text-slate-400 text-xs">{formatDateFull(order.created_at)}</span>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-1">
                             <button
                               onClick={() => onDetail(order)}
-                              className="w-7 h-7 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors"
+                              className="w-7 h-7 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors"
                               title="Detail"
                             >
                               {icons.eye}
@@ -1937,7 +1509,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                               href={`https://wa.me/62${order.wa}?text=${encodeURIComponent('Halo ' + order.nama + '! Pesanan undangan digital kamu (Order #' + short + ') sedang kami proses ya')}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-7 h-7 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-[#25D366] hover:border-[#25D366] transition-colors"
+                              className="w-7 h-7 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-[#25D366] hover:border-[#25D366] transition-colors"
                               title="WhatsApp"
                             >
                               {icons.wa}
@@ -1946,7 +1518,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                               <select
                                 onChange={e => { if (e.target.value) onStatusChange(order.id, e.target.value); e.target.value = '' }}
                                 defaultValue=""
-                                className="bg-sage-950 border border-sage-700 text-ivory-200 rounded-lg px-2 py-1 text-xs outline-none hover:border-gold-500 transition-colors cursor-pointer"
+                                className="bg-slate-950 border border-slate-700 text-surface-200 rounded-lg px-2 py-1 text-xs outline-none hover:border-primary-500 transition-colors cursor-pointer"
                               >
                                 <option value="" disabled>Ubah...</option>
                                 {nextStatuses.map(ns => (
@@ -1969,17 +1541,17 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
             </div>
 
             {/* Mobile Cards */}
-            <div className="lg:hidden divide-y divide-sage-800/50">
+            <div className="lg:hidden divide-y divide-slate-800/50">
               {paginated.map(order => {
                 const cfg = STATUS_CFG[order.status] || STATUS_CFG.pending
-                const pkg = PKG_CFG[order.package_id] || { label: order.package_id, color: 'text-sage-400' }
+                const pkg = PKG_CFG[order.package_id] || { label: order.package_id, color: 'text-slate-400' }
                 const short = order.id.slice(0, 8).toUpperCase()
                 const nextStatuses = STATUS_FLOW[order.status] || []
 
                 return (
                   <div
                     key={order.id}
-                    className={`p-4 hover:bg-sage-800/20 transition-colors ${updating === order.id ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`p-4 hover:bg-slate-800/20 transition-colors ${updating === order.id ? 'opacity-50 pointer-events-none' : ''}`}
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 ${cfg.dot}`} />
@@ -1987,27 +1559,27 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                         <div className="flex items-start justify-between gap-2 flex-wrap">
                           <div>
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="font-mono font-bold text-sm text-gold-400">#{short}</span>
+                              <span className="font-mono font-bold text-sm text-primary-400">#{short}</span>
                               <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${cfg.bg} ${cfg.color}`}>
                                 {cfg.label}
                               </span>
                               <span className={`text-xs font-semibold ${pkg.color}`}>{pkg.label}</span>
                             </div>
-                            <p className="font-semibold text-ivory-200 mt-1">{order.nama}</p>
-                            <p className="text-sage-400 text-xs">
+                            <p className="font-semibold text-surface-200 mt-1">{order.nama}</p>
+                            <p className="text-slate-400 text-xs">
                               {order.email} · {order.wa ? '+62 ' + order.wa : '--'}
                             </p>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <p className="font-bold text-gold-400">{formatRp(order.total)}</p>
-                            <p className="text-sage-500 text-xs">{formatDate(order.created_at)}</p>
+                            <p className="font-bold text-primary-400">{formatRp(order.total)}</p>
+                            <p className="text-slate-500 text-xs">{formatDate(order.created_at)}</p>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-2 mt-3 flex-wrap">
                           <button
                             onClick={() => onDetail(order)}
-                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-sage-950 border border-sage-700 text-sage-300 rounded-lg hover:border-gold-500 hover:text-gold-400 transition-colors"
+                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-950 border border-slate-700 text-slate-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-colors"
                           >
                             {icons.eye} Detail
                           </button>
@@ -2015,7 +1587,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                             href={`https://wa.me/62${order.wa}?text=${encodeURIComponent('Halo ' + order.nama + '! Pesanan undangan digital kamu (Order #' + short + ') sedang kami proses ya')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-sage-950 border border-sage-700 text-[#25D366] rounded-lg hover:border-[#25D366] transition-colors"
+                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-950 border border-slate-700 text-[#25D366] rounded-lg hover:border-[#25D366] transition-colors"
                           >
                             {icons.wa} WA
                           </a>
@@ -2025,7 +1597,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                               onClick={() => onStatusChange(order.id, ns)}
                               className={`text-xs px-3 py-1.5 rounded-lg font-bold transition-colors border ${ns === 'dibatalkan'
                                 ? 'border-red-800 text-red-400 hover:bg-red-900/20'
-                                : 'border-sage-600 text-sage-200 bg-sage-800 hover:bg-sage-700'
+                                : 'border-slate-600 text-slate-200 bg-slate-800 hover:bg-slate-700'
                                 }`}
                             >
                               {ns === 'menunggu_konfirmasi' ? 'Konfirmasi' :
@@ -2043,15 +1615,15 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
             </div>
 
             {/* Pagination */}
-            <div className="px-4 py-3 border-t border-sage-800 flex items-center justify-between flex-wrap gap-2">
-              <p className="text-xs text-sage-500">
+            <div className="px-4 py-3 border-t border-slate-800 flex items-center justify-between flex-wrap gap-2">
+              <p className="text-xs text-slate-500">
                 Halaman {page} dari {totalPages}
               </p>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setPage(1)}
                   disabled={page === 1}
-                  className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                   title="First"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3"><polyline points="11 17 6 12 11 7" /><polyline points="18 17 13 12 18 7" /></svg>
@@ -2059,7 +1631,7 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                 <button
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                 >
                   {icons.chevLeft}
                 </button>
@@ -2075,8 +1647,8 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                       key={p}
                       onClick={() => setPage(p)}
                       className={`w-8 h-8 rounded-lg text-xs font-bold transition-colors ${page === p
-                        ? 'bg-gold-500 text-sage-950'
-                        : 'bg-sage-950 border border-sage-700 text-sage-400 hover:border-gold-500 hover:text-gold-400'
+                        ? 'bg-primary-500 text-slate-950'
+                        : 'bg-slate-950 border border-slate-700 text-slate-400 hover:border-primary-500 hover:text-primary-400'
                         }`}
                     >
                       {p}
@@ -2086,14 +1658,14 @@ function OrderDataTable({ orders, stats, loading, onStatusChange, onDetail, upda
                 <button
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                 >
                   {icons.chevRight}
                 </button>
                 <button
                   onClick={() => setPage(totalPages)}
                   disabled={page === totalPages}
-                  className="w-8 h-8 rounded-lg bg-sage-950 border border-sage-700 flex items-center justify-center text-sage-400 hover:border-gold-500 hover:text-gold-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-700 flex items-center justify-center text-slate-400 hover:border-primary-500 hover:text-primary-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                   title="Last"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3"><polyline points="13 17 18 12 13 7" /><polyline points="6 17 11 12 6 7" /></svg>
@@ -2124,25 +1696,11 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<AdminTab>('orders')
   const [templateList, setTemplateList] = useState<TemplateRow[]>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
-=======
-// ─── Main Dashboard ───────────────────────────────────────────────────────────
-export default function AdminDashboard() {
-  const [authed,       setAuthed]   = useState(false)
-  const [orders,       setOrders]   = useState<Order[]>([])
-  const [stats,        setStats]    = useState<Stats | null>(null)
-  const [loading,      setLoading]  = useState(true)
-  const [filterStatus, setFilter]   = useState<string>('semua')
-  const [search,       setSearch]   = useState('')
-  const [detail,       setDetail]   = useState<Order | null>(null)
-  const [toast,        setToast]    = useState<string | null>(null)
-  const [updating,     setUpdating] = useState<string | null>(null)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
   useEffect(() => {
     if (sessionStorage.getItem('katresnan_admin') === '1') setAuthed(true)
   }, [])
 
-<<<<<<< HEAD
   const showToast = useCallback((msg: string) => {
     setToast(msg)
     setTimeout(() => setToast(null), 3000)
@@ -2158,21 +1716,6 @@ export default function AdminDashboard() {
     if (ordersRes.data) setOrders(ordersRes.data)
     if (statsRes.data) setStats(statsRes.data)
     if (tplRes.data) setTemplateList(tplRes.data)
-=======
-  const showToast = (msg: string) => {
-    setToast(msg)
-    setTimeout(() => setToast(null), 3000)
-  }
-
-  const loadData = useCallback(async () => {
-    setLoading(true)
-    const [ordersRes, statsRes] = await Promise.all([
-      supabase.rpc('get_all_orders_admin', { p_status: null, p_limit: 100, p_offset: 0 }),
-      supabase.rpc('get_order_stats'),
-    ])
-    if (ordersRes.data) setOrders(ordersRes.data)
-    if (statsRes.data)  setStats(statsRes.data)
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     setLoading(false)
   }, [])
 
@@ -2190,11 +1733,7 @@ export default function AdminDashboard() {
       })
       .subscribe()
     return () => { supabase.removeChannel(channel) }
-<<<<<<< HEAD
   }, [authed, loadData, showToast])
-=======
-  }, [authed, loadData])
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
   async function handleStatusChange(orderId: string, newStatus: string) {
     setUpdating(orderId)
@@ -2211,7 +1750,6 @@ export default function AdminDashboard() {
     setUpdating(null)
   }
 
-<<<<<<< HEAD
   if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />
 
   const tabs: { id: AdminTab; label: string; icon: JSX.Element }[] = [
@@ -2221,46 +1759,22 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-sage-950 text-ivory-200">
+    <div className="min-h-screen bg-slate-950 text-surface-200">
 
       {/* Toast */}
       {toast && (
-        <div className="fixed top-4 right-4 z-[60] bg-sage-900 border border-gold-500/60 text-ivory-200 px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center gap-2" style={{ animation: 'fadeUp 0.3s ease' }}>
-          <svg className="w-4 h-4 text-gold-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22,4 12,14.01 9,11.01" /></svg>
-=======
-  const filtered = orders.filter(o => {
-    const matchStatus = filterStatus === 'semua' || o.status === filterStatus
-    const q = search.toLowerCase()
-    const matchSearch = !q
-      || o.nama.toLowerCase().includes(q)
-      || o.email.toLowerCase().includes(q)
-      || o.id.toLowerCase().includes(q)
-      || (o.wa || '').includes(q)
-    return matchStatus && matchSearch
-  })
-
-  if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />
-
-  return (
-    <div className="min-h-screen bg-[#0f1a13] text-[#e8f0e8]">
-
-      {toast && (
-        <div className="fixed top-4 right-4 z-50 bg-[#1a2e1d] border border-[#4ecdc4] text-[#e8f0e8] px-5 py-3 rounded-2xl shadow-2xl text-sm font-medium">
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+        <div className="fixed top-4 right-4 z-[60] bg-slate-900 border border-primary-500/60 text-surface-200 px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center gap-2" style={{ animation: 'fadeUp 0.3s ease' }}>
+          <svg className="w-4 h-4 text-primary-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22,4 12,14.01 9,11.01" /></svg>
           {toast}
         </div>
       )}
 
-<<<<<<< HEAD
       {/* Detail Modal */}
-=======
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
       {detail && (
         <DetailModal
           order={detail}
           onClose={() => setDetail(null)}
           onStatusChange={(id, status) => { handleStatusChange(id, status); setDetail(null) }}
-<<<<<<< HEAD
           templateList={templateList}
         />
       )}
@@ -2271,11 +1785,11 @@ export default function AdminDashboard() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-64 bg-sage-900 border-r border-sage-800 z-50 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+      <aside className={`fixed top-0 left-0 h-full w-64 bg-slate-900 border-r border-slate-800 z-50 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         {/* Logo */}
-        <div className="px-6 py-5 border-b border-sage-800">
-          <h1 className="font-serif font-bold text-lg text-ivory-200">Katresnan</h1>
-          <p className="text-sage-500 text-xs">Admin Dashboard</p>
+        <div className="px-6 py-5 border-b border-slate-800">
+          <h1 className="font-serif font-bold text-lg text-surface-200">Katresnan</h1>
+          <p className="text-slate-500 text-xs">Admin Dashboard</p>
         </div>
 
         {/* Nav */}
@@ -2285,8 +1799,8 @@ export default function AdminDashboard() {
               key={t.id}
               onClick={() => { setActiveTab(t.id); setSidebarOpen(false) }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === t.id
-                ? 'bg-sage-800 text-gold-400 shadow-lg shadow-sage-950/50'
-                : 'text-sage-400 hover:bg-sage-800/50 hover:text-ivory-200'
+                ? 'bg-slate-800 text-primary-400 shadow-lg shadow-slate-950/50'
+                : 'text-slate-400 hover:bg-slate-800/50 hover:text-surface-200'
                 }`}
             >
               {t.icon}
@@ -2301,16 +1815,16 @@ export default function AdminDashboard() {
         </nav>
 
         {/* Footer */}
-        <div className="px-3 py-4 border-t border-sage-800 space-y-1">
+        <div className="px-3 py-4 border-t border-slate-800 space-y-1">
           <button
             onClick={loadData}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-sage-400 hover:bg-sage-800/50 hover:text-ivory-200 transition-all"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-slate-400 hover:bg-slate-800/50 hover:text-surface-200 transition-all"
           >
             {icons.refresh} Refresh Data
           </button>
           <button
             onClick={() => { sessionStorage.removeItem('katresnan_admin'); setAuthed(false) }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-sage-400 hover:bg-red-900/20 hover:text-red-400 transition-all"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-slate-400 hover:bg-red-900/20 hover:text-red-400 transition-all"
           >
             {icons.logout} Keluar
           </button>
@@ -2320,18 +1834,18 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <main className="lg:ml-64 min-h-screen">
         {/* Top bar */}
-        <div className="border-b border-sage-800 px-4 lg:px-8 py-4 sticky top-0 bg-sage-950/95 backdrop-blur z-30 flex items-center gap-4">
+        <div className="border-b border-slate-800 px-4 lg:px-8 py-4 sticky top-0 bg-slate-950/95 backdrop-blur z-30 flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden w-10 h-10 rounded-xl bg-sage-900 border border-sage-700 flex items-center justify-center text-sage-400"
+            className="lg:hidden w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-400"
           >
             {icons.menu}
           </button>
           <div>
-            <h2 className="font-serif font-bold text-lg text-ivory-200">
+            <h2 className="font-serif font-bold text-lg text-surface-200">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
-            <p className="text-sage-500 text-xs">
+            <p className="text-slate-500 text-xs">
               {activeTab === 'orders' ? 'Kelola semua pesanan undangan' :
                 activeTab === 'templates' ? 'Tambah, edit, dan hapus template undangan' :
                   'Atur harga dan diskon paket undangan'}
@@ -2359,116 +1873,6 @@ export default function AdminDashboard() {
           )}
         </div>
       </main>
-=======
-        />
-      )}
-
-      {/* Header */}
-      <div className="border-b border-[#1a3028] px-4 py-4 sticky top-0 bg-[#0f1a13]/95 backdrop-blur z-40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div>
-            <p className="font-bold text-[#e8f0e8]">Katresnan Admin</p>
-            <p className="text-[#3a5a48] text-xs">Dashboard Pesanan</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={loadData}
-              className="w-8 h-8 rounded-lg bg-[#1a2e1d] border border-[#2a4a38] flex items-center justify-center text-[#5a9e80] hover:border-[#4ecdc4] transition-colors"
-            >
-              R
-            </button>
-            <button
-              onClick={() => { sessionStorage.removeItem('katresnan_admin'); setAuthed(false) }}
-              className="text-xs px-3 py-1.5 bg-[#1a2e1d] border border-[#2a4a38] text-[#5a9e80] rounded-lg hover:border-red-800 hover:text-red-400 transition-colors"
-            >
-              Keluar
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
-
-        {/* Stats */}
-        {stats && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            <StatCard icon="~"  label="Total Order"    value={stats.total}                                    color="bg-[#1a3028]" />
-            <StatCard icon="!"  label="Perlu Aksi"     value={stats.pending + stats.menunggu_konfirmasi}      color="bg-amber-900/30" />
-            <StatCard icon=">"  label="Diproses"       value={stats.diproses}                                 color="bg-purple-900/30" />
-            <StatCard icon="ok" label="Selesai"        value={stats.selesai}                                  color="bg-green-900/30" />
-            <StatCard icon="Rp" label="Revenue Bulan"  value={formatRp(stats.revenue_bulan_ini)}
-              sub={'Total: ' + formatRp(stats.revenue_total)} color="bg-[#03554e]/30" />
-          </div>
-        )}
-
-        {/* Filter + Search */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="flex-1">
-            <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Cari nama, email, WA, atau Order ID..."
-              className="w-full bg-[#1a2e1d] border border-[#2a4a38] focus:border-[#4ecdc4] rounded-xl px-4 py-2.5 text-sm text-[#e8f0e8] outline-none transition-colors placeholder:text-[#3a5a48]"
-            />
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            {['semua', 'pending', 'menunggu_konfirmasi', 'diproses', 'selesai', 'dibatalkan'].map(s => (
-              <button
-                key={s}
-                onClick={() => setFilter(s)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                  filterStatus === s
-                    ? 'bg-[#03554e] text-white border border-[#03554e]'
-                    : 'bg-[#1a2e1d] border border-[#2a4a38] text-[#5a9e80] hover:border-[#4ecdc4]'
-                }`}
-              >
-                {s === 'semua' ? 'Semua' : (STATUS_CFG[s]?.label || s)}
-                {s !== 'semua' && stats && (
-                  <span className="ml-1.5 opacity-60">
-                    ({s === 'pending' ? stats.pending
-                      : s === 'menunggu_konfirmasi' ? stats.menunggu_konfirmasi
-                      : s === 'diproses' ? stats.diproses
-                      : s === 'selesai' ? stats.selesai
-                      : stats.dibatalkan})
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Orders list */}
-        {loading ? (
-          <div className="space-y-3">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="bg-[#1a2e1d] border border-[#2a4a38] rounded-2xl p-4 animate-pulse">
-                <div className="h-4 bg-[#2a4a38] rounded w-1/3 mb-2" />
-                <div className="h-3 bg-[#2a4a38] rounded w-1/2" />
-              </div>
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-[#5a9e80] font-medium">Tidak ada order ditemukan</p>
-            <p className="text-[#3a5a48] text-sm mt-1">Coba ubah filter atau kata kunci pencarian</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-[#3a5a48] text-xs">{filtered.length} order ditampilkan</p>
-            {filtered.map(order => (
-              <div key={order.id} className={updating === order.id ? 'opacity-50 pointer-events-none' : ''}>
-                <OrderRow
-                  order={order}
-                  onStatusChange={handleStatusChange}
-                  onDetail={setDetail}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-      </div>
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     </div>
   )
 }

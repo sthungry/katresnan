@@ -56,9 +56,9 @@ const sections = [
 
 export default function KebijakanPrivasi() {
   return (
-    <div className="min-h-screen bg-[#fffde8] dark:bg-[#0f1a13]">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617]">
       {/* Header */}
-      <div className="bg-[#03554e] dark:bg-[#071310]">
+      <div className="bg-[#3B82F6] dark:bg-[#020617]">
         <div className="max-w-3xl mx-auto px-6 py-12">
           <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-6 transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export default function KebijakanPrivasi() {
             Kembali ke Beranda
           </Link>
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-full bg-[#ffdce2] flex items-center justify-center text-xl">🔒</div>
+            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-xl">🔒</div>
             <span className="text-white/60 text-sm font-medium uppercase tracking-widest">Katresnan</span>
           </div>
           <h1 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">Kebijakan Privasi</h1>
@@ -78,8 +78,8 @@ export default function KebijakanPrivasi() {
       {/* Content */}
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Intro */}
-        <div className="bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-2xl p-6 mb-8">
-          <p className="text-[#1a2e1d] dark:text-[#e8f0e8] leading-relaxed">
+        <div className="bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-2xl p-6 mb-8">
+          <p className="text-[#0f172a] dark:text-[#f1f5f9] leading-relaxed">
             <strong>Katresnan</strong> berkomitmen untuk melindungi privasi pengguna kami. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda ketika Anda menggunakan situs web kami.
           </p>
         </div>
@@ -87,21 +87,21 @@ export default function KebijakanPrivasi() {
         {/* Sections */}
         <div className="space-y-6">
           {sections.map((s) => (
-            <div key={s.num} className="bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-2xl p-6">
+            <div key={s.num} className="bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-2xl p-6">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ffdce2] to-[#fff5c0] dark:from-[#1a3028] dark:to-[#2a4a38] flex items-center justify-center font-bold text-sm text-[#03554e] dark:text-[#4ecdc4] flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#e2e8f0] to-[#fff5c0] dark:from-[#1e293b] dark:to-[#1e293b] flex items-center justify-center font-bold text-sm text-primary-800 dark:text-[#60a5fa] flex-shrink-0 mt-0.5">
                   {s.num}
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-display font-bold text-lg text-[#1a2e1d] dark:text-[#e8f0e8] mb-3">{s.title}</h2>
+                  <h2 className="font-display font-bold text-lg text-[#0f172a] dark:text-[#f1f5f9] mb-3">{s.title}</h2>
                   {s.content && (
-                    <p className="text-[#6b8f72] dark:text-[#7aaa90] text-sm leading-relaxed mb-3">{s.content}</p>
+                    <p className="text-[#64748b] dark:text-[#94a3b8] text-sm leading-relaxed mb-3">{s.content}</p>
                   )}
                   {s.list && (
                     <ul className="space-y-2">
                       {s.list.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-sm text-[#6b8f72] dark:text-[#7aaa90]">
-                          <span className="w-5 h-5 rounded-full bg-[#ffdce2] dark:bg-[#2a4a38] text-[#e8879a] dark:text-[#4ecdc4] flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-[#64748b] dark:text-[#94a3b8]">
+                          <span className="w-5 h-5 rounded-full bg-primary-100 dark:bg-[#1e293b] text-[#3B82F6] dark:text-[#60a5fa] flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
                           {item}
                         </li>
                       ))}
@@ -113,7 +113,7 @@ export default function KebijakanPrivasi() {
           ))}
 
           {/* Contact section */}
-          <div className="bg-[#03554e] dark:bg-[#1a3028] rounded-2xl p-6 text-white">
+          <div className="bg-[#3B82F6] dark:bg-[#1e293b] rounded-2xl p-6 text-white">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">8</div>
               <div>
@@ -146,19 +146,19 @@ export default function KebijakanPrivasi() {
         </div>
 
         {/* Footer note */}
-        <div className="mt-8 p-5 bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] rounded-2xl text-center">
-          <p className="text-sm text-[#6b8f72] dark:text-[#7aaa90] leading-relaxed">
+        <div className="mt-8 p-5 bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-2xl text-center">
+          <p className="text-sm text-[#64748b] dark:text-[#94a3b8] leading-relaxed">
             Dengan menggunakan situs web kami, Anda menyetujui Kebijakan Privasi ini.<br/>
-            Terima kasih telah mempercayakan <strong className="text-[#03554e] dark:text-[#4ecdc4]">katresnan.id</strong> untuk kebutuhan undangan digital Anda.
+            Terima kasih telah mempercayakan <strong className="text-primary-800 dark:text-[#60a5fa]">katresnan.id</strong> untuk kebutuhan undangan digital Anda.
           </p>
         </div>
 
         {/* Nav to other legal page */}
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
-          <Link href="/" className="flex-1 border border-[#ffdce2] dark:border-[#2a4a38] text-[#03554e] dark:text-[#4ecdc4] font-semibold px-6 py-3 rounded-full text-sm text-center hover:bg-[#ffdce2]/30 transition-colors">
+          <Link href="/" className="flex-1 border border-[#e2e8f0] dark:border-[#1e293b] text-primary-800 dark:text-[#60a5fa] font-semibold px-6 py-3 rounded-full text-sm text-center hover:bg-primary-100/30 transition-colors">
             ← Kembali ke Beranda
           </Link>
-          <Link href="/syarat-ketentuan" className="flex-1 bg-[#03554e] dark:bg-[#1a5c52] text-white font-semibold px-6 py-3 rounded-full text-sm text-center hover:bg-[#023d38] transition-colors">
+          <Link href="/syarat-ketentuan" className="flex-1 bg-[#3B82F6] dark:bg-[#1a5c52] text-white font-semibold px-6 py-3 rounded-full text-sm text-center hover:bg-[#2563eb] transition-colors">
             Lihat Syarat & Ketentuan →
           </Link>
         </div>

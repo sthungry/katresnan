@@ -3,10 +3,7 @@
 // Setiap layout = struktur & urutan section yang berbeda
 // ============================================================
 import type { Layout } from './types'
-<<<<<<< HEAD
 import type { SectionId } from '../types'
-=======
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
 
 export const LAYOUTS: Record<string, Layout> = {
 
@@ -16,12 +13,23 @@ export const LAYOUTS: Record<string, Layout> = {
     id: 'classic',
     name: 'Classic Scroll',
     description: 'Layout klasik dengan urutan standar, cocok untuk semua tema',
-<<<<<<< HEAD
     sections: ['cover','pembuka','mempelai','countdown','acara','galeri','rsvp','amplop','closing'] as SectionId[],
-=======
-    sections: ['cover','pembuka','mempelai','countdown','acara','galeri','rsvp','amplop','closing'],
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     config: {
+      coverStyle:    'fullscreen',
+      mempelaiStyle: 'stacked',
+      galeriFeed:    'masonry',
+      acara:         'cards',
+    },
+  },
+
+  // ── Layout: Desktop Split Classic ──────────────────────────────────────────
+  'split-classic': {
+    id: 'split-classic',
+    name: 'Desktop Split Classic',
+    description: 'Layout klasik dengan fitur desktop terbelah (slideshow di kiri, konten gulir di kanan)',
+    sections: ['cover','pembuka','mempelai','countdown','acara','galeri','rsvp','amplop','closing'] as SectionId[],
+    config: {
+      desktopSplit:  true,
       coverStyle:    'fullscreen',
       mempelaiStyle: 'stacked',
       galeriFeed:    'masonry',
@@ -35,12 +43,23 @@ export const LAYOUTS: Record<string, Layout> = {
     id: 'story-first',
     name: 'Story First',
     description: 'Cerita cinta dan perjalanan ditampilkan di awal sebelum detail acara',
-<<<<<<< HEAD
     sections: ['cover','pembuka','mempelai','cerita','countdown','acara','galeri','rsvp','amplop','closing'] as SectionId[],
-=======
-    sections: ['cover','pembuka','mempelai','cerita','countdown','acara','galeri','rsvp','amplop','closing'],
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     config: {
+      coverStyle:    'fullscreen',
+      mempelaiStyle: 'side-by-side',
+      galeriFeed:    'masonry',
+      acara:         'timeline',
+    },
+  },
+
+  // ── Layout: Desktop Split Story ──────────────────────────────────────────
+  'split-story': {
+    id: 'split-story',
+    name: 'Desktop Split Story',
+    description: 'Cerita cinta di awal dengan fitur desktop terbelah',
+    sections: ['cover','pembuka','mempelai','cerita','countdown','acara','galeri','rsvp','amplop','closing'] as SectionId[],
+    config: {
+      desktopSplit:  true,
       coverStyle:    'fullscreen',
       mempelaiStyle: 'side-by-side',
       galeriFeed:    'masonry',
@@ -54,11 +73,7 @@ export const LAYOUTS: Record<string, Layout> = {
     id: 'magazine',
     name: 'Modern Magazine',
     description: 'Tampilan bersih ala majalah modern, galeri slideshow, acara minimalis',
-<<<<<<< HEAD
     sections: ['cover','mempelai','galeri','acara','countdown','rsvp','amplop','closing'] as SectionId[],
-=======
-    sections: ['cover','mempelai','galeri','acara','countdown','rsvp','amplop','closing'],
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     config: {
       coverStyle:    'split',
       mempelaiStyle: 'side-by-side',
@@ -73,11 +88,7 @@ export const LAYOUTS: Record<string, Layout> = {
     id: 'islamic',
     name: 'Islamic Traditional',
     description: 'Nuansa islami kuat, pembuka ayat Quran, timeline acara',
-<<<<<<< HEAD
     sections: ['cover','pembuka','mempelai','countdown','acara','galeri','rsvp','amplop','closing'] as SectionId[],
-=======
-    sections: ['cover','pembuka','mempelai','countdown','acara','galeri','rsvp','amplop','closing'],
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     config: {
       coverStyle:    'centered',
       mempelaiStyle: 'card',
@@ -92,11 +103,7 @@ export const LAYOUTS: Record<string, Layout> = {
     id: 'gallery-focus',
     name: 'Gallery Focus',
     description: 'Galeri foto besar & menonjol, cocok untuk paket dengan banyak foto',
-<<<<<<< HEAD
     sections: ['cover','galeri','mempelai','cerita','countdown','acara','rsvp','amplop','closing'] as SectionId[],
-=======
-    sections: ['cover','galeri','mempelai','cerita','countdown','acara','rsvp','amplop','closing'],
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     config: {
       coverStyle:    'fullscreen',
       mempelaiStyle: 'card',

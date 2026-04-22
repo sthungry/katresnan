@@ -86,21 +86,21 @@ export const TEMPLATES: Record<string, Template> = {
   },
 
   // ── RUSTIC SAGE ───────────────────────────────────────────────────────────
-  'sage-classic': {
+  'slate-classic': {
     id: 'sage-classic', name: 'Rustic Sage Classic',
     layoutId: 'classic', themeId: 'rustic-sage',
     previewUrl: '/templates/previews/sage-classic.jpg',
     category: 'rustic', isPremium: false,
     tags: ['green','sage','rustic','nature'],
   },
-  'sage-story': {
+  'slate-story': {
     id: 'sage-story', name: 'Rustic Sage Story',
     layoutId: 'story-first', themeId: 'rustic-sage',
     previewUrl: '/templates/previews/sage-story.jpg',
     category: 'rustic', isPremium: false,
     tags: ['green','sage','story','nature'],
   },
-  'sage-magazine': {
+  'slate-magazine': {
     id: 'sage-magazine', name: 'Rustic Sage Magazine',
     layoutId: 'magazine', themeId: 'rustic-sage',
     previewUrl: '/templates/previews/sage-magazine.jpg',
@@ -200,6 +200,39 @@ export const TEMPLATES: Record<string, Template> = {
     previewUrl: '/templates/previews/vintage-story.jpg',
     category: 'elegant', isPremium: true,
     tags: ['vintage','cream','story','premium'],
+  },
+
+  // ── TANPA FOTO ────────────────────────────────────────────────────────────────
+  // Template yang TIDAK memerlukan foto pasangan
+  'arabesque-classic': {
+    id: 'arabesque-classic', name: 'Arabesque Classic',
+    layoutId: 'classic', themeId: 'rustic-sage',
+    previewUrl: '/templates/previews/arabesque-classic.jpg',
+    category: 'elegant', isPremium: false,
+    tags: ['arabesque','gold','dark','tanpa-foto','islamic','elegant','no-photo'],
+  },
+  'botanical-sage': {
+    id: 'botanical-sage', name: 'Botanical Sage',
+    layoutId: 'classic', themeId: 'rustic-sage',
+    previewUrl: '/templates/previews/botanical-sage.jpg',
+    category: 'floral', isPremium: false,
+    tags: ['botanical','sage','green','cream','gold','tanpa-foto','no-photo','floral','peacock'],
+  },
+
+  // ── GILDED NOIR ───────────────────────────────────────────────────────────────
+  'gilded-classic': {
+    id: 'gilded-classic', name: 'Gilded Noir Classic',
+    layoutId: 'split-classic', themeId: 'gilded-noir',
+    previewUrl: '/templates/previews/gilded-classic.jpg',
+    category: 'elegant', isPremium: true,
+    tags: ['gold','dark','noir','cinematic','premium'],
+  },
+  'gilded-story': {
+    id: 'gilded-story', name: 'Gilded Noir Story',
+    layoutId: 'split-story', themeId: 'gilded-noir',
+    previewUrl: '/templates/previews/gilded-story.jpg',
+    category: 'elegant', isPremium: true,
+    tags: ['gold','dark','story','premium'],
   },
 }
 

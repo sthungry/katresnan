@@ -36,11 +36,8 @@ export interface WeddingData {
   resepsi_maps_url: string
 
   // Media
-<<<<<<< HEAD
   pria_foto_url?: string
   wanita_foto_url?: string
-=======
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
   foto_urls: string[]
   video_youtube_url: string
   musik_pilihan: string
@@ -148,6 +145,7 @@ export interface Layout {
 
   // Layout-specific config
   config: {
+    desktopSplit?: boolean                               // enable split screen desktop mode
     coverStyle: 'fullscreen' | 'split' | 'centered'      // cover photo style
     mempelaiStyle: 'stacked' | 'side-by-side' | 'card'  // how mempelai shown
     galeriFeed: 'masonry' | 'grid' | 'slideshow'         // gallery layout

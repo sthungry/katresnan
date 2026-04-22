@@ -8,13 +8,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-<<<<<<< HEAD
-    { media: '(prefers-color-scheme: light)', color: '#FAF8F5' },
-    { media: '(prefers-color-scheme: dark)',  color: '#0f1512' },
-=======
-    { media: '(prefers-color-scheme: light)', color: '#fffde8' },
-    { media: '(prefers-color-scheme: dark)',  color: '#0f1a13' },
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
+    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
+    { media: '(prefers-color-scheme: dark)',  color: '#020617' },
   ],
 }
 

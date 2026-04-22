@@ -32,7 +32,7 @@ export default function PromoBanner() {
   const pad = (n: number) => String(n).padStart(2, '0')
 
   return (
-    <div className="relative z-50 bg-gradient-to-r from-[#03554e] via-[#057a71] to-[#03554e] dark:from-[#071310] dark:via-[#0f2e26] dark:to-[#071310] text-white text-center py-2.5 px-6">
+    <div className="relative z-50 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-white text-center py-2.5 px-6">
       <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs md:text-sm">
         <span className="font-semibold">🎉 PROMO AKHIR BULAN — Diskon 20% semua paket!</span>
         <div className="flex items-center gap-1.5">
@@ -50,7 +50,7 @@ export default function PromoBanner() {
             </span>
           ))}
         </div>
-        <a href="#harga" className="bg-[#ffdce2] text-[#03554e] font-bold text-xs px-3 py-1 rounded-full hover:bg-white transition-colors whitespace-nowrap">
+        <a href="#harga" className="bg-primary-100 text-primary-800 font-bold text-xs px-3 py-1 rounded-full hover:bg-white transition-colors whitespace-nowrap">
           Klaim Sekarang →
         </a>
       </div>

@@ -580,6 +580,64 @@ export function SectionClosing({ wedding: w, theme }: SectionProps) {
   )
 }
 
+// ─── Component: Desktop Slideshow (For Split Layouts) ─────────────────────────
+function DesktopSlideshow({ wedding, theme }: { wedding: WeddingData; theme: Theme }) {
+  const fotos = (wedding.foto_urls || []).filter(Boolean)
+  const [cur, setCur] = useState(0)
+  const [fade, setFade] = useState(true)
+  useEffect(() => {
+    if (fotos.length < 2) return
+    const id = setInterval(() => {
+      setFade(false)
+      setTimeout(() => { setCur(c => (c + 1) % fotos.length); setFade(true) }, 350)
+    }, 4500)
+    return () => clearInterval(id)
+  }, [fotos.length])
+  function goTo(i: number) { setFade(false); setTimeout(() => { setCur(i); setFade(true) }, 300) }
+  function prev() { goTo((cur - 1 + fotos.length) % fotos.length) }
+  function next() { goTo((cur + 1) % fotos.length) }
+  
+  if (!fotos.length) return (
+    <div className="w-full h-full flex items-center justify-center" style={{ background: theme.colors.bgAlt }}>
+      <p style={{ fontFamily: `'${theme.fonts.display}', serif`, fontSize: '2rem', color: theme.colors.textMuted, opacity: 0.3 }}>Gallery</p>
+    </div>
+  )
+  return (
+    <div className="relative w-full h-full overflow-hidden" style={{ background: theme.colors.bg }}>
+      <img key={cur} src={fotos[cur]} alt="" className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: 'center top', opacity: fade ? 1 : 0, transition: 'opacity 0.4s ease' }} />
+      <div className="absolute inset-0" style={{ background: `linear-gradient(180deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.0) 35%,rgba(0,0,0,0.7) 100%)` }} />
+      <div className="absolute bottom-0 left-0 right-0 px-12 pb-12 z-10">
+        <p style={{ fontFamily: `'${theme.fonts.display}', serif`, fontSize: '0.58rem', letterSpacing: '0.55em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>Undangan Pernikahan</p>
+        <h2 style={{ fontFamily: `'${theme.fonts.display}', serif`, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2.4rem,3.8vw,3.8rem)', color: '#fff', lineHeight: 0.95, textShadow: '0 2px 24px rgba(0,0,0,0.55)', margin: '0 0 4px' }}>
+          {wedding.pria_nama_panggilan || 'Nama'}
+        </h2>
+        <p style={{ fontFamily: `'${theme.fonts.script}', cursive`, fontSize: 'clamp(1.4rem,2.2vw,2rem)', color: theme.colors.primary, lineHeight: 1, margin: '4px 0' }}>&amp;</p>
+        <h2 style={{ fontFamily: `'${theme.fonts.display}', serif`, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2.4rem,3.8vw,3.8rem)', color: '#fff', lineHeight: 0.95, textShadow: '0 2px 24px rgba(0,0,0,0.55)', margin: '4px 0 12px' }}>
+          {wedding.wanita_nama_panggilan || 'Nama'}
+        </h2>
+        <div style={{ width: 40, height: 1, background: `linear-gradient(to right,transparent,${theme.colors.primary},transparent)`, marginBottom: 10 }} />
+      </div>
+      {fotos.length > 1 && (
+        <>
+          <button onClick={prev} className="absolute left-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center transition-all hover:scale-110 active:scale-90"
+            style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(0,0,0,0.3)', border: `1px solid rgba(255,255,255,0.3)`, color: '#fff', fontSize: '1.4rem', cursor: 'pointer', backdropFilter: 'blur(8px)' }}>&#8249;</button>
+          <button onClick={next} className="absolute right-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center transition-all hover:scale-110 active:scale-90"
+            style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(0,0,0,0.3)', border: `1px solid rgba(255,255,255,0.3)`, color: '#fff', fontSize: '1.4rem', cursor: 'pointer', backdropFilter: 'blur(8px)' }}>&#8250;</button>
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 items-center">
+            {fotos.map((_, i) => (
+              <button key={i} onClick={() => goTo(i)} style={{ width: i === cur ? 24 : 7, height: 7, borderRadius: 4, background: i === cur ? theme.colors.primary : 'rgba(255,255,255,0.25)', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease', padding: 0 }} />
+            ))}
+          </div>
+          <div className="absolute top-7 right-8 z-20">
+            <span style={{ fontFamily: `'${theme.fonts.display}', serif`, fontSize: '0.58rem', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)' }}>{String(cur + 1).padStart(2, '0')} / {String(fotos.length).padStart(2, '0')}</span>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 // ─── Main Renderer ────────────────────────────────────────────────────────────
 export default function TemplateRenderer({ wedding, templateId }: { wedding: WeddingData; templateId: string }) {
   const [opened,  setOpened]  = useState(false)
@@ -595,7 +653,9 @@ export default function TemplateRenderer({ wedding, templateId }: { wedding: Wed
   function handleOpen() {
     setOpened(true)
     audioRef.current?.play().then(() => setPlaying(true)).catch(() => {})
-    window.scrollTo(0, 0)
+    const scrollContainer = document.getElementById('template-scrollable-area')
+    if (scrollContainer) scrollContainer.scrollTop = 0
+    else window.scrollTo(0, 0)
   }
 
   function toggleMusic() {
@@ -630,6 +690,24 @@ export default function TemplateRenderer({ wedding, templateId }: { wedding: Wed
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: ${theme.colors.bg}; }
         ::-webkit-scrollbar-thumb { background: ${theme.colors.border}; border-radius: 3px; }
+
+        @media(min-width: 768px) {
+          .template-split-left {
+             display: block; position: fixed; top: 0; left: 0; width: 66.667vw; height: 100vh; z-index: 2;
+          }
+          .template-split-right {
+             position: fixed; top: 0; left: 66.667vw; width: 33.333vw; height: 100vh;
+             overflow-y: auto; overflow-x: hidden; z-index: 3;
+             background: ${theme.colors.bg};
+             box-shadow: -4px 0 24px rgba(0,0,0,0.5);
+          }
+          .template-split-right::-webkit-scrollbar { width: 4px; }
+          .template-split-right::-webkit-scrollbar-thumb { background: ${theme.colors.border}; border-radius: 2px; }
+        }
+        @media(max-width: 767px) {
+          .template-split-left { display: none; }
+          .template-split-right { width: 100%; position: relative; z-index: 1; min-height: 100vh; }
+        }
       `}</style>
 
       <audio ref={audioRef} loop preload="none">
@@ -647,12 +725,31 @@ export default function TemplateRenderer({ wedding, templateId }: { wedding: Wed
         </div>
       )}
 
-      {!opened ? (
-        <SectionCover {...props} onOpen={handleOpen} playing={playing} onToggleMusic={toggleMusic}/>
+      {layout.config.desktopSplit ? (
+        <div className="template-split-root">
+          <div className="template-split-left">
+            <DesktopSlideshow wedding={wedding} theme={theme} />
+          </div>
+          <div className="template-split-right" id="template-scrollable-area">
+            {!opened ? (
+              <SectionCover {...props} onOpen={handleOpen} playing={playing} onToggleMusic={toggleMusic}/>
+            ) : (
+              <main>
+                {layout.sections.filter(s => s !== 'cover').map(sId => SECTION_MAP[sId])}
+              </main>
+            )}
+          </div>
+        </div>
       ) : (
-        <main>
-          {layout.sections.filter(s => s !== 'cover').map(sId => SECTION_MAP[sId])}
-        </main>
+        <div id="template-scrollable-area">
+          {!opened ? (
+            <SectionCover {...props} onOpen={handleOpen} playing={playing} onToggleMusic={toggleMusic}/>
+          ) : (
+            <main>
+              {layout.sections.filter(s => s !== 'cover').map(sId => SECTION_MAP[sId])}
+            </main>
+          )}
+        </div>
       )}
     </>
   )

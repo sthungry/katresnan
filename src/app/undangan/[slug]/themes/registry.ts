@@ -325,6 +325,38 @@ export const THEMES: Record<string, Theme> = {
     },
     darkSections: ['countdown', 'amplop'],
   },
+
+  // ── 11. Gilded Noir (From Stitch) ─────────────────────────────────────────
+  'gilded-noir': {
+    id: 'gilded-noir',
+    name: 'Gilded Noir',
+    colors: {
+      primary:     '#f2ca50',
+      secondary:   '#d4af37',
+      bg:          '#131313',
+      bgAlt:       '#1b1b1b',
+      bgDark:      '#0e0e0e',
+      text:        '#e2e2e2',
+      textMuted:   '#d0c5af',
+      textLight:   '#e2e2e2',
+      border:      '#4d4635',
+      highlight:   '#2a2a2a',
+    },
+    fonts: {
+      display:    'Noto Serif',
+      body:       'Work Sans',
+      script:     'Pinyon Script',
+      displayUrl: 'https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;600&display=swap',
+      scriptUrl:  'https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap',
+    },
+    ornaments: {
+      petal:   ['✨', '🌟', '💫', '⭐', '✨'],
+      divider: '✦',
+      section: '👑',
+      cover:   'geometric',
+    },
+    darkSections: ['countdown', 'amplop', 'closing'],
+  },
 }
 
 // ─── Helper: get theme by id, fallback to floral-pink ────────────────────────

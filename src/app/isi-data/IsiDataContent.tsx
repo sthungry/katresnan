@@ -109,13 +109,13 @@ function Input({ label, value, onChange, placeholder, required, hint, type = 'te
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-[#1a2e1d] dark:text-[#e8f0e8] uppercase tracking-wide mb-1.5">
-        {label} {required && <span className="text-[#e8879a]">*</span>}
+      <label className="block text-xs font-bold text-[#0f172a] dark:text-[#f1f5f9] uppercase tracking-wide mb-1.5">
+        {label} {required && <span className="text-[#3B82F6]">*</span>}
       </label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="w-full bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] focus:border-[#03554e] dark:focus:border-[#4ecdc4] rounded-xl px-4 py-3 text-sm text-[#1a2e1d] dark:text-[#e8f0e8] outline-none transition-colors placeholder:text-[#c0c0c0]"
+        className="w-full bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] focus:border-[#3B82F6] dark:focus:border-[#60a5fa] rounded-xl px-4 py-3 text-sm text-[#0f172a] dark:text-[#f1f5f9] outline-none transition-colors placeholder:text-[#94a3b8]"
       />
-      {hint && <p className="text-[11px] text-[#8a9e8c] mt-1">{hint}</p>}
+      {hint && <p className="text-[11px] text-[#94a3b8] mt-1">{hint}</p>}
     </div>
   )
 }
@@ -126,11 +126,11 @@ function Textarea({ label, value, onChange, placeholder, hint, rows = 3 }: {
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-[#1a2e1d] dark:text-[#e8f0e8] uppercase tracking-wide mb-1.5">{label}</label>
+      <label className="block text-xs font-bold text-[#0f172a] dark:text-[#f1f5f9] uppercase tracking-wide mb-1.5">{label}</label>
       <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={rows}
-        className="w-full bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] focus:border-[#03554e] rounded-xl px-4 py-3 text-sm text-[#1a2e1d] dark:text-[#e8f0e8] outline-none transition-colors placeholder:text-[#c0c0c0] resize-none"
+        className="w-full bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] focus:border-[#3B82F6] rounded-xl px-4 py-3 text-sm text-[#0f172a] dark:text-[#f1f5f9] outline-none transition-colors placeholder:text-[#94a3b8] resize-none"
       />
-      {hint && <p className="text-[11px] text-[#8a9e8c] mt-1">{hint}</p>}
+      {hint && <p className="text-[11px] text-[#94a3b8] mt-1">{hint}</p>}
     </div>
   )
 }
@@ -141,9 +141,9 @@ function Select({ label, value, onChange, options }: {
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-[#1a2e1d] dark:text-[#e8f0e8] uppercase tracking-wide mb-1.5">{label}</label>
+      <label className="block text-xs font-bold text-[#0f172a] dark:text-[#f1f5f9] uppercase tracking-wide mb-1.5">{label}</label>
       <select value={value} onChange={e => onChange(e.target.value)}
-        className="w-full bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] focus:border-[#03554e] rounded-xl px-4 py-3 text-sm text-[#1a2e1d] dark:text-[#e8f0e8] outline-none transition-colors">
+        className="w-full bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] focus:border-[#3B82F6] rounded-xl px-4 py-3 text-sm text-[#0f172a] dark:text-[#f1f5f9] outline-none transition-colors">
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
@@ -154,13 +154,13 @@ function Toggle({ label, value, onChange, hint }: {
   label: string; value: boolean; onChange: (v: boolean) => void; hint?: string
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 p-4 bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] rounded-xl">
+    <div className="flex items-start justify-between gap-4 p-4 bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-xl">
       <div>
-        <p className="text-sm font-semibold text-[#1a2e1d] dark:text-[#e8f0e8]">{label}</p>
-        {hint && <p className="text-xs text-[#8a9e8c] mt-0.5">{hint}</p>}
+        <p className="text-sm font-semibold text-[#0f172a] dark:text-[#f1f5f9]">{label}</p>
+        {hint && <p className="text-xs text-[#94a3b8] mt-0.5">{hint}</p>}
       </div>
       <button type="button" onClick={() => onChange(!value)}
-        className={`flex-shrink-0 w-12 h-6 rounded-full transition-colors relative ${value ? 'bg-[#03554e]' : 'bg-[#d0d0d0] dark:bg-[#2a4a38]'}`}>
+        className={`flex-shrink-0 w-12 h-6 rounded-full transition-colors relative ${value ? 'bg-[#3B82F6]' : 'bg-[#cbd5e1] dark:bg-[#1e293b]'}`}>
         <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${value ? 'translate-x-6' : 'translate-x-0.5'}`}/>
       </button>
     </div>
@@ -169,8 +169,8 @@ function Toggle({ label, value, onChange, hint }: {
 
 function SectionCard({ title, emoji, children }: { title: string; emoji: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white dark:bg-[#1a2e1d] rounded-2xl border border-[#ffdce2] dark:border-[#2a4a38] overflow-hidden">
-      <div className="bg-gradient-to-r from-[#03554e] to-[#057a71] px-5 py-3 flex items-center gap-2">
+    <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] overflow-hidden">
+      <div className="bg-gradient-to-r from-primary-800 to-[#2563eb] px-5 py-3 flex items-center gap-2">
         <span>{emoji}</span>
         <p className="text-white font-bold text-sm">{title}</p>
       </div>
@@ -188,12 +188,12 @@ function StepIndicator({ current }: { current: Step }) {
         return (
           <div key={step.id} className="flex items-center gap-1 flex-shrink-0">
             <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-bold transition-all ${
-              active ? 'bg-[#03554e] text-white' : done ? 'bg-[#d4ede9] dark:bg-[#1a3028] text-[#03554e] dark:text-[#4ecdc4]' : 'bg-[#f0f0f0] dark:bg-[#1a2e1d] text-[#8a9e8c]'
+              active ? 'bg-[#3B82F6] text-white' : done ? 'bg-[#dbeafe] dark:bg-[#1e293b] text-primary-800 dark:text-[#60a5fa]' : 'bg-[#f1f5f9] dark:bg-[#0f172a] text-[#94a3b8]'
             }`}>
               <span>{done ? '✓' : step.emoji}</span>
               <span className="hidden sm:inline">{step.label}</span>
             </div>
-            {i < STEPS.length - 2 && <div className={`w-4 h-px flex-shrink-0 ${done ? 'bg-[#03554e]' : 'bg-[#e0e0e0] dark:bg-[#2a4a38]'}`}/>}
+            {i < STEPS.length - 2 && <div className={`w-4 h-px flex-shrink-0 ${done ? 'bg-[#3B82F6]' : 'bg-[#e2e8f0] dark:bg-[#1e293b]'}`}/>}
           </div>
         )
       })}
@@ -215,14 +215,14 @@ function RekeningManager({ list, onChange }: { list: RekeningItem[]; onChange: (
   return (
     <div className="space-y-3">
       {list.length === 0 && (
-        <div className="text-center py-6 text-[#8a9e8c] text-sm border-2 border-dashed border-[#ffdce2] dark:border-[#2a4a38] rounded-xl">
+        <div className="text-center py-6 text-[#94a3b8] text-sm border-2 border-dashed border-[#e2e8f0] dark:border-[#1e293b] rounded-xl">
           Belum ada rekening. Klik tombol di bawah untuk menambahkan.
         </div>
       )}
       {list.map((r, i) => (
-        <div key={r.id} className="bg-[#fffde8] dark:bg-[#111d17] border border-[#ffdce2] dark:border-[#2a4a38] rounded-xl p-4 space-y-3">
+        <div key={r.id} className="bg-[#f8fafc] dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-xl p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#03554e] dark:text-[#4ecdc4] uppercase tracking-wide">
+            <span className="text-xs font-bold text-primary-800 dark:text-[#60a5fa] uppercase tracking-wide">
               Rekening {i + 1}
             </span>
             <button onClick={() => remove(r.id)}
@@ -233,42 +233,42 @@ function RekeningManager({ list, onChange }: { list: RekeningItem[]; onChange: (
           <div className="grid grid-cols-2 gap-3">
             {/* Kategori */}
             <div>
-              <label className="block text-[10px] font-bold text-[#8a9e8c] uppercase tracking-wide mb-1">Kategori</label>
+              <label className="block text-[10px] font-bold text-[#94a3b8] uppercase tracking-wide mb-1">Kategori</label>
               <select value={r.kategori} onChange={e => update(r.id, 'kategori', e.target.value)}
-                className="w-full bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-lg px-3 py-2 text-xs text-[#1a2e1d] dark:text-[#e8f0e8] outline-none">
+                className="w-full bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-lg px-3 py-2 text-xs text-[#0f172a] dark:text-[#f1f5f9] outline-none">
                 {KATEGORI_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
             {/* Bank */}
             <div>
-              <label className="block text-[10px] font-bold text-[#8a9e8c] uppercase tracking-wide mb-1">Bank / E-wallet</label>
+              <label className="block text-[10px] font-bold text-[#94a3b8] uppercase tracking-wide mb-1">Bank / E-wallet</label>
               <select value={r.bank} onChange={e => update(r.id, 'bank', e.target.value)}
-                className="w-full bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-lg px-3 py-2 text-xs text-[#1a2e1d] dark:text-[#e8f0e8] outline-none">
+                className="w-full bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-lg px-3 py-2 text-xs text-[#0f172a] dark:text-[#f1f5f9] outline-none">
                 {BANK_OPTIONS.map(b => <option key={b} value={b}>{b}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-[10px] font-bold text-[#8a9e8c] uppercase tracking-wide mb-1">Nomor Rekening / No. HP</label>
+            <label className="block text-[10px] font-bold text-[#94a3b8] uppercase tracking-wide mb-1">Nomor Rekening / No. HP</label>
             <input value={r.nomor} onChange={e => update(r.id, 'nomor', e.target.value)}
               placeholder="contoh: 1234567890"
-              className="w-full bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-lg px-3 py-2 text-sm text-[#1a2e1d] dark:text-[#e8f0e8] outline-none placeholder:text-[#c0c0c0]"
+              className="w-full bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-lg px-3 py-2 text-sm text-[#0f172a] dark:text-[#f1f5f9] outline-none placeholder:text-[#94a3b8]"
             />
           </div>
           <div>
-            <label className="block text-[10px] font-bold text-[#8a9e8c] uppercase tracking-wide mb-1">Nama Pemilik</label>
+            <label className="block text-[10px] font-bold text-[#94a3b8] uppercase tracking-wide mb-1">Nama Pemilik</label>
             <input value={r.nama} onChange={e => update(r.id, 'nama', e.target.value)}
               placeholder="Nama sesuai rekening"
-              className="w-full bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-lg px-3 py-2 text-sm text-[#1a2e1d] dark:text-[#e8f0e8] outline-none placeholder:text-[#c0c0c0]"
+              className="w-full bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-lg px-3 py-2 text-sm text-[#0f172a] dark:text-[#f1f5f9] outline-none placeholder:text-[#94a3b8]"
             />
           </div>
         </div>
       ))}
       {list.length < 6 && (
         <button onClick={add}
-          className="w-full py-3 border-2 border-dashed border-[#03554e]/30 dark:border-[#4ecdc4]/30 text-[#03554e] dark:text-[#4ecdc4] font-semibold text-sm rounded-xl hover:border-[#03554e] dark:hover:border-[#4ecdc4] hover:bg-[#d4ede9]/20 transition-all flex items-center justify-center gap-2">
+          className="w-full py-3 border-2 border-dashed border-[#3B82F6]/30 dark:border-[#60a5fa]/30 text-primary-800 dark:text-[#60a5fa] font-semibold text-sm rounded-xl hover:border-[#3B82F6] dark:hover:border-[#60a5fa] hover:bg-[#dbeafe]/20 transition-all flex items-center justify-center gap-2">
           + Tambah Rekening
-          <span className="text-xs text-[#8a9e8c] font-normal">({list.length}/6)</span>
+          <span className="text-xs text-[#94a3b8] font-normal">({list.length}/6)</span>
         </button>
       )}
     </div>
@@ -335,25 +335,25 @@ function PhotoUpload({ orderId, urls, onChange }: {
         onClick={() => !uploading && inputRef.current?.click()}
         className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
           dragOver
-            ? 'border-[#03554e] bg-[#d4ede9]/30 dark:bg-[#1a3028]'
+            ? 'border-[#3B82F6] bg-[#dbeafe]/30 dark:bg-[#1e293b]'
             : urls.length >= MAX
-              ? 'border-[#e0e0e0] dark:border-[#2a4a38] bg-[#f9f9f9] dark:bg-[#111d17] cursor-not-allowed opacity-60'
-              : 'border-[#ffdce2] dark:border-[#2a4a38] hover:border-[#03554e] hover:bg-[#d4ede9]/10'
+              ? 'border-[#e2e8f0] dark:border-[#1e293b] bg-[#f8fafc] dark:bg-[#0f172a] cursor-not-allowed opacity-60'
+              : 'border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6] hover:bg-[#dbeafe]/10'
         }`}
       >
         <input ref={inputRef} type="file" multiple accept="image/*" className="hidden"
           onChange={e => uploadFiles(e.target.files)} disabled={uploading || urls.length >= MAX}/>
         <div className="text-4xl mb-3">{uploading ? '⏳' : '📸'}</div>
         {uploading ? (
-          <p className="text-sm font-semibold text-[#03554e] dark:text-[#4ecdc4]">Mengupload foto...</p>
+          <p className="text-sm font-semibold text-primary-800 dark:text-[#60a5fa]">Mengupload foto...</p>
         ) : urls.length >= MAX ? (
-          <p className="text-sm text-[#8a9e8c]">Sudah mencapai maksimal {MAX} foto</p>
+          <p className="text-sm text-[#94a3b8]">Sudah mencapai maksimal {MAX} foto</p>
         ) : (
           <>
-            <p className="text-sm font-semibold text-[#1a2e1d] dark:text-[#e8f0e8] mb-1">
+            <p className="text-sm font-semibold text-[#0f172a] dark:text-[#f1f5f9] mb-1">
               Klik atau drag & drop foto di sini
             </p>
-            <p className="text-xs text-[#8a9e8c]">
+            <p className="text-xs text-[#94a3b8]">
               JPG, PNG, WEBP · Max 10MB per foto · {urls.length}/{MAX} foto
             </p>
           </>
@@ -362,13 +362,13 @@ function PhotoUpload({ orderId, urls, onChange }: {
 
       {/* Upload progress */}
       {Object.entries(progress).map(([name, pct]) => (
-        <div key={name} className="bg-[#fffde8] dark:bg-[#111d17] rounded-xl px-4 py-2">
+        <div key={name} className="bg-[#f8fafc] dark:bg-[#0f172a] rounded-xl px-4 py-2">
           <div className="flex items-center justify-between text-xs mb-1">
-            <span className="text-[#6b8f72] truncate max-w-[200px]">{name}</span>
-            <span className="text-[#03554e] dark:text-[#4ecdc4] font-bold">{pct}%</span>
+            <span className="text-[#64748b] truncate max-w-[200px]">{name}</span>
+            <span className="text-primary-800 dark:text-[#60a5fa] font-bold">{pct}%</span>
           </div>
-          <div className="h-1.5 bg-[#e0e0e0] dark:bg-[#2a4a38] rounded-full overflow-hidden">
-            <div className="h-full bg-[#03554e] dark:bg-[#4ecdc4] rounded-full transition-all" style={{ width: `${pct}%` }}/>
+          <div className="h-1.5 bg-[#e2e8f0] dark:bg-[#1e293b] rounded-full overflow-hidden">
+            <div className="h-full bg-[#3B82F6] dark:bg-[#60a5fa] rounded-full transition-all" style={{ width: `${pct}%` }}/>
           </div>
         </div>
       ))}
@@ -377,7 +377,7 @@ function PhotoUpload({ orderId, urls, onChange }: {
       {urls.length > 0 && (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
           {urls.map((url, i) => (
-            <div key={url} className="relative group aspect-square rounded-xl overflow-hidden bg-[#f0f0f0] dark:bg-[#1a2e1d]">
+            <div key={url} className="relative group aspect-square rounded-xl overflow-hidden bg-[#f1f5f9] dark:bg-[#0f172a]">
               <img src={url} alt={`Foto ${i+1}`} className="w-full h-full object-cover"/>
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button onClick={() => removePhoto(url)}
@@ -392,8 +392,8 @@ function PhotoUpload({ orderId, urls, onChange }: {
           ))}
           {urls.length < MAX && !uploading && (
             <div onClick={() => inputRef.current?.click()}
-              className="aspect-square rounded-xl border-2 border-dashed border-[#ffdce2] dark:border-[#2a4a38] hover:border-[#03554e] flex items-center justify-center cursor-pointer transition-colors">
-              <span className="text-2xl text-[#c0c0c0] hover:text-[#03554e]">+</span>
+              className="aspect-square rounded-xl border-2 border-dashed border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6] flex items-center justify-center cursor-pointer transition-colors">
+              <span className="text-2xl text-[#94a3b8] hover:text-primary-800">+</span>
             </div>
           )}
         </div>
@@ -443,7 +443,7 @@ function PortraitUpload({ orderId, url, onChange, label }: {
       <div
         onClick={() => !uploading && inputRef.current?.click()}
         className="relative w-32 h-32 rounded-full overflow-hidden cursor-pointer group border-2 border-dashed transition-all"
-        style={{ borderColor: url ? '#03554e' : '#ffdce2' }}
+        style={{ borderColor: url ? '#3B82F6' : '#e2e8f0' }}
       >
         {url ? (
           <>
@@ -453,19 +453,19 @@ function PortraitUpload({ orderId, url, onChange, label }: {
             </div>
           </>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-1 bg-[#f9f9f9] dark:bg-[#1a2e1d]">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-1 bg-[#f8fafc] dark:bg-[#0f172a]">
             {uploading
               ? <span className="text-2xl animate-spin">⏳</span>
               : <>
                   <span className="text-3xl">{label === 'pria' ? '🤵' : '👰'}</span>
-                  <span className="text-[10px] text-[#8a9e8c] text-center px-2">Klik untuk upload</span>
+                  <span className="text-[10px] text-[#94a3b8] text-center px-2">Klik untuk upload</span>
                 </>
             }
           </div>
         )}
         {uploading && (
           <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center">
-            <span className="text-[#03554e] text-xs font-semibold animate-pulse">Mengupload...</span>
+            <span className="text-primary-800 text-xs font-semibold animate-pulse">Mengupload...</span>
           </div>
         )}
       </div>
@@ -479,10 +479,10 @@ function PortraitUpload({ orderId, url, onChange, label }: {
       />
 
       <div className="text-center">
-        <p className="text-xs font-semibold text-[#1a2e1d] dark:text-[#e8f0e8]">
+        <p className="text-xs font-semibold text-[#0f172a] dark:text-[#f1f5f9]">
           Foto {label === 'pria' ? 'Mempelai Pria' : 'Mempelai Wanita'}
         </p>
-        <p className="text-[10px] text-[#8a9e8c] mt-0.5">JPG/PNG · Max 10MB · Wajah jelas</p>
+        <p className="text-[10px] text-[#94a3b8] mt-0.5">JPG/PNG · Max 10MB · Wajah jelas</p>
       </div>
 
       {url && (
@@ -600,10 +600,10 @@ function RundownManager({ list, onChange }: {
   return (
     <div className="space-y-3">
       {list.length === 0 ? (
-        <div className="text-center py-6 rounded-2xl border border-dashed border-[#2a4a38]">
-          <p className="text-[#5a9e80] text-sm mb-3">Belum ada rundown acara</p>
+        <div className="text-center py-6 rounded-2xl border border-dashed border-[#1e293b]">
+          <p className="text-[#64748b] text-sm mb-3">Belum ada rundown acara</p>
           <button type="button" onClick={loadDefault}
-            className="text-xs px-4 py-2 rounded-xl bg-[#03554e]/40 text-[#4ecdc4] border border-[#2a4a38] hover:bg-[#03554e]/60 transition-colors">
+            className="text-xs px-4 py-2 rounded-xl bg-[#3B82F6]/40 text-[#60a5fa] border border-[#1e293b] hover:bg-[#3B82F6]/60 transition-colors">
             📋 Gunakan Template Default
           </button>
         </div>
@@ -614,10 +614,10 @@ function RundownManager({ list, onChange }: {
               {/* Urutan */}
               <div className="flex flex-col gap-0.5 flex-shrink-0">
                 <button type="button" onClick={() => moveUp(idx)}
-                  className="w-5 h-4 flex items-center justify-center text-[#5a9e80] hover:text-[#4ecdc4] disabled:opacity-20 text-[10px] transition-colors"
+                  className="w-5 h-4 flex items-center justify-center text-[#64748b] hover:text-[#60a5fa] disabled:opacity-20 text-[10px] transition-colors"
                   disabled={idx === 0}>▲</button>
                 <button type="button" onClick={() => moveDown(idx)}
-                  className="w-5 h-4 flex items-center justify-center text-[#5a9e80] hover:text-[#4ecdc4] disabled:opacity-20 text-[10px] transition-colors"
+                  className="w-5 h-4 flex items-center justify-center text-[#64748b] hover:text-[#60a5fa] disabled:opacity-20 text-[10px] transition-colors"
                   disabled={idx === list.length - 1}>▼</button>
               </div>
               {/* Jam */}
@@ -625,14 +625,14 @@ function RundownManager({ list, onChange }: {
                 type="time"
                 value={r.jam}
                 onChange={e => update(r.id, 'jam', e.target.value)}
-                className="w-24 flex-shrink-0 bg-[#111d17] border border-[#2a4a38] text-[#e8f0e8] rounded-xl px-2 py-2 text-sm outline-none"
+                className="w-24 flex-shrink-0 bg-[#0f172a] border border-[#1e293b] text-[#f1f5f9] rounded-xl px-2 py-2 text-sm outline-none"
               />
               {/* Nama acara */}
               <input
                 value={r.acara}
                 onChange={e => update(r.id, 'acara', e.target.value)}
                 placeholder="Nama acara..."
-                className="flex-1 bg-[#111d17] border border-[#2a4a38] text-[#e8f0e8] rounded-xl px-3 py-2 text-sm outline-none placeholder-[#3a5a48]"
+                className="flex-1 bg-[#0f172a] border border-[#1e293b] text-[#f1f5f9] rounded-xl px-3 py-2 text-sm outline-none placeholder-[#334155]"
               />
               {/* Hapus */}
               <button type="button" onClick={() => remove(r.id)}
@@ -645,17 +645,17 @@ function RundownManager({ list, onChange }: {
       )}
       <div className="flex gap-2 pt-1">
         <button type="button" onClick={add}
-          className="flex-1 py-2.5 rounded-xl text-xs font-semibold border border-dashed border-[#2a4a38] text-[#5a9e80] hover:border-[#4ecdc4] hover:text-[#4ecdc4] transition-colors">
+          className="flex-1 py-2.5 rounded-xl text-xs font-semibold border border-dashed border-[#1e293b] text-[#64748b] hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors">
           + Tambah Acara
         </button>
         {list.length > 0 && (
           <button type="button" onClick={loadDefault}
-            className="px-3 py-2.5 rounded-xl text-xs text-[#5a9e80] border border-[#2a4a38] hover:border-[#4ecdc4] hover:text-[#4ecdc4] transition-colors">
+            className="px-3 py-2.5 rounded-xl text-xs text-[#64748b] border border-[#1e293b] hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors">
             Reset Default
           </button>
         )}
       </div>
-      <p className="text-xs text-[#3a5a48]">Urutkan dengan ▲▼ — akan ditampilkan sesuai urutan ini di undangan</p>
+      <p className="text-xs text-[#334155]">Urutkan dengan ▲▼ — akan ditampilkan sesuai urutan ini di undangan</p>
     </div>
   )
 }
@@ -681,7 +681,7 @@ function StepAcara({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
       </SectionCard>
 
       <SectionCard title="Rundown Acara" emoji="📋">
-        <p className="text-xs text-[#8a9e8c] -mt-2">Susunan acara yang akan ditampilkan di undangan.</p>
+        <p className="text-xs text-[#94a3b8] -mt-2">Susunan acara yang akan ditampilkan di undangan.</p>
         <RundownManager
           list={form.rundown_list}
           onChange={v => set('rundown_list', v)}
@@ -752,15 +752,15 @@ function BgSingleSection({
   const ytId = type === 'youtube' ? extractYouTubeId(url) : ''
 
   return (
-    <div className="rounded-2xl border border-[#e8e8e8] dark:border-[#2a4a38] overflow-hidden">
+    <div className="rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#f9f9f9] dark:bg-[#111d17]">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#f8fafc] dark:bg-[#0f172a]">
         <div>
-          <p className="text-sm font-semibold text-[#1a2e1d] dark:text-[#e8f0e8]">{label}</p>
-          <p className="text-xs text-[#8a9e8c]">{hint}</p>
+          <p className="text-sm font-semibold text-[#0f172a] dark:text-[#f1f5f9]">{label}</p>
+          <p className="text-xs text-[#94a3b8]">{hint}</p>
         </div>
         {type !== 'default' && (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#03554e]/10 text-[#03554e] dark:text-[#4ecdc4] uppercase tracking-wider">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3B82F6]/10 text-primary-800 dark:text-[#60a5fa] uppercase tracking-wider">
             Custom
           </span>
         )}
@@ -779,11 +779,11 @@ function BgSingleSection({
               onClick={() => setType(opt.value as BgSection['type'])}
               className={`flex flex-col items-center gap-1 py-2 px-1 rounded-xl border text-center transition-all ${
                 type === opt.value
-                  ? 'border-[#03554e] bg-[#03554e]/8 dark:bg-[#03554e]/15'
-                  : 'border-[#e0e0e0] dark:border-[#2a4a38] hover:border-[#03554e]/50'
+                  ? 'border-[#3B82F6] bg-[#3B82F6]/8 dark:bg-[#3B82F6]/15'
+                  : 'border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6]/50'
               }`}>
               <span className="text-base leading-none">{opt.icon}</span>
-              <span className={`text-[10px] font-medium leading-none ${type === opt.value ? 'text-[#03554e] dark:text-[#4ecdc4]' : 'text-[#8a9e8c]'}`}>
+              <span className={`text-[10px] font-medium leading-none ${type === opt.value ? 'text-primary-800 dark:text-[#60a5fa]' : 'text-[#94a3b8]'}`}>
                 {opt.label}
               </span>
             </button>
@@ -804,16 +804,16 @@ function BgSingleSection({
                   ✕
                 </button>
                 <button onClick={() => inputRef.current?.click()}
-                  className="absolute bottom-2 right-2 text-xs bg-white/90 text-[#1a2e1d] px-2 py-1 rounded-lg font-medium">
+                  className="absolute bottom-2 right-2 text-xs bg-white/90 text-[#0f172a] px-2 py-1 rounded-lg font-medium">
                   Ganti
                 </button>
               </div>
             ) : (
               <button onClick={() => inputRef.current?.click()} disabled={uploading}
-                className="w-full border-2 border-dashed border-[#ffdce2] dark:border-[#2a4a38] hover:border-[#03554e] rounded-xl py-6 text-center transition-colors">
+                className="w-full border-2 border-dashed border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6] rounded-xl py-6 text-center transition-colors">
                 <p className="text-2xl mb-1">{uploading ? '⏳' : '📤'}</p>
-                <p className="text-sm text-[#6b8f72]">{uploading ? 'Mengupload...' : 'Upload foto background'}</p>
-                <p className="text-xs text-[#8a9e8c] mt-0.5">JPG, PNG · Max 15MB</p>
+                <p className="text-sm text-[#64748b]">{uploading ? 'Mengupload...' : 'Upload foto background'}</p>
+                <p className="text-xs text-[#94a3b8] mt-0.5">JPG, PNG · Max 15MB</p>
               </button>
             )}
           </div>
@@ -829,7 +829,7 @@ function BgSingleSection({
                 value={url}
                 onChange={e => setUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=..."
-                className="w-full px-3 py-2 text-sm rounded-xl border border-[#e0e0e0] dark:border-[#2a4a38] bg-white dark:bg-[#111d17] text-[#1a2e1d] dark:text-[#e8f0e8] outline-none focus:border-[#03554e]"
+                className="w-full px-3 py-2 text-sm rounded-xl border border-[#e2e8f0] dark:border-[#1e293b] bg-white dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f1f5f9] outline-none focus:border-[#3B82F6]"
               />
             </div>
             {ytId && (
@@ -857,7 +857,7 @@ function BgSingleSection({
               value={url}
               onChange={e => setUrl(e.target.value)}
               placeholder="https://example.com/video.mp4"
-              className="w-full px-3 py-2 text-sm rounded-xl border border-[#e0e0e0] dark:border-[#2a4a38] bg-white dark:bg-[#111d17] text-[#1a2e1d] dark:text-[#e8f0e8] outline-none focus:border-[#03554e]"
+              className="w-full px-3 py-2 text-sm rounded-xl border border-[#e2e8f0] dark:border-[#1e293b] bg-white dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f1f5f9] outline-none focus:border-[#3B82F6]"
             />
             {url && (
               <video src={url} className="w-full rounded-xl mt-2 aspect-video object-cover" muted controls/>
@@ -872,7 +872,7 @@ function BgSingleSection({
               <label className="text-xs font-medium text-[#4a6a4e] dark:text-[#8aaa90]">
                 Gelap overlay
               </label>
-              <span className="text-xs font-bold text-[#03554e] dark:text-[#4ecdc4]">
+              <span className="text-xs font-bold text-primary-800 dark:text-[#60a5fa]">
                 {Math.round(overlay * 100)}%
               </span>
             </div>
@@ -880,9 +880,9 @@ function BgSingleSection({
               type="range" min="0" max="80" step="5"
               value={Math.round(overlay * 100)}
               onChange={e => setOverlay(Number(e.target.value) / 100)}
-              className="w-full accent-[#03554e]"
+              className="w-full accent-[#3B82F6]"
             />
-            <div className="flex justify-between text-[10px] text-[#8a9e8c] mt-0.5">
+            <div className="flex justify-between text-[10px] text-[#94a3b8] mt-0.5">
               <span>Terang</span><span>Gelap</span>
             </div>
           </div>
@@ -909,24 +909,24 @@ function BgSectionManager({
         onClick={() => setExpanded(e => !e)}
         className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl border transition-all ${
           customCount > 0
-            ? 'border-[#03554e] bg-[#03554e]/5 dark:bg-[#03554e]/10'
-            : 'border-[#e0e0e0] dark:border-[#2a4a38] bg-[#f9f9f9] dark:bg-[#111d17]'
+            ? 'border-[#3B82F6] bg-[#3B82F6]/5 dark:bg-[#3B82F6]/10'
+            : 'border-[#e2e8f0] dark:border-[#1e293b] bg-[#f8fafc] dark:bg-[#0f172a]'
         }`}>
         <div className="flex items-center gap-2">
           <span className="text-lg">🎨</span>
           <div className="text-left">
-            <p className="text-sm font-semibold text-[#1a2e1d] dark:text-[#e8f0e8]">
+            <p className="text-sm font-semibold text-[#0f172a] dark:text-[#f1f5f9]">
               Custom Background
               {customCount > 0 && (
-                <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#03554e] text-white">
+                <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#3B82F6] text-white">
                   {customCount} aktif
                 </span>
               )}
             </p>
-            <p className="text-xs text-[#8a9e8c]">Atur background tiap section</p>
+            <p className="text-xs text-[#94a3b8]">Atur background tiap section</p>
           </div>
         </div>
-        <span className="text-[#8a9e8c] transition-transform" style={{transform: expanded ? 'rotate(180deg)' : 'none'}}>
+        <span className="text-[#94a3b8] transition-transform" style={{transform: expanded ? 'rotate(180deg)' : 'none'}}>
           ▾
         </span>
       </button>
@@ -957,7 +957,7 @@ function StepMedia({ form, set, orderId }: { form: WeddingForm; set: (k: keyof W
   return (
     <div className="space-y-4">
       <SectionCard title="Foto Prewedding" emoji="📸">
-        <p className="text-xs text-[#8a9e8c] -mt-2">Upload langsung di sini, maksimal 20 foto.</p>
+        <p className="text-xs text-[#94a3b8] -mt-2">Upload langsung di sini, maksimal 20 foto.</p>
         <PhotoUpload
           orderId={orderId}
           urls={form.foto_urls}
@@ -973,7 +973,7 @@ function StepMedia({ form, set, orderId }: { form: WeddingForm; set: (k: keyof W
           placeholder="#RezaDanNadya2025"/>
       </SectionCard>
       <SectionCard title="🎨 Background Custom" emoji="🎨">
-        <p className="text-xs text-[#8a9e8c] -mt-2">
+        <p className="text-xs text-[#94a3b8] -mt-2">
           Atur background tiap section — foto, video YouTube, atau mp4 URL.
         </p>
         <BgSectionManager
@@ -991,7 +991,7 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
     <div className="space-y-4">
 
       <SectionCard title="🕌 Kata-kata Pembuka" emoji="🕌">
-        <p className="text-xs text-[#6b8f72] dark:text-[#7aaa90] mb-3">
+        <p className="text-xs text-[#64748b] dark:text-[#94a3b8] mb-3">
           Ayat / kata-kata yang ditampilkan di halaman pembuka undangan
         </p>
 
@@ -1017,8 +1017,8 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
             <label key={opt.value}
               className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                 form.kata_kata_pilihan === opt.value
-                  ? 'border-[#03554e] bg-[#03554e]/5 dark:bg-[#03554e]/10'
-                  : 'border-[#e0e0e0] dark:border-[#2a4a38] hover:border-[#03554e]/40'
+                  ? 'border-[#3B82F6] bg-[#3B82F6]/5 dark:bg-[#3B82F6]/10'
+                  : 'border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6]/40'
               }`}
             >
               <input
@@ -1027,12 +1027,12 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
                 value={opt.value}
                 checked={form.kata_kata_pilihan === opt.value}
                 onChange={() => set('kata_kata_pilihan', opt.value)}
-                className="mt-0.5 accent-[#03554e]"
+                className="mt-0.5 accent-[#3B82F6]"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#1a2e1d] dark:text-[#e8f0e8]">{opt.label}</p>
+                <p className="text-sm font-medium text-[#0f172a] dark:text-[#f1f5f9]">{opt.label}</p>
                 {opt.preview && form.kata_kata_pilihan === opt.value && (
-                  <p className="text-xs text-[#6b8f72] dark:text-[#7aaa90] mt-1 leading-relaxed italic">
+                  <p className="text-xs text-[#64748b] dark:text-[#94a3b8] mt-1 leading-relaxed italic">
                     {opt.preview}
                   </p>
                 )}
@@ -1134,7 +1134,6 @@ function IsiDataInner() {
     if (!orderId) return
     setSaving(true); setError(null)
     try {
-<<<<<<< HEAD
       console.log('[saveProgress] Sending data to upsert_wedding_data:', { orderId, form })
       const { data, error: err } = await supabase.rpc('upsert_wedding_data', {
         p_order_id: orderId,
@@ -1152,26 +1151,16 @@ function IsiDataInner() {
       const errorMsg = e?.message || e?.details || JSON.stringify(e)
       setError('Gagal menyimpan: ' + errorMsg)
     }
-=======
-      const { error: err } = await supabase.rpc('upsert_wedding_data', {
-        p_order_id: orderId,
-        p_data: form,
-      })
-      if (err) throw err
-      if (nextStep) setStep(nextStep)
-      setSaved(true); setTimeout(() => setSaved(false), 2000)
-    } catch (e: any) { setError('Gagal menyimpan: ' + e.message) }
->>>>>>> e40ea50899cb8afda9add57f89ef9938382b1835
     setSaving(false)
   }
 
   // ── Belum selesai cek token ──
   if (!tokenChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fffde8] dark:bg-[#0f1a13]">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617]">
         <div className="text-center">
           <div className="text-4xl mb-3 animate-spin">🔐</div>
-          <p className="text-sm text-[#6b8f72]">Memverifikasi akses...</p>
+          <p className="text-sm text-[#64748b]">Memverifikasi akses...</p>
         </div>
       </div>
     )
@@ -1180,11 +1169,11 @@ function IsiDataInner() {
   // ── Token tidak valid / tidak ada ──
   if (!tokenValid) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fffde8] dark:bg-[#0f1a13] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="text-center max-w-sm">
           <p className="text-5xl mb-4">🔒</p>
-          <p className="text-lg font-bold text-[#1a2e1d] dark:text-[#e8f0e8] mb-2">Akses Ditolak</p>
-          <p className="text-sm text-[#6b8f72] mb-6 leading-relaxed">
+          <p className="text-lg font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Akses Ditolak</p>
+          <p className="text-sm text-[#64748b] mb-6 leading-relaxed">
             Link ini tidak valid atau sudah kadaluarsa.<br/>
             Gunakan link yang dikirim via WhatsApp dari tim Katresnan.
           </p>
@@ -1199,12 +1188,12 @@ function IsiDataInner() {
 
   if (!orderId) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fffde8] dark:bg-[#0f1a13] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="text-center max-w-sm">
           <p className="text-5xl mb-4">⚠️</p>
-          <p className="text-lg font-bold text-[#1a2e1d] dark:text-[#e8f0e8] mb-2">Order ID tidak ditemukan</p>
-          <p className="text-sm text-[#6b8f72] mb-6">Akses halaman ini melalui link setelah checkout.</p>
-          <a href="/" className="text-[#03554e] dark:text-[#4ecdc4] underline text-sm">Kembali ke beranda</a>
+          <p className="text-lg font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Order ID tidak ditemukan</p>
+          <p className="text-sm text-[#64748b] mb-6">Akses halaman ini melalui link setelah checkout.</p>
+          <a href="/" className="text-primary-800 dark:text-[#60a5fa] underline text-sm">Kembali ke beranda</a>
         </div>
       </div>
     )
@@ -1212,21 +1201,21 @@ function IsiDataInner() {
 
   if (step === 'selesai') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fffde8] dark:bg-[#0f1a13] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="max-w-md w-full text-center py-12 space-y-6">
           <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-5xl mx-auto"
             style={{ animation: 'float 3s ease-in-out infinite' }}>🎉</div>
           <div>
-            <h2 className="font-display text-3xl font-bold text-[#1a2e1d] dark:text-[#e8f0e8] mb-2">Data Tersimpan!</h2>
-            <p className="text-[#6b8f72] dark:text-[#7aaa90] leading-relaxed">
+            <h2 className="font-display text-3xl font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Data Tersimpan!</h2>
+            <p className="text-[#64748b] dark:text-[#94a3b8] leading-relaxed">
               Tim kami akan segera mengerjakan undangan digital kamu.<br/>
               Kami akan menghubungi via WhatsApp untuk preview & revisi.
             </p>
           </div>
-          <div className="bg-white dark:bg-[#1a2e1d] border border-[#ffdce2] dark:border-[#2a4a38] rounded-2xl p-5 text-left space-y-2 text-sm">
-            <p className="font-bold text-[#1a2e1d] dark:text-[#e8f0e8] mb-3">📋 Langkah selanjutnya:</p>
+          <div className="bg-white dark:bg-[#0f172a] border border-[#e2e8f0] dark:border-[#1e293b] rounded-2xl p-5 text-left space-y-2 text-sm">
+            <p className="font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-3">📋 Langkah selanjutnya:</p>
             {['⏳ Tunggu preview undangan dalam 1x24 jam','✏️ Cek & minta revisi jika ada','📲 Bagikan link undangan ke tamu'].map((t,i) => (
-              <div key={i} className="flex items-start gap-2 text-[#6b8f72] dark:text-[#7aaa90]">
+              <div key={i} className="flex items-start gap-2 text-[#64748b] dark:text-[#94a3b8]">
                 <span>{t.split(' ')[0]}</span><span>{t.split(' ').slice(1).join(' ')}</span>
               </div>
             ))}
@@ -1237,7 +1226,7 @@ function IsiDataInner() {
             💬 Konfirmasi ke WhatsApp Admin
           </a>
           <a href={`/order?id=${orderId.slice(0,8).toUpperCase()}`}
-            className="block text-sm text-[#03554e] dark:text-[#4ecdc4] underline">
+            className="block text-sm text-primary-800 dark:text-[#60a5fa] underline">
             Pantau status order →
           </a>
         </div>
@@ -1248,14 +1237,14 @@ function IsiDataInner() {
   const ORDER: Step[] = ['mempelai_pria','mempelai_wanita','acara','media','fitur','selesai']
 
   return (
-    <div className="min-h-screen bg-[#fffde8] dark:bg-[#0f1a13]">
-      <div className="sticky top-0 z-40 bg-[#fffde8]/97 dark:bg-[#0f1a13]/97 backdrop-blur border-b border-[#ffdce2] dark:border-[#1a3028] px-4 py-3">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617]">
+      <div className="sticky top-0 z-40 bg-[#f8fafc]/97 dark:bg-[#020617]/97 backdrop-blur border-b border-[#e2e8f0] dark:border-[#1e293b] px-4 py-3">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <KatresnanLogo variant="auto" height={24} />
             <div>
-              <p className="font-bold text-sm text-[#1a2e1d] dark:text-[#e8f0e8]">Isi Data Pengantin</p>
-              <p className="text-xs text-[#8a9e8c]">Order #{orderId.slice(0,8).toUpperCase()}</p>
+              <p className="font-bold text-sm text-[#0f172a] dark:text-[#f1f5f9]">Isi Data Pengantin</p>
+              <p className="text-xs text-[#94a3b8]">Order #{orderId.slice(0,8).toUpperCase()}</p>
             </div>
             {saved && <span className="ml-auto text-xs text-green-600 dark:text-green-400 font-medium animate-pulse">✓ Tersimpan</span>}
           </div>
@@ -1265,10 +1254,10 @@ function IsiDataInner() {
 
       <div className="max-w-2xl mx-auto px-4 py-6 pb-32">
         <div className="mb-6">
-          <h1 className="font-display text-2xl font-bold text-[#1a2e1d] dark:text-[#e8f0e8]">
+          <h1 className="font-display text-2xl font-bold text-[#0f172a] dark:text-[#f1f5f9]">
             {STEPS[stepIdx].emoji} {STEPS[stepIdx].label}
           </h1>
-          <p className="text-sm text-[#6b8f72] dark:text-[#7aaa90] mt-1">Langkah {stepIdx + 1} dari {STEPS.length - 1}</p>
+          <p className="text-sm text-[#64748b] dark:text-[#94a3b8] mt-1">Langkah {stepIdx + 1} dari {STEPS.length - 1}</p>
         </div>
 
         {error && (
@@ -1284,16 +1273,16 @@ function IsiDataInner() {
         {step === 'fitur'           && <StepFitur          form={form} set={set}/>}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white/97 dark:bg-[#1a2e1d]/97 backdrop-blur border-t border-[#ffdce2] dark:border-[#2a4a38] px-4 py-4 z-40">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/97 dark:bg-[#0f172a]/97 backdrop-blur border-t border-[#e2e8f0] dark:border-[#1e293b] px-4 py-4 z-40">
         <div className="max-w-2xl mx-auto flex gap-3">
           {stepIdx > 0 && (
             <button onClick={() => setStep(ORDER[stepIdx - 1] as Step)}
-              className="flex-1 sm:flex-none px-6 py-3 border-2 border-[#ffdce2] dark:border-[#2a4a38] text-[#6b8f72] dark:text-[#7aaa90] font-semibold rounded-xl text-sm hover:border-[#03554e] transition-colors">
+              className="flex-1 sm:flex-none px-6 py-3 border-2 border-[#e2e8f0] dark:border-[#1e293b] text-[#64748b] dark:text-[#94a3b8] font-semibold rounded-xl text-sm hover:border-[#3B82F6] transition-colors">
               ← Kembali
             </button>
           )}
           <button onClick={() => saveProgress(ORDER[stepIdx + 1] as Step)} disabled={saving}
-            className="flex-1 bg-[#03554e] hover:bg-[#023d38] disabled:opacity-60 text-white font-bold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-lg">
+            className="flex-1 bg-[#3B82F6] hover:bg-[#2563eb] disabled:opacity-60 text-white font-bold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-lg">
             {saving
               ? <><span className="animate-spin">⏳</span> Menyimpan...</>
               : step === 'fitur' ? '🎉 Selesai & Kirim Data' : 'Lanjut →'
@@ -1308,10 +1297,10 @@ function IsiDataInner() {
 export default function IsiDataContent() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#fffde8] dark:bg-[#0f1a13]">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617]">
         <div className="text-center">
           <div className="text-5xl mb-4 animate-bounce">🌸</div>
-          <p className="text-[#6b8f72] dark:text-[#7aaa90]">Memuat form...</p>
+          <p className="text-[#64748b] dark:text-[#94a3b8]">Memuat form...</p>
         </div>
       </div>
     }>
