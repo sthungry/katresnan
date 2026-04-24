@@ -37,17 +37,38 @@ export default function DashboardOverview({ guests, ucapan, checkins, wishlists,
       </div>
 
       {/* Theme Banner */}
-      <div className="card" style={{ padding: '1rem 1.25rem', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <ion-icon name="globe-outline" style={{ fontSize: 20, color: 'var(--text-muted)' }}></ion-icon>
+      <div className="card" style={{ padding: '1rem 1.25rem', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 }}>
+          <div style={{ 
+            width: 40, height: 40, borderRadius: 'var(--radius)', 
+            background: wedding ? '#D1FAE5' : '#FEF3C7',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 20, flexShrink: 0
+          }}>
+            {wedding ? '🎉' : '🎨'}
+          </div>
           <div>
-            <span style={{ fontWeight: 700, fontSize: 14 }}>Tema belum dipilih</span>
+            <span style={{ fontWeight: 700, fontSize: 14 }}>
+              {wedding?.pria_nama_panggilan && wedding?.wanita_nama_panggilan
+                ? `${wedding.pria_nama_panggilan} & ${wedding.wanita_nama_panggilan}`
+                : 'Tema belum dipilih'}
+            </span>
             <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>
-              Pilih tema undangan dan lengkapi data untuk mengaktifkan website undangan Anda.
+              {wedding?.pria_nama_panggilan
+                ? 'Klik untuk mengubah data undangan atau pilih template baru.'
+                : 'Pilih tema undangan dan lengkapi data untuk mengaktifkan website undangan Anda.'}
             </p>
           </div>
         </div>
-        <button className="btn btn-primary btn-sm">Atur Tema</button>
+        <button 
+          className="btn btn-primary btn-sm"
+          onClick={() => {
+            const evt = new CustomEvent('switchTab', { detail: 'theme' })
+            window.dispatchEvent(evt)
+          }}
+        >
+          {wedding?.pria_nama_panggilan ? '✏️ Edit Tema' : '🎨 Atur Tema'}
+        </button>
       </div>
 
       {/* Three column grid */}

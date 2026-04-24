@@ -12,6 +12,8 @@ import {
   savePendingOrder, getPendingOrder, clearPendingOrder,
   getRemainingMs, type PendingOrderCookie,
 } from '@/lib/orderCookie'
+import { useAuth } from '@/components/AuthProvider'
+import { updateProfile, signInWithGoogle } from '@/lib/supabaseAuth'
 
 function BankLogo({ bank, size = 40 }: { bank: string; size?: number }) {
   const cfg: Record<string, { bg: string; label: string }> = {
@@ -52,15 +54,30 @@ function CheckoutInner() {
   const paketId        = params.get('paket') || 'silver'
   const templateIds    = (params.get('templates') || '').split(',').filter(Boolean)
 
+  const { user, profile } = useAuth()
+
   // Data dari Supabase
   const [pkg,        setPkg]        = useState<Package | null>(null)
   const [tplData,    setTplData]    = useState<Template[]>([])
   const [dataReady,  setDataReady]  = useState(false)
 
-  // UI state
   const [step,       setStep]       = useState<Step>('form')
   const [payMethod,  setPayMethod]  = useState<PayMethod>('bca')
   const [form,       setForm]       = useState({ nama: '', email: '', wa: '', catatan: '' })
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  
+  // Prefill dari profile jika ada
+  useEffect(() => {
+    if (profile && !form.nama && !form.email) {
+      setForm(prev => ({
+        ...prev,
+        nama: profile.nama || '',
+        email: profile.email || '',
+        wa: profile.wa || ''
+      }))
+    }
+  }, [profile])
+
   const [errors,     setErrors]     = useState<Record<string, string>>({})
   const [copied,     setCopied]     = useState<string | null>(null)
   const [orderId,    setOrderId]    = useState<string | null>(null)
@@ -145,6 +162,11 @@ function CheckoutInner() {
   }
 
   async function handleSubmit() {
+    if (!user) {
+      setShowAuthModal(true)
+      return
+    }
+
     const e = validate()
     if (Object.keys(e).length > 0) { setErrors(e); return }
     setErrors({})
@@ -152,6 +174,7 @@ function CheckoutInner() {
     setDbError(null)
 
     const { data, error } = await insertOrder({
+      user_id: profile?.id,
       nama: form.nama, email: form.email, wa: form.wa,
       package_id: paketId,
       template_1_id: templateIds[0] || null,
@@ -167,6 +190,15 @@ function CheckoutInner() {
       setDbError('Gagal menyimpan pesanan: ' + (error || 'data tidak kembali dari server'))
       setDbLoading(false)
       return
+    }
+
+    // Link the order to the user's profile
+    if (profile) {
+      await updateProfile(profile.id, { 
+        order_id: data.id,
+        package_id: paketId,
+        template_id: templateIds[0] || null
+      })
     }
 
     setOrderId(data.id)
@@ -188,6 +220,13 @@ function CheckoutInner() {
     setDbLoading(true)
     const { error } = await confirmOrderPayment(orderId)
     if (error) { setDbError('Gagal konfirmasi. Coba lagi.'); setDbLoading(false); return }
+    
+    // Simulate plan upgrade immediately upon confirmation (for demo purposes)
+    // Di sistem nyata, update plan dilakukan oleh webhook Midtrans/Mutasi setelah lunas
+    if (profile) {
+      await updateProfile(profile.id, { plan: paketId as any })
+    }
+    
     clearPendingOrder()
     setDbLoading(false)
     setStep('success')
@@ -655,6 +694,47 @@ function CheckoutInner() {
             </div>
           </div>
         )}
+
+        {/* Auth Modal Overlay */}
+        {showAuthModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+            <div className="bg-white dark:bg-[#0f172a] rounded-3xl p-8 max-w-sm w-full shadow-2xl relative">
+              <button onClick={() => setShowAuthModal(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+              
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-[#eff6ff] dark:bg-[#1e293b] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">👋</div>
+                <h3 className="font-display text-xl font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Masuk untuk Lanjut</h3>
+                <p className="text-sm text-[#64748b] dark:text-[#94a3b8] mb-2">Agar pesananmu tersimpan dengan aman dan kamu bisa mengisi data pengantin nanti.</p>
+              </div>
+
+              <button
+                onClick={() => signInWithGoogle(`${window.location.origin}/checkout?paket=${paketId}&templates=${templateIds.join(',')}`)}
+                className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-bold py-3.5 px-4 rounded-xl transition-all shadow-sm mb-4"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.8055 10.2292C19.8055 9.55056 19.7508 8.86667 19.6328 8.19531H10.2V12.0492H15.6016C15.3773 13.2911 14.6571 14.3898 13.6023 15.0875V17.5866H16.825C18.7172 15.8449 19.8055 13.2728 19.8055 10.2292Z" fill="#4285F4"></path>
+                  <path d="M10.2 20C12.9 20 15.1711 19.1044 16.8297 17.5866L13.607 15.0875C12.7086 15.6972 11.5508 16.0428 10.2047 16.0428C7.59141 16.0428 5.38047 14.2828 4.58672 11.9172H1.26562V14.4922C2.96172 17.8695 6.41953 20 10.2 20Z" fill="#34A853"></path>
+                  <path d="M4.58203 11.9125C4.16484 10.6706 4.16484 9.33406 4.58203 8.09219V5.51719H1.26562C-0.421875 8.88281 -0.421875 12.1219 1.26562 15.4875L4.58203 11.9125Z" fill="#FBBC04"></path>
+                  <path d="M10.2 3.95781C11.6203 3.93594 13.0008 4.47188 14.0414 5.45781L16.8945 2.60469C15.0867 0.904688 12.6867 -0.0210938 10.2 0.000781252C6.41953 0.000781252 2.96172 2.13125 1.26562 5.51719L4.58203 8.09219C5.37109 5.72188 7.58672 3.95781 10.2 3.95781Z" fill="#EA4335"></path>
+                </svg>
+                Lanjutkan dengan Google
+              </button>
+              
+              <div className="relative flex py-2 items-center mb-2">
+                <div className="flex-grow border-t border-gray-200"></div>
+                <span className="flex-shrink-0 mx-4 text-gray-400 text-xs">Atau</span>
+                <div className="flex-grow border-t border-gray-200"></div>
+              </div>
+
+              <Link href="/auth/register" className="w-full flex items-center justify-center bg-[#f8fafc] text-[#64748b] hover:bg-[#e2e8f0] font-semibold py-3.5 px-4 rounded-xl transition-all">
+                Daftar dengan Email
+              </Link>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   )

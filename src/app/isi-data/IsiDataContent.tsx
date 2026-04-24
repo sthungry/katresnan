@@ -3,7 +3,17 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { supabase } from '@/lib/supabase'
+import { supabaseAuth } from '@/lib/supabaseAuth'
 import KatresnanLogo from '@/components/KatresnanLogo'
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-icon': any;
+    }
+  }
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Step = 'mempelai_pria' | 'mempelai_wanita' | 'acara' | 'media' | 'fitur' | 'selesai'
@@ -82,13 +92,13 @@ const EMPTY: WeddingForm = {
   bg_sections: {},
 }
 
-const STEPS: { id: Step; label: string; emoji: string }[] = [
-  { id: 'mempelai_pria',   label: 'Mempelai Pria',   emoji: '🤵' },
-  { id: 'mempelai_wanita', label: 'Mempelai Wanita', emoji: '👰' },
-  { id: 'acara',           label: 'Detail Acara',     emoji: '💒' },
-  { id: 'media',           label: 'Foto & Media',     emoji: '📸' },
-  { id: 'fitur',           label: 'Fitur Tambahan',   emoji: '✨' },
-  { id: 'selesai',         label: 'Selesai',          emoji: '🎉' },
+const STEPS: { id: Step; label: string; icon: string }[] = [
+  { id: 'mempelai_pria',   label: 'Mempelai Pria',   icon: 'person' },
+  { id: 'mempelai_wanita', label: 'Mempelai Wanita', icon: 'person-outline' },
+  { id: 'acara',           label: 'Detail Acara',     icon: 'calendar-outline' },
+  { id: 'media',           label: 'Foto & Media',     icon: 'images-outline' },
+  { id: 'fitur',           label: 'Fitur Tambahan',   icon: 'star-outline' },
+  { id: 'selesai',         label: 'Selesai',          icon: 'checkmark-circle-outline' },
 ]
 
 const BANK_OPTIONS = [
@@ -167,11 +177,11 @@ function Toggle({ label, value, onChange, hint }: {
   )
 }
 
-function SectionCard({ title, emoji, children }: { title: string; emoji: string; children: React.ReactNode }) {
+function SectionCard({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
   return (
     <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] overflow-hidden">
       <div className="bg-gradient-to-r from-primary-800 to-[#2563eb] px-5 py-3 flex items-center gap-2">
-        <span>{emoji}</span>
+        <ion-icon name={icon} style={{ color: 'white', fontSize: 16 }}></ion-icon>
         <p className="text-white font-bold text-sm">{title}</p>
       </div>
       <div className="p-5 space-y-4">{children}</div>
@@ -190,7 +200,7 @@ function StepIndicator({ current }: { current: Step }) {
             <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-bold transition-all ${
               active ? 'bg-[#3B82F6] text-white' : done ? 'bg-[#dbeafe] dark:bg-[#1e293b] text-primary-800 dark:text-[#60a5fa]' : 'bg-[#f1f5f9] dark:bg-[#0f172a] text-[#94a3b8]'
             }`}>
-              <span>{done ? '✓' : step.emoji}</span>
+              <span>{done ? <ion-icon name="checkmark-outline"></ion-icon> : <ion-icon name={step.icon}></ion-icon>}</span>
               <span className="hidden sm:inline">{step.label}</span>
             </div>
             {i < STEPS.length - 2 && <div className={`w-4 h-px flex-shrink-0 ${done ? 'bg-[#3B82F6]' : 'bg-[#e2e8f0] dark:bg-[#1e293b]'}`}/>}
@@ -276,9 +286,10 @@ function RekeningManager({ list, onChange }: { list: RekeningItem[]; onChange: (
 }
 
 // ─── Photo Upload ─────────────────────────────────────────────────────────────
-function PhotoUpload({ orderId, urls, onChange }: {
-  orderId: string; urls: string[]; onChange: (urls: string[]) => void
+function PhotoUpload({ orderId, urls, onChange, client }: {
+  orderId: string; urls: string[]; onChange: (urls: string[]) => void; client?: SupabaseClient
 }) {
+  const db = client || supabase
   const [uploading, setUploading] = useState(false)
   const [progress,  setProgress]  = useState<Record<string, number>>({})
   const [dragOver,  setDragOver]  = useState(false)
@@ -302,12 +313,12 @@ function PhotoUpload({ orderId, urls, onChange }: {
       const path = `${orderId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
       setProgress(p => ({ ...p, [file.name]: 0 }))
 
-      const { data, error } = await supabase.storage
+      const { data, error } = await db.storage
         .from('wedding-photos')
         .upload(path, file, { cacheControl: '3600', upsert: false })
 
       if (!error && data) {
-        const { data: { publicUrl } } = supabase.storage.from('wedding-photos').getPublicUrl(data.path)
+        const { data: { publicUrl } } = db.storage.from('wedding-photos').getPublicUrl(data.path)
         newUrls.push(publicUrl)
       }
       setProgress(p => ({ ...p, [file.name]: 100 }))
@@ -322,7 +333,7 @@ function PhotoUpload({ orderId, urls, onChange }: {
     onChange(urls.filter(u => u !== url))
     // Hapus dari storage juga
     const path = url.split('/wedding-photos/')[1]
-    if (path) supabase.storage.from('wedding-photos').remove([path])
+    if (path) db.storage.from('wedding-photos').remove([path])
   }
 
   return (
@@ -343,7 +354,7 @@ function PhotoUpload({ orderId, urls, onChange }: {
       >
         <input ref={inputRef} type="file" multiple accept="image/*" className="hidden"
           onChange={e => uploadFiles(e.target.files)} disabled={uploading || urls.length >= MAX}/>
-        <div className="text-4xl mb-3">{uploading ? '⏳' : '📸'}</div>
+        <div className="text-4xl mb-3 text-[#94a3b8]">{uploading ? <ion-icon name="sync-outline" class="animate-spin"></ion-icon> : <ion-icon name="cloud-upload-outline"></ion-icon>}</div>
         {uploading ? (
           <p className="text-sm font-semibold text-primary-800 dark:text-[#60a5fa]">Mengupload foto...</p>
         ) : urls.length >= MAX ? (
@@ -403,9 +414,10 @@ function PhotoUpload({ orderId, urls, onChange }: {
 }
 
 // ─── Portrait Upload (foto mempelai, 1 foto, tampil lingkaran) ───────────────
-function PortraitUpload({ orderId, url, onChange, label }: {
-  orderId: string; url: string; onChange: (url: string) => void; label: string
+function PortraitUpload({ orderId, url, onChange, label, client }: {
+  orderId: string; url: string; onChange: (url: string) => void; label: string; client?: SupabaseClient
 }) {
+  const db = client || supabase
   const [uploading, setUploading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -417,19 +429,19 @@ function PortraitUpload({ orderId, url, onChange, label }: {
     // Hapus foto lama dari storage kalau ada
     if (url) {
       const oldPath = url.split('/wedding-photos/')[1]
-      if (oldPath) supabase.storage.from('wedding-photos').remove([oldPath])
+      if (oldPath) db.storage.from('wedding-photos').remove([oldPath])
     }
 
     const ext  = file.name.split('.').pop()
     const slug = label === 'pria' ? 'groom' : 'bride'
     const path = `${orderId}/portrait-${slug}-${Date.now()}.${ext}`
 
-    const { data, error } = await supabase.storage
+    const { data, error } = await db.storage
       .from('wedding-photos')
       .upload(path, file, { cacheControl: '3600', upsert: true })
 
     if (!error && data) {
-      const { data: { publicUrl } } = supabase.storage.from('wedding-photos').getPublicUrl(data.path)
+      const { data: { publicUrl } } = db.storage.from('wedding-photos').getPublicUrl(data.path)
       onChange(publicUrl)
     } else if (error) {
       alert('Gagal upload: ' + error.message)
@@ -455,9 +467,9 @@ function PortraitUpload({ orderId, url, onChange, label }: {
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-1 bg-[#f8fafc] dark:bg-[#0f172a]">
             {uploading
-              ? <span className="text-2xl animate-spin">⏳</span>
+              ? <ion-icon name="sync-outline" class="animate-spin" style={{ fontSize: 24, color: '#94a3b8' }}></ion-icon>
               : <>
-                  <span className="text-3xl">{label === 'pria' ? '🤵' : '👰'}</span>
+                  <ion-icon name={label === 'pria' ? 'person' : 'person-outline'} style={{ fontSize: 30, color: '#94a3b8' }}></ion-icon>
                   <span className="text-[10px] text-[#94a3b8] text-center px-2">Klik untuk upload</span>
                 </>
             }
@@ -487,7 +499,7 @@ function PortraitUpload({ orderId, url, onChange, label }: {
 
       {url && (
         <button
-          onClick={() => { onChange(''); const p = url.split('/wedding-photos/')[1]; if (p) supabase.storage.from('wedding-photos').remove([p]) }}
+          onClick={() => { onChange(''); const p = url.split('/wedding-photos/')[1]; if (p) db.storage.from('wedding-photos').remove([p]) }}
           className="text-[10px] text-red-400 hover:text-red-600 underline transition-colors"
         >
           Hapus foto
@@ -498,9 +510,9 @@ function PortraitUpload({ orderId, url, onChange, label }: {
 }
 
 // ─── Steps ────────────────────────────────────────────────────────────────────
-function StepMempelaiPria({ form, set, orderId }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string }) {
+function StepMempelaiPria({ form, set, orderId, client }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string; client?: SupabaseClient }) {
   return (
-    <SectionCard title="Data Mempelai Pria" emoji="🤵">
+    <SectionCard title="Data Mempelai Pria" icon="person">
       {/* Foto portrait */}
       <div className="flex justify-center pb-2">
         <PortraitUpload
@@ -508,6 +520,7 @@ function StepMempelaiPria({ form, set, orderId }: { form: WeddingForm; set: (k: 
           url={form.pria_foto_url}
           onChange={v => set('pria_foto_url', v)}
           label="pria"
+          client={client}
         />
       </div>
       <Input label="Nama Lengkap" value={form.pria_nama_lengkap} onChange={v => set('pria_nama_lengkap', v)} placeholder="Muhammad Rizky Pratama, S.T." required/>
@@ -529,9 +542,9 @@ function StepMempelaiPria({ form, set, orderId }: { form: WeddingForm; set: (k: 
   )
 }
 
-function StepMempelaiWanita({ form, set, orderId }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string }) {
+function StepMempelaiWanita({ form, set, orderId, client }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string; client?: SupabaseClient }) {
   return (
-    <SectionCard title="Data Mempelai Wanita" emoji="👰">
+    <SectionCard title="Data Mempelai Wanita" icon="person-outline">
       {/* Foto portrait */}
       <div className="flex justify-center pb-2">
         <PortraitUpload
@@ -539,6 +552,7 @@ function StepMempelaiWanita({ form, set, orderId }: { form: WeddingForm; set: (k
           url={form.wanita_foto_url}
           onChange={v => set('wanita_foto_url', v)}
           label="wanita"
+          client={client}
         />
       </div>
       <Input label="Nama Lengkap" value={form.wanita_nama_lengkap} onChange={v => set('wanita_nama_lengkap', v)} placeholder="Nadya Kusuma Dewi, S.Pd." required/>
@@ -603,8 +617,8 @@ function RundownManager({ list, onChange }: {
         <div className="text-center py-6 rounded-2xl border border-dashed border-[#1e293b]">
           <p className="text-[#64748b] text-sm mb-3">Belum ada rundown acara</p>
           <button type="button" onClick={loadDefault}
-            className="text-xs px-4 py-2 rounded-xl bg-[#3B82F6]/40 text-[#60a5fa] border border-[#1e293b] hover:bg-[#3B82F6]/60 transition-colors">
-            📋 Gunakan Template Default
+            className="text-xs px-4 py-2 rounded-xl bg-[#3B82F6]/40 text-[#60a5fa] border border-[#1e293b] hover:bg-[#3B82F6]/60 transition-colors flex items-center justify-center gap-2 mx-auto">
+            <ion-icon name="clipboard-outline"></ion-icon> Gunakan Template Default
           </button>
         </div>
       ) : (
@@ -615,10 +629,10 @@ function RundownManager({ list, onChange }: {
               <div className="flex flex-col gap-0.5 flex-shrink-0">
                 <button type="button" onClick={() => moveUp(idx)}
                   className="w-5 h-4 flex items-center justify-center text-[#64748b] hover:text-[#60a5fa] disabled:opacity-20 text-[10px] transition-colors"
-                  disabled={idx === 0}>▲</button>
+                  disabled={idx === 0}><ion-icon name="chevron-up-outline"></ion-icon></button>
                 <button type="button" onClick={() => moveDown(idx)}
                   className="w-5 h-4 flex items-center justify-center text-[#64748b] hover:text-[#60a5fa] disabled:opacity-20 text-[10px] transition-colors"
-                  disabled={idx === list.length - 1}>▼</button>
+                  disabled={idx === list.length - 1}><ion-icon name="chevron-down-outline"></ion-icon></button>
               </div>
               {/* Jam */}
               <input
@@ -663,7 +677,7 @@ function RundownManager({ list, onChange }: {
 function StepAcara({ form, set }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void }) {
   return (
     <div className="space-y-4">
-      <SectionCard title="Akad Nikah" emoji="🕌">
+      <SectionCard title="Akad Nikah" icon="business-outline">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input label="Tanggal & Waktu" value={form.akad_tanggal} onChange={v => set('akad_tanggal', v)} type="datetime-local" required/>
           <Input label="Nama Tempat" value={form.akad_lokasi} onChange={v => set('akad_lokasi', v)} placeholder="Masjid Al-Ikhlas" required/>
@@ -671,7 +685,7 @@ function StepAcara({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
         <Input label="Alamat Lengkap" value={form.akad_alamat} onChange={v => set('akad_alamat', v)} placeholder="Jl. Merdeka No. 1, Jakarta Selatan"/>
         <Input label="Link Google Maps" value={form.akad_maps_url} onChange={v => set('akad_maps_url', v)} placeholder="https://maps.google.com/..." hint="Klik share di Google Maps lalu copy link-nya"/>
       </SectionCard>
-      <SectionCard title="Resepsi Pernikahan" emoji="🎊">
+      <SectionCard title="Resepsi Pernikahan" icon="wine-outline">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input label="Tanggal & Waktu" value={form.resepsi_tanggal} onChange={v => set('resepsi_tanggal', v)} type="datetime-local" required/>
           <Input label="Nama Tempat" value={form.resepsi_lokasi} onChange={v => set('resepsi_lokasi', v)} placeholder="Grand Ballroom Hotel Mulia" required/>
@@ -680,7 +694,7 @@ function StepAcara({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
         <Input label="Link Google Maps" value={form.resepsi_maps_url} onChange={v => set('resepsi_maps_url', v)} placeholder="https://maps.google.com/..."/>
       </SectionCard>
 
-      <SectionCard title="Rundown Acara" emoji="📋">
+      <SectionCard title="Rundown Acara" icon="list-outline">
         <p className="text-xs text-[#94a3b8] -mt-2">Susunan acara yang akan ditampilkan di undangan.</p>
         <RundownManager
           list={form.rundown_list}
@@ -707,7 +721,7 @@ function extractYouTubeId(url: string): string {
 }
 
 function BgSingleSection({
-  sectionKey, label, hint, value, onChange, orderId
+  sectionKey, label, hint, value, onChange, orderId, client
 }: {
   sectionKey: string
   label: string
@@ -715,7 +729,9 @@ function BgSingleSection({
   value: BgSection | undefined
   onChange: (v: BgSection | undefined) => void
   orderId: string
+  client?: SupabaseClient
 }) {
+  const db = client || supabase
   const [uploading, setUploading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const type = value?.type || 'default'
@@ -737,11 +753,11 @@ function BgSingleSection({
     setUploading(true)
     const ext  = file.name.split('.').pop()
     const path = `${orderId}/bg-${sectionKey}-${Date.now()}.${ext}`
-    const { data, error } = await supabase.storage
+    const { data, error } = await db.storage
       .from('wedding-photos')
       .upload(path, file, { cacheControl: '3600', upsert: true })
     if (!error && data) {
-      const { data: { publicUrl } } = supabase.storage.from('wedding-photos').getPublicUrl(data.path)
+      const { data: { publicUrl } } = db.storage.from('wedding-photos').getPublicUrl(data.path)
       onChange({ type: 'foto', url: publicUrl, overlay })
     } else {
       alert('Upload gagal: ' + error?.message)
@@ -770,10 +786,10 @@ function BgSingleSection({
         {/* Type selector */}
         <div className="grid grid-cols-4 gap-1.5">
           {[
-            { value: 'default', icon: '🎨', label: 'Default'  },
-            { value: 'foto',    icon: '🖼️', label: 'Foto'     },
-            { value: 'youtube', icon: '▶️', label: 'YouTube'  },
-            { value: 'video',   icon: '🎬', label: 'Video URL'},
+            { value: 'default', icon: 'color-palette-outline', label: 'Default'  },
+            { value: 'foto',    icon: 'image-outline', label: 'Foto'     },
+            { value: 'youtube', icon: 'logo-youtube', label: 'YouTube'  },
+            { value: 'video',   icon: 'videocam-outline', label: 'Video URL'},
           ].map(opt => (
             <button key={opt.value}
               onClick={() => setType(opt.value as BgSection['type'])}
@@ -782,7 +798,7 @@ function BgSingleSection({
                   ? 'border-[#3B82F6] bg-[#3B82F6]/8 dark:bg-[#3B82F6]/15'
                   : 'border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6]/50'
               }`}>
-              <span className="text-base leading-none">{opt.icon}</span>
+              <ion-icon name={opt.icon} style={{ fontSize: 16, marginBottom: 2 }}></ion-icon>
               <span className={`text-[10px] font-medium leading-none ${type === opt.value ? 'text-primary-800 dark:text-[#60a5fa]' : 'text-[#94a3b8]'}`}>
                 {opt.label}
               </span>
@@ -811,7 +827,7 @@ function BgSingleSection({
             ) : (
               <button onClick={() => inputRef.current?.click()} disabled={uploading}
                 className="w-full border-2 border-dashed border-[#e2e8f0] dark:border-[#1e293b] hover:border-[#3B82F6] rounded-xl py-6 text-center transition-colors">
-                <p className="text-2xl mb-1">{uploading ? '⏳' : '📤'}</p>
+                <p className="text-2xl mb-1 text-[#94a3b8]">{uploading ? <ion-icon name="sync-outline" class="animate-spin"></ion-icon> : <ion-icon name="cloud-upload-outline"></ion-icon>}</p>
                 <p className="text-sm text-[#64748b]">{uploading ? 'Mengupload...' : 'Upload foto background'}</p>
                 <p className="text-xs text-[#94a3b8] mt-0.5">JPG, PNG · Max 15MB</p>
               </button>
@@ -893,11 +909,12 @@ function BgSingleSection({
 }
 
 function BgSectionManager({
-  value, onChange, orderId
+  value, onChange, orderId, client
 }: {
   value: BgSections
   onChange: (v: BgSections) => void
   orderId: string
+  client?: SupabaseClient
 }) {
   const [expanded, setExpanded] = useState(false)
   const customCount = Object.values(value).filter(Boolean).length
@@ -912,8 +929,8 @@ function BgSectionManager({
             ? 'border-[#3B82F6] bg-[#3B82F6]/5 dark:bg-[#3B82F6]/10'
             : 'border-[#e2e8f0] dark:border-[#1e293b] bg-[#f8fafc] dark:bg-[#0f172a]'
         }`}>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🎨</span>
+        <div className="flex items-center gap-3">
+          <ion-icon name="color-palette-outline" style={{ fontSize: 20, color: '#94a3b8' }}></ion-icon>
           <div className="text-left">
             <p className="text-sm font-semibold text-[#0f172a] dark:text-[#f1f5f9]">
               Custom Background
@@ -926,9 +943,7 @@ function BgSectionManager({
             <p className="text-xs text-[#94a3b8]">Atur background tiap section</p>
           </div>
         </div>
-        <span className="text-[#94a3b8] transition-transform" style={{transform: expanded ? 'rotate(180deg)' : 'none'}}>
-          ▾
-        </span>
+        <ion-icon name="chevron-down-outline" style={{ color: '#94a3b8', transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}></ion-icon>
       </button>
 
       {expanded && (
@@ -945,6 +960,7 @@ function BgSectionManager({
                 [cfg.key]: v
               })}
               orderId={orderId}
+              client={client}
             />
           ))}
         </div>
@@ -953,18 +969,19 @@ function BgSectionManager({
   )
 }
 
-function StepMedia({ form, set, orderId }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string }) {
+function StepMedia({ form, set, orderId, client }: { form: WeddingForm; set: (k: keyof WeddingForm, v: any) => void; orderId: string; client?: SupabaseClient }) {
   return (
     <div className="space-y-4">
-      <SectionCard title="Foto Prewedding" emoji="📸">
+      <SectionCard title="Foto Prewedding" icon="camera-outline">
         <p className="text-xs text-[#94a3b8] -mt-2">Upload langsung di sini, maksimal 20 foto.</p>
         <PhotoUpload
           orderId={orderId}
           urls={form.foto_urls}
           onChange={v => set('foto_urls', v)}
+          client={client}
         />
       </SectionCard>
-      <SectionCard title="Video & Musik" emoji="🎵">
+      <SectionCard title="Video & Musik" icon="musical-notes-outline">
         <Input label="Link Video YouTube" value={form.video_youtube_url} onChange={v => set('video_youtube_url', v)}
           placeholder="https://youtube.com/watch?v=..." hint="Video prewedding / save the date (opsional)"/>
         <Input label="Musik Latar" value={form.musik_pilihan} onChange={v => set('musik_pilihan', v)}
@@ -972,7 +989,7 @@ function StepMedia({ form, set, orderId }: { form: WeddingForm; set: (k: keyof W
         <Input label="Hashtag Instagram" value={form.hashtag_instagram} onChange={v => set('hashtag_instagram', v)}
           placeholder="#RezaDanNadya2025"/>
       </SectionCard>
-      <SectionCard title="🎨 Background Custom" emoji="🎨">
+      <SectionCard title="Background Custom" icon="color-palette-outline">
         <p className="text-xs text-[#94a3b8] -mt-2">
           Atur background tiap section — foto, video YouTube, atau mp4 URL.
         </p>
@@ -980,6 +997,7 @@ function StepMedia({ form, set, orderId }: { form: WeddingForm; set: (k: keyof W
           value={form.bg_sections}
           onChange={v => set('bg_sections', v)}
           orderId={orderId}
+          client={client}
         />
       </SectionCard>
     </div>
@@ -990,7 +1008,7 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
   return (
     <div className="space-y-4">
 
-      <SectionCard title="🕌 Kata-kata Pembuka" emoji="🕌">
+      <SectionCard title="Kata-kata Pembuka" icon="book-outline">
         <p className="text-xs text-[#64748b] dark:text-[#94a3b8] mb-3">
           Ayat / kata-kata yang ditampilkan di halaman pembuka undangan
         </p>
@@ -1054,7 +1072,7 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
         )}
       </SectionCard>
 
-      <SectionCard title="💳 Amplop Digital" emoji="💳">
+      <SectionCard title="Amplop Digital" icon="wallet-outline">
         <Toggle label="Aktifkan Amplop Digital" value={form.fitur_amplop_digital} onChange={v => set('fitur_amplop_digital', v)}
           hint="Tampilkan rekening untuk tamu yang ingin memberi hadiah uang"/>
         {form.fitur_amplop_digital && (
@@ -1069,7 +1087,7 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
         )}
       </SectionCard>
 
-      <SectionCard title="📖 Cerita Cinta" emoji="📖">
+      <SectionCard title="Cerita Cinta" icon="heart-outline">
         <Toggle label="Tampilkan Cerita Cinta" value={form.fitur_cerita_cinta} onChange={v => set('fitur_cerita_cinta', v)}
           hint="Timeline pertemuan, jadian, dan lamaran kalian"/>
         {form.fitur_cerita_cinta && (
@@ -1086,7 +1104,7 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
         )}
       </SectionCard>
 
-      <SectionCard title="Catatan Tambahan" emoji="📝">
+      <SectionCard title="Catatan Tambahan" icon="pencil-outline">
         <Textarea label="Ada permintaan khusus?" value={form.catatan_tambahan} onChange={v => set('catatan_tambahan', v)}
           placeholder="Warna tema, font pilihan, urutan foto, atau hal lain..." rows={4}
           hint="Opsional — tulis jika ada detail tambahan untuk tim kami"/>
@@ -1096,11 +1114,16 @@ function StepFitur({ form, set }: { form: WeddingForm; set: (k: keyof WeddingFor
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
-function IsiDataInner() {
+export function IsiDataInner({ embeddedOrderId }: { embeddedOrderId?: string }) {
   const params   = useSearchParams()
-  const orderId  = params.get('order') || ''
+  const urlOrderId = params.get('order')
+  const orderId  = embeddedOrderId || urlOrderId || ''
   const token    = params.get('token') || ''   // edit token untuk autentikasi customer
-  const isAdmin  = params.get('admin') === '1' // admin bypass (dari dashboard)
+  const isEmbedded = !!embeddedOrderId
+  const isAdmin  = params.get('admin') === '1' || isEmbedded // admin bypass (dari dashboard)
+
+  // Use auth client when embedded in dashboard for proper RLS
+  const db = isEmbedded ? supabaseAuth : supabase
 
   const [step,         setStep]         = useState<Step>('mempelai_pria')
   const [form,         setForm]         = useState<WeddingForm>(EMPTY)
@@ -1109,6 +1132,62 @@ function IsiDataInner() {
   const [saved,        setSaved]        = useState(false)
   const [tokenValid,   setTokenValid]   = useState<boolean | null>(null) // null = checking
   const [tokenChecked, setTokenChecked] = useState(false)
+  const [dataLoaded,   setDataLoaded]   = useState(false)
+
+  // Load existing wedding data on mount
+  useEffect(() => {
+    if (!orderId || dataLoaded) return
+    async function loadExisting() {
+      try {
+        const { data, error: loadErr } = await db
+          .from('wedding_data')
+          .select('*')
+          .eq('order_id', orderId)
+          .maybeSingle()
+        
+        if (!loadErr && data) {
+          // Map DB columns back to form fields
+          const loaded: Partial<WeddingForm> = {}
+          const fieldMap: Record<string, keyof WeddingForm> = {
+            pria_nama_lengkap: 'pria_nama_lengkap', pria_nama_panggilan: 'pria_nama_panggilan',
+            pria_gelar: 'pria_gelar', pria_nama_ayah: 'pria_nama_ayah',
+            pria_status_ayah: 'pria_status_ayah', pria_nama_ibu: 'pria_nama_ibu',
+            pria_status_ibu: 'pria_status_ibu', pria_foto_url: 'pria_foto_url',
+            wanita_nama_lengkap: 'wanita_nama_lengkap', wanita_nama_panggilan: 'wanita_nama_panggilan',
+            wanita_gelar: 'wanita_gelar', wanita_nama_ayah: 'wanita_nama_ayah',
+            wanita_status_ayah: 'wanita_status_ayah', wanita_nama_ibu: 'wanita_nama_ibu',
+            wanita_status_ibu: 'wanita_status_ibu', wanita_foto_url: 'wanita_foto_url',
+            akad_tanggal: 'akad_tanggal', akad_lokasi: 'akad_lokasi',
+            akad_alamat: 'akad_alamat', akad_maps_url: 'akad_maps_url',
+            resepsi_tanggal: 'resepsi_tanggal', resepsi_lokasi: 'resepsi_lokasi',
+            resepsi_alamat: 'resepsi_alamat', resepsi_maps_url: 'resepsi_maps_url',
+            video_youtube_url: 'video_youtube_url', musik_pilihan: 'musik_pilihan',
+            hashtag_instagram: 'hashtag_instagram', foto_urls: 'foto_urls',
+            rekening_list: 'rekening_list', alamat_kado: 'alamat_kado',
+            cerita_pertemuan: 'cerita_pertemuan', tanggal_jadian: 'tanggal_jadian',
+            tanggal_lamaran: 'tanggal_lamaran', engagement_story: 'engagement_story',
+            fitur_amplop_digital: 'fitur_amplop_digital', fitur_cerita_cinta: 'fitur_cerita_cinta',
+            catatan_tambahan: 'catatan_tambahan', rundown_list: 'rundown_list',
+            kata_kata_pilihan: 'kata_kata_pilihan', kata_kata_custom: 'kata_kata_custom',
+            bg_sections: 'bg_sections',
+          }
+          for (const [dbKey, formKey] of Object.entries(fieldMap)) {
+            if (data[dbKey] !== undefined && data[dbKey] !== null) {
+              (loaded as any)[formKey] = data[dbKey]
+            }
+          }
+          setForm(f => ({ ...f, ...loaded }))
+          console.log('[IsiDataInner] Loaded existing wedding data')
+        } else {
+          console.log('[IsiDataInner] No existing wedding data found, starting fresh')
+        }
+      } catch (e) {
+        console.error('[IsiDataInner] Error loading existing data:', e)
+      }
+      setDataLoaded(true)
+    }
+    loadExisting()
+  }, [orderId, dataLoaded, db])
 
   // Validasi token saat mount
   useEffect(() => {
@@ -1117,12 +1196,12 @@ function IsiDataInner() {
     if (isAdmin) { setTokenValid(true); setTokenChecked(true); return }
     if (!token)  { setTokenValid(false); setTokenChecked(true); return }
 
-    supabase.rpc('validate_edit_token', { p_order_id: orderId, p_token: token })
+    db.rpc('validate_edit_token', { p_order_id: orderId, p_token: token })
       .then(({ data, error }) => {
         setTokenValid(!error && data === true)
         setTokenChecked(true)
       })
-  }, [orderId, token, isAdmin])
+  }, [orderId, token, isAdmin, db])
 
   const stepIdx = STEPS.findIndex(s => s.id === step)
 
@@ -1135,7 +1214,7 @@ function IsiDataInner() {
     setSaving(true); setError(null)
     try {
       console.log('[saveProgress] Sending data to upsert_wedding_data:', { orderId, form })
-      const { data, error: err } = await supabase.rpc('upsert_wedding_data', {
+      const { data, error: err } = await db.rpc('upsert_wedding_data', {
         p_order_id: orderId,
         p_data: form,
       })
@@ -1154,12 +1233,28 @@ function IsiDataInner() {
     setSaving(false)
   }
 
+  // Auto-save when embedded (debounced, every 30 seconds of inactivity)
+  const autoSaveTimer = useRef<NodeJS.Timeout | null>(null)
+  useEffect(() => {
+    if (!isEmbedded || !orderId || !dataLoaded) return
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+    autoSaveTimer.current = setTimeout(async () => {
+      try {
+        await db.rpc('upsert_wedding_data', { p_order_id: orderId, p_data: form })
+        console.log('[autoSave] Draft saved')
+      } catch (e) {
+        console.error('[autoSave] Failed:', e)
+      }
+    }, 30000)
+    return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current) }
+  }, [form, isEmbedded, orderId, dataLoaded, db])
+
   // ── Belum selesai cek token ──
   if (!tokenChecked) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617]">
         <div className="text-center">
-          <div className="text-4xl mb-3 animate-spin">🔐</div>
+          <ion-icon name="sync-outline" class="animate-spin" style={{ fontSize: 36, color: '#3B82F6', marginBottom: 12, display: 'block', margin: '0 auto' }}></ion-icon>
           <p className="text-sm text-[#64748b]">Memverifikasi akses...</p>
         </div>
       </div>
@@ -1171,7 +1266,7 @@ function IsiDataInner() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="text-center max-w-sm">
-          <p className="text-5xl mb-4">🔒</p>
+          <p className="text-5xl mb-4 text-[#64748b]"><ion-icon name="lock-closed-outline"></ion-icon></p>
           <p className="text-lg font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Akses Ditolak</p>
           <p className="text-sm text-[#64748b] mb-6 leading-relaxed">
             Link ini tidak valid atau sudah kadaluarsa.<br/>
@@ -1190,7 +1285,7 @@ function IsiDataInner() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="text-center max-w-sm">
-          <p className="text-5xl mb-4">⚠️</p>
+          <p className="text-5xl mb-4 text-amber-500"><ion-icon name="warning-outline"></ion-icon></p>
           <p className="text-lg font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Order ID tidak ditemukan</p>
           <p className="text-sm text-[#64748b] mb-6">Akses halaman ini melalui link setelah checkout.</p>
           <a href="/" className="text-primary-800 dark:text-[#60a5fa] underline text-sm">Kembali ke beranda</a>
@@ -1204,7 +1299,7 @@ function IsiDataInner() {
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617] px-4">
         <div className="max-w-md w-full text-center py-12 space-y-6">
           <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-5xl mx-auto"
-            style={{ animation: 'float 3s ease-in-out infinite' }}>🎉</div>
+            style={{ animation: 'float 3s ease-in-out infinite' }}><ion-icon name="checkmark-circle-outline" style={{ color: '#22c55e' }}></ion-icon></div>
           <div>
             <h2 className="font-display text-3xl font-bold text-[#0f172a] dark:text-[#f1f5f9] mb-2">Data Tersimpan!</h2>
             <p className="text-[#64748b] dark:text-[#94a3b8] leading-relaxed">
@@ -1255,7 +1350,7 @@ function IsiDataInner() {
       <div className="max-w-2xl mx-auto px-4 py-6 pb-32">
         <div className="mb-6">
           <h1 className="font-display text-2xl font-bold text-[#0f172a] dark:text-[#f1f5f9]">
-            {STEPS[stepIdx].emoji} {STEPS[stepIdx].label}
+            <ion-icon name={STEPS[stepIdx].icon} style={{ marginRight: 8, transform: 'translateY(2px)' }}></ion-icon> {STEPS[stepIdx].label}
           </h1>
           <p className="text-sm text-[#64748b] dark:text-[#94a3b8] mt-1">Langkah {stepIdx + 1} dari {STEPS.length - 1}</p>
         </div>
@@ -1266,10 +1361,10 @@ function IsiDataInner() {
           </div>
         )}
 
-        {step === 'mempelai_pria'   && <StepMempelaiPria   form={form} set={set} orderId={orderId}/>}
-        {step === 'mempelai_wanita' && <StepMempelaiWanita form={form} set={set} orderId={orderId}/>}
+        {step === 'mempelai_pria'   && <StepMempelaiPria   form={form} set={set} orderId={orderId} client={db}/>}
+        {step === 'mempelai_wanita' && <StepMempelaiWanita form={form} set={set} orderId={orderId} client={db}/>}
         {step === 'acara'           && <StepAcara          form={form} set={set}/>}
-        {step === 'media'           && <StepMedia          form={form} set={set} orderId={orderId}/>}
+        {step === 'media'           && <StepMedia          form={form} set={set} orderId={orderId} client={db}/>}
         {step === 'fitur'           && <StepFitur          form={form} set={set}/>}
       </div>
 
@@ -1284,8 +1379,8 @@ function IsiDataInner() {
           <button onClick={() => saveProgress(ORDER[stepIdx + 1] as Step)} disabled={saving}
             className="flex-1 bg-[#3B82F6] hover:bg-[#2563eb] disabled:opacity-60 text-white font-bold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-lg">
             {saving
-              ? <><span className="animate-spin">⏳</span> Menyimpan...</>
-              : step === 'fitur' ? '🎉 Selesai & Kirim Data' : 'Lanjut →'
+              ? <><ion-icon name="sync-outline" class="animate-spin"></ion-icon> Menyimpan...</>
+              : step === 'fitur' ? <><ion-icon name="paper-plane-outline"></ion-icon> Selesai & Kirim Data</> : 'Lanjut →'
             }
           </button>
         </div>
@@ -1299,7 +1394,7 @@ export default function IsiDataContent() {
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-[#020617]">
         <div className="text-center">
-          <div className="text-5xl mb-4 animate-bounce">🌸</div>
+          <div className="text-5xl mb-4 text-[#3B82F6]"><ion-icon name="sync-outline" class="animate-spin"></ion-icon></div>
           <p className="text-[#64748b] dark:text-[#94a3b8]">Memuat form...</p>
         </div>
       </div>

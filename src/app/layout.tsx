@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { AuthProvider } from '@/components/AuthProvider'
 
 const BASE_URL = 'https://katresnan.id'
 
@@ -100,7 +101,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "sameAs": ["https://wa.me/6285150000715"],
           })}}
         />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider><AuthProvider>{children}</AuthProvider></ThemeProvider>
+        
+        {/* Ionicons (Global) */}
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" />
+        <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" />
       </body>
     </html>
   )

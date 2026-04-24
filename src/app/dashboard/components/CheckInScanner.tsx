@@ -199,7 +199,7 @@ export default function CheckInScanner({ guests, checkins, orderId, showToast, o
 
       {/* Scan QR FAB */}
       <div style={{ position: 'fixed', bottom: 110, left: '50%', transform: 'translateX(-50%)', zIndex: 60, display: 'flex', gap: 12, width: 'max-content' }}>
-        <button className="btn btn-success" onClick={scanning ? stopScan : startScan}
+        <button className="btn btn-success" onClick={() => scanning ? stopScan() : startScan()}
           style={{ padding: '14px 28px', borderRadius: 999, fontSize: 15, gap: 8, boxShadow: '0 8px 30px rgba(16,185,129,0.4)' }}>
           <ion-icon name="qr-code-outline" style={{ fontSize: 20 }}></ion-icon>
           {scanning ? 'Stop Scan' : 'Scan QR'}

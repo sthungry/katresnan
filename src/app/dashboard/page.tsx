@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
+import { supabaseAuth, canAccessFeature, getMinPlanForFeature, getPlanLabel, getPlanEmoji, type FeatureId, type UserPlan } from '@/lib/supabaseAuth'
+import { useAuth } from '@/components/AuthProvider'
 import DashboardOverview from './components/DashboardOverview'
 import GuestManagement from './components/GuestManagement'
 import CheckInScanner from './components/CheckInScanner'
@@ -11,6 +13,8 @@ import WeddingPlannerTab from './components/WeddingPlannerTab'
 import NabungBareng from './components/NabungBareng'
 import MobileBottomNav from './components/MobileBottomNav'
 import SearchModal from './components/SearchModal'
+import ThemeSetup from './components/ThemeSetup'
+import AccountSettings from './components/AccountSettings'
 import { ConfirmDialog, ScrollToTop, getGreeting, useKeyboardShortcuts } from './components/DashboardEnhancements'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -41,53 +45,46 @@ export interface WeddingSettings {
   rekening_list: any[]; alamat_pengiriman: string
   kota: string; kode_pos: string
   nabung_target: number; nabung_sources: any[]; nabung_deposits: any[]
+  planner_checklist?: any[]; planner_engagement?: any[]; planner_prewedding?: any[]
+  planner_administrasi?: any[]; planner_vendor?: any[]; planner_seserahan?: any[]
+  planner_budget?: any[]; planner_agenda?: any[]
 }
 export interface WeddingData {
   order_id: string; link_unik: string
   pria_nama_panggilan: string; wanita_nama_panggilan: string
 }
 
-type TabId = 'dashboard' | 'theme' | 'guests' | 'checkin' | 'ucapan' | 'template_wa' | 'planner' | 'nabung' | 'wishlist' | 'rekening' | 'alamat'
+type TabId = 'dashboard' | 'theme' | 'guests' | 'checkin' | 'ucapan' | 'template_wa' | 'planner' | 'nabung' | 'wishlist' | 'rekening' | 'alamat' | 'settings'
 
 interface NavItem { id: TabId; label: string; icon: string; badge?: number }
 
-// ─── Login Screen ────────────────────────────────────────────────────────────
-function LoginScreen({ onLogin }: { onLogin: (orderId: string) => void }) {
-  const [orderId, setOrderId] = useState('')
-  const [err, setErr] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  async function handleLogin() {
-    if (!orderId.trim()) return
-    setLoading(true); setErr('')
-    const { data, error } = await supabase
-      .from('wedding_data')
-      .select('order_id, pria_nama_panggilan, wanita_nama_panggilan')
-      .eq('order_id', orderId.trim()).single()
-    if (error || !data) { setErr('Order ID tidak ditemukan.'); setLoading(false); return }
-    sessionStorage.setItem('katresnan_user_order', orderId.trim())
-    onLogin(orderId.trim())
-  }
+// ─── Locked Feature Card ────────────────────────────────────────────────────
+function LockedFeature({ feature, userPlan }: { feature: FeatureId; userPlan: UserPlan }) {
+  const minPlan = getMinPlanForFeature(feature)
+  const label = getPlanLabel(minPlan)
+  const emoji = getPlanEmoji(minPlan)
 
   return (
-    <div className="dashboard-root" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '1rem' }}>
-      <div style={{ width: '100%', maxWidth: 400 }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--dark)', letterSpacing: '-0.03em' }}>
-            <span style={{ color: 'var(--accent)' }}>✦</span> Katresnan<span style={{ color: 'var(--accent)' }}>.</span>
-          </h1>
-          <p style={{ fontSize: 14, color: 'var(--text-secondary)', marginTop: 4 }}>Wedding Planner Dashboard</p>
-        </div>
-        <div className="card" style={{ padding: 28 }}>
-          <label className="label">Order ID</label>
-          <input className="input" value={orderId} onChange={e => { setOrderId(e.target.value); setErr('') }}
-            onKeyDown={e => e.key === 'Enter' && handleLogin()} placeholder="Masukkan Order ID" />
-          {err && <p style={{ color: 'var(--danger)', fontSize: 13, marginTop: 8 }}>{err}</p>}
-          <button className="btn btn-primary" onClick={handleLogin} disabled={!orderId.trim() || loading}
-            style={{ width: '100%', marginTop: 16, justifyContent: 'center', padding: '0.875rem', opacity: loading ? 0.6 : 1 }}>
-            {loading ? 'Memverifikasi...' : 'Masuk ke Dashboard'}
-          </button>
-        </div>
+    <div className="card">
+      <div className="empty-state">
+        <div style={{ fontSize: 64, marginBottom: 16, filter: 'grayscale(0.5)' }}>🔒</div>
+        <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Fitur {label}</h3>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 14, maxWidth: 360, margin: '0 auto 20px', lineHeight: 1.6 }}>
+          Fitur ini tersedia untuk paket <strong>{emoji} {label}</strong> ke atas.
+          {userPlan === 'free'
+            ? ' Pilih paket di tab "Atur Tema" untuk membuka semua fitur.'
+            : ' Upgrade paket kamu untuk mengakses fitur ini.'}
+        </p>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            // Scroll to theme tab (or navigate)
+            const evt = new CustomEvent('switchTab', { detail: 'theme' })
+            window.dispatchEvent(evt)
+          }}
+        >
+          {userPlan === 'free' ? '🎨 Pilih Paket Sekarang' : '⬆️ Upgrade Paket'}
+        </button>
       </div>
     </div>
   )
@@ -95,7 +92,9 @@ function LoginScreen({ onLogin }: { onLogin: (orderId: string) => void }) {
 
 // ─── Main Dashboard ──────────────────────────────────────────────────────────
 export default function UserDashboard() {
-  const [orderId, setOrderId] = useState<string | null>(null)
+  const router = useRouter()
+  const { user, profile, loading: authLoading, plan, signOut: handleSignOut, refreshProfile } = useAuth()
+
   const [activeTab, setActiveTab] = useState<TabId>('dashboard')
   const [wedding, setWedding] = useState<WeddingData | null>(null)
   const [guests, setGuests] = useState<Guest[]>([])
@@ -111,21 +110,36 @@ export default function UserDashboard() {
 
   const showToast = useCallback((msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000) }, [])
 
+  // Listen for tab switch events (from LockedFeature)
   useEffect(() => {
-    const saved = sessionStorage.getItem('katresnan_user_order')
-    if (saved) setOrderId(saved); else setLoading(false)
+    function handleSwitchTab(e: any) { setActiveTab(e.detail) }
+    window.addEventListener('switchTab', handleSwitchTab)
+    return () => window.removeEventListener('switchTab', handleSwitchTab)
   }, [])
 
-  const loadData = useCallback(async (oid: string) => {
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/auth/login')
+    }
+  }, [authLoading, user, router])
+
+  // The orderId to use for data queries — from profile or legacy
+  const orderId = profile?.order_id || null
+
+  const loadData = useCallback(async (uid: string) => {
     setLoading(true)
+
+    // Try to load by user_id first, fall back to order_id
     const [wdRes, gRes, uRes, ciRes, wlRes, sRes] = await Promise.all([
-      supabase.from('wedding_data').select('order_id, link_unik, pria_nama_panggilan, wanita_nama_panggilan').eq('order_id', oid).single(),
-      supabase.from('guests').select('*').eq('order_id', oid).order('created_at', { ascending: false }),
-      supabase.from('ucapan').select('*').eq('order_id', oid).order('created_at', { ascending: false }),
-      supabase.from('checkins').select('*, guests(nama)').eq('order_id', oid).order('checked_in_at', { ascending: false }),
-      supabase.from('wishlists').select('*').eq('order_id', oid).order('created_at', { ascending: false }),
-      supabase.from('wedding_settings').select('*').eq('order_id', oid).single(),
+      supabaseAuth.from('wedding_data').select('order_id, link_unik, pria_nama_panggilan, wanita_nama_panggilan').eq('user_id', uid).single(),
+      supabaseAuth.from('guests').select('*').eq('user_id', uid).order('created_at', { ascending: false }),
+      supabaseAuth.from('ucapan').select('*').eq('user_id', uid).order('created_at', { ascending: false }),
+      supabaseAuth.from('checkins').select('*, guests(nama)').eq('user_id', uid).order('checked_in_at', { ascending: false }),
+      supabaseAuth.from('wishlists').select('*').eq('user_id', uid).order('created_at', { ascending: false }),
+      supabaseAuth.from('wedding_settings').select('*').eq('user_id', uid).single(),
     ])
+
     if (wdRes.data) setWedding(wdRes.data as WeddingData)
     if (gRes.data) setGuests(gRes.data as Guest[])
     if (uRes.data) setUcapanList(uRes.data as Ucapan[])
@@ -133,15 +147,23 @@ export default function UserDashboard() {
     if (wlRes.data) setWishlists(wlRes.data as WishlistItem[])
     if (sRes.data) setSettings(sRes.data as WeddingSettings)
     else {
-      const { data: ns } = await supabase.from('wedding_settings').insert({ order_id: oid }).select().single()
+      // Auto-create wedding settings for new users
+      const { data: ns } = await supabaseAuth.from('wedding_settings')
+        .insert({ order_id: crypto.randomUUID(), user_id: uid })
+        .select().single()
       if (ns) setSettings(ns as WeddingSettings)
     }
     setLoading(false)
   }, [])
 
-  useEffect(() => { if (orderId) loadData(orderId) }, [orderId, loadData])
+  useEffect(() => {
+    if (user) loadData(user.id)
+  }, [user, loadData])
 
-  function handleLogout() { sessionStorage.removeItem('katresnan_user_order'); setOrderId(null); setLoading(false) }
+  function handleLogout() {
+    handleSignOut()
+    router.push('/auth/login')
+  }
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -149,11 +171,22 @@ export default function UserDashboard() {
     onEscape: () => { setSearchOpen(false); setSidebarOpen(false) }
   })
 
-  if (!orderId && !loading) return <LoginScreen onLogin={oid => setOrderId(oid)} />
+  // Still loading auth
+  if (authLoading || (!user && !authLoading)) {
+    return (
+      <div className="dashboard-root" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 48, marginBottom: 16, animation: 'float 2s ease-in-out infinite' }}>✦</div>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Memuat dashboard...</p>
+        </div>
+      </div>
+    )
+  }
 
-  const userName = wedding ? `${wedding.pria_nama_panggilan}` : '...'
+  const userName = profile?.nama || wedding?.pria_nama_panggilan || user?.email?.split('@')[0] || '...'
   const initial = userName.charAt(0).toUpperCase()
   const greeting = getGreeting()
+  const planLabel = `${getPlanEmoji(plan)} ${getPlanLabel(plan)}`
 
   const mainNav: NavItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: 'home-outline' },
@@ -172,22 +205,71 @@ export default function UserDashboard() {
     { id: 'alamat', label: 'Alamat Kirim', icon: 'location-outline' },
   ]
 
-  const tabLabels: Record<TabId, string> = {
-    dashboard: 'Overview Dashboard', theme: 'Atur Tema', guests: 'Daftar Tamu',
-    checkin: 'Check-in QR', ucapan: 'Ucapan Tamu', template_wa: 'Template WA',
-    planner: 'Wedding Planner', nabung: 'Nabung Bareng',
-    wishlist: 'Daftar Kado', rekening: 'Rekening Bank', alamat: 'Alamat Kirim',
+  // Check if a nav item is locked
+  function isLocked(tabId: TabId): boolean {
+    return !canAccessFeature(plan, tabId as FeatureId)
   }
 
   function NavBtn({ item }: { item: NavItem }) {
+    const locked = isLocked(item.id)
     return (
-      <button className={`sidebar-nav-item ${activeTab === item.id ? 'active' : ''}`}
-        onClick={() => { setActiveTab(item.id); setSidebarOpen(false) }}>
+      <button className={`sidebar-nav-item ${activeTab === item.id ? 'active' : ''} ${locked ? 'locked' : ''}`}
+        onClick={() => { setActiveTab(item.id); setSidebarOpen(false) }}
+        style={locked ? { opacity: 0.5 } : undefined}
+      >
         <ion-icon name={item.icon}></ion-icon>
         <span>{item.label}</span>
-        {item.badge !== undefined && item.badge > 0 && <span className="nav-badge">{item.badge}</span>}
+        {locked && <span style={{ marginLeft: 'auto', fontSize: 10 }}>🔒</span>}
+        {!locked && item.badge !== undefined && item.badge > 0 && <span className="nav-badge">{item.badge}</span>}
       </button>
     )
+  }
+
+  // Render tab content with feature gating
+  function renderTab() {
+    // Free tabs — always accessible
+    if (activeTab === 'dashboard') {
+      return <DashboardOverview guests={guests} ucapan={ucapanList} checkins={checkins} wishlists={wishlists} wedding={wedding} />
+    }
+    if (activeTab === 'theme') {
+      const oid = orderId || settings?.order_id || ''
+      return <ThemeSetup profile={profile!} orderId={oid} onProfileUpdate={refreshProfile} />
+    }
+    if (activeTab === 'settings') {
+      return <AccountSettings user={user} profile={profile} plan={plan} onRefreshProfile={refreshProfile} onSignOut={handleSignOut} showToast={showToast} />
+    }
+
+    // Gated tabs
+    const featureId = activeTab as FeatureId
+    if (!canAccessFeature(plan, featureId)) {
+      return <LockedFeature feature={featureId} userPlan={plan} />
+    }
+
+    // The orderId for components that need it
+    const oid = orderId || settings?.order_id || ''
+
+    switch (activeTab) {
+      case 'guests':
+        return <GuestManagement guests={guests} orderId={oid} wedding={wedding} showToast={showToast} onRefresh={() => loadData(user!.id)} />
+      case 'checkin':
+        return <CheckInScanner guests={guests} checkins={checkins} orderId={oid} showToast={showToast} onRefresh={() => loadData(user!.id)} />
+      case 'ucapan':
+        return <UcapanMessages ucapan={ucapanList} />
+      case 'template_wa':
+        return <SettingsPanel settings={settings} orderId={oid} showToast={showToast} onRefresh={() => loadData(user!.id)} initialSection="wa" />
+      case 'planner':
+        return <WeddingPlannerTab orderId={oid} showToast={showToast} settings={settings} onRefresh={() => loadData(user!.id)} />
+      case 'nabung':
+        return <NabungBareng orderId={oid} showToast={showToast} settings={settings} onRefresh={() => loadData(user!.id)} />
+      case 'wishlist':
+        return <WishlistManager wishlists={wishlists} orderId={oid} showToast={showToast} onRefresh={() => loadData(user!.id)} />
+      case 'rekening':
+        return <SettingsPanel settings={settings} orderId={oid} showToast={showToast} onRefresh={() => loadData(user!.id)} initialSection="bank" />
+      case 'alamat':
+        return <SettingsPanel settings={settings} orderId={oid} showToast={showToast} onRefresh={() => loadData(user!.id)} initialSection="alamat" />
+      default:
+        return null
+    }
   }
 
   return (
@@ -204,11 +286,11 @@ export default function UserDashboard() {
           <h1>Katresnan<span style={{ color: 'var(--accent)' }}>.</span></h1>
         </div>
 
-        <div className="sidebar-user" onClick={() => {}}>
+        <div className="sidebar-user" onClick={() => { setActiveTab('settings'); setSidebarOpen(false); }} style={{ cursor: 'pointer' }}>
           <div className="sidebar-user-avatar">{initial}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="sidebar-user-name" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userName}</div>
-            <span className="sidebar-user-plan">Premium</span>
+            <span className="sidebar-user-plan">{planLabel}</span>
           </div>
           <ion-icon name="chevron-forward-outline" style={{ fontSize: 14, color: 'var(--text-muted)' }}></ion-icon>
         </div>
@@ -263,7 +345,7 @@ export default function UserDashboard() {
             <button className="topbar-btn" title="Tutorial">
               <ion-icon name="help-circle-outline" style={{ fontSize: 18 }}></ion-icon>
             </button>
-            <button className="topbar-btn" title="Notifikasi" onClick={() => orderId && loadData(orderId)}>
+            <button className="topbar-btn" title="Notifikasi" onClick={() => user && loadData(user.id)}>
               <ion-icon name="notifications-outline" style={{ fontSize: 18 }}></ion-icon>
               <span className="notif-dot"></span>
             </button>
@@ -278,30 +360,7 @@ export default function UserDashboard() {
             <div className="stats-grid">
               {[1,2,3,4].map(i => <div key={i} className="skeleton" style={{ height: 96 }} />)}
             </div>
-          ) : (
-            <>
-              {activeTab === 'dashboard' && <DashboardOverview guests={guests} ucapan={ucapanList} checkins={checkins} wishlists={wishlists} wedding={wedding} />}
-              {activeTab === 'guests' && <GuestManagement guests={guests} orderId={orderId!} wedding={wedding} showToast={showToast} onRefresh={() => loadData(orderId!)} />}
-              {activeTab === 'checkin' && <CheckInScanner guests={guests} checkins={checkins} orderId={orderId!} showToast={showToast} onRefresh={() => loadData(orderId!)} />}
-              {activeTab === 'ucapan' && <UcapanMessages ucapan={ucapanList} />}
-              {activeTab === 'template_wa' && <SettingsPanel settings={settings} orderId={orderId!} showToast={showToast} onRefresh={() => loadData(orderId!)} initialSection="wa" />}
-              {activeTab === 'planner' && <WeddingPlannerTab />}
-              {activeTab === 'nabung' && <NabungBareng orderId={orderId!} showToast={showToast} settings={settings} onRefresh={() => loadData(orderId!)} />}
-              {activeTab === 'wishlist' && <WishlistManager wishlists={wishlists} orderId={orderId!} showToast={showToast} onRefresh={() => loadData(orderId!)} />}
-              {activeTab === 'rekening' && <SettingsPanel settings={settings} orderId={orderId!} showToast={showToast} onRefresh={() => loadData(orderId!)} initialSection="bank" />}
-              {activeTab === 'alamat' && <SettingsPanel settings={settings} orderId={orderId!} showToast={showToast} onRefresh={() => loadData(orderId!)} initialSection="alamat" />}
-              {activeTab === 'theme' && (
-                <div className="card"><div className="empty-state">
-                  <div style={{ fontSize: 64, marginBottom: 16 }}>🎨</div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Belum Ada Tema Undangan</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, maxWidth: 320, margin: '0 auto 20px' }}>
-                    Pilih tema undangan untuk memulai membuat website undangan pernikahan Anda dengan desain yang indah.
-                  </p>
-                  <button className="btn btn-primary">Pilih Tema Sekarang</button>
-                </div></div>
-              )}
-            </>
-          )}
+          ) : renderTab()}
         </div>
       </main>
 

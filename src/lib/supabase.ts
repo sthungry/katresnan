@@ -29,7 +29,7 @@ export interface Template {
   category?: TemplateCategory
 }
 export interface Order {
-  id?: string; nama: string; email: string; wa: string
+  id?: string; user_id?: string; nama: string; email: string; wa: string
   package_id: string; template_1_id?: string | null; template_2_id?: string | null
   template_text_1: string; template_text_2?: string; metode_bayar: string
   harga: number; kode_unik: number; total: number; status: OrderStatus
